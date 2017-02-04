@@ -4,10 +4,11 @@
 #include "xlcd.h"
 
 // flags for function set
+#define LCD_8BITMODE 0x10
+#define LCD_4BITMODE 0x00
 #define LCD_2LINE 0x08
 #define LCD_1LINE 0x00
-#define LCD_5x10DOTS 0x04
-#define LCD_5x8DOTS 0x00
+
 
 
 // flags for display/cursor shift
@@ -15,6 +16,202 @@
 #define LCD_CURSORMOVE 0x00
 #define LCD_MOVERIGHT 0x04
 #define LCD_MOVELEFT 0x00
+
+// flags for display on/off control
+#define LCD_DISPLAYON 0x04
+#define LCD_DISPLAYOFF 0x00
+#define LCD_CURSORON 0x02
+#define LCD_CURSOROFF 0x00
+#define LCD_BLINKON 0x01
+#define LCD_BLINKOFF 0x00
+
+
+uint8_t CharLeftRight[] = 
+{
+    0b00000001,
+    0b00000011,
+    0b00000111,
+    0b00010011,
+    0b00011001,
+    0b00011100,
+    0b00011000,
+    0b00010000,
+};
+
+uint8_t CharGradusC[] = 
+{
+    0b00011000,
+    0b00011000,
+    0b00000110,
+    0b00001001,
+    0b00001000,
+    0b00001001,
+    0b00000110,
+    0b00000000,
+};
+
+
+uint8_t Progress[][8] =
+{
+    // ==== LEFT =======
+    { // 0 left empty
+        0b00011111,
+        0b00010000,
+        0b00010000,
+        0b00010000,
+        0b00010000,
+        0b00010000,
+        0b00011111,
+        0b00000000,
+    },
+    
+     { // 1 left 1
+        0b00011111,
+        0b00010000,
+        0b00010100,
+        0b00010100,
+        0b00010100,
+        0b00010000,
+        0b00011111,
+        0b00000000,
+    },
+    { // 2 left 2
+        0b00011111,
+        0b00010000,
+        0b00010110,
+        0b00010110,
+        0b00010110,
+        0b00010000,
+        0b00011111,
+        0b00000000,
+    },
+    { // 3 left full
+        0b00011111,
+        0b00010000,
+        0b00010111,
+        0b00010111,
+        0b00010111,
+        0b00010000,
+        0b00011111,
+        0b00000000,
+    },
+   
+    // ==== FULL =======
+    
+    { // 4 full
+        0b00011111,
+        0b00000000,
+        0b00011111,
+        0b00011111,
+        0b00011111,
+        0b00000000,
+        0b00011111,
+        0b00000000,
+    },
+    
+    // ==== MIDDLE =======
+    { // 5 middle 1
+        0b00011111,
+        0b00000000,
+        0b00010000,
+        0b00010000,
+        0b00010000,
+        0b00000000,
+        0b00011111,
+        0b00000000,
+    },    
+    { // 6 middle 2
+        0b00011111,
+        0b00000000,
+        0b00011000,
+        0b00011000,
+        0b00011000,
+        0b00000000,
+        0b00011111,
+        0b00000000,
+    },    
+    { // 7 middle 3
+        0b00011111,
+        0b00000000,
+        0b00011100,
+        0b00011100,
+        0b00011100,
+        0b00000000,
+        0b00011111,
+        0b00000000,
+    },    
+    { // 8 middle 4
+        0b00011111,
+        0b00000000,
+        0b00011110,
+        0b00011110,
+        0b00011110,
+        0b00000000,
+        0b00011111,
+        0b00000000,
+    },    
+    
+    // ==== EMPTY =======
+    
+      
+    { // 9 empty
+        0b00011111,
+        0b00000000,
+        0b00000000,
+        0b00000000,
+        0b00000000,
+        0b00000000,
+        0b00011111,
+        0b00000000,
+    },
+    
+    // ==== RIGHT =======
+    
+    { // 10 right empty
+        0b00011111,
+        0b00000001,
+        0b00000001,
+        0b00000001,
+        0b00000001,
+        0b00000001,
+        0b00011111,
+        0b00000000,
+    },
+    { // 11 right 1
+        0b00011111,
+        0b00000001,
+        0b00010001,
+        0b00010001,
+        0b00010001,
+        0b00000001,
+        0b00011111,
+        0b00000000,
+    },
+    { // 12 right 2
+        0b00011111,
+        0b00000001,
+        0b00011001,
+        0b00011001,
+        0b00011001,
+        0b00000001,
+        0b00011111,
+        0b00000000,
+    },
+    { // 13 right full
+        0b00011111,
+        0b00000001,
+        0b00011101,
+        0b00011101,
+        0b00011101,
+        0b00000001,
+        0b00011111,
+        0b00000000,
+    },
+    
+};
+
+
+
 
 uint8_t _initialized;
 
@@ -28,6 +225,9 @@ void SetRowOffsets(int row0, int row1, int row2, int row3)
   _row_offsets[2] = row2;
   _row_offsets[3] = row3;
 }
+
+uint8_t _displayfunction = 0;
+uint8_t _displaycontrol = 0;
 /********************************************************************
 *       Function Name:  OpenXLCD                                    *
 *       Return Value:   void                                        *
@@ -42,15 +242,23 @@ void SetRowOffsets(int row0, int row1, int row2, int row3)
 *                       DelayPORXLCD() provides at least 15ms delay *
 *                       DelayXLCD() provides at least 5ms delay     *
 ********************************************************************/
-void OpenXLCD(unsigned char lcdtype, uint8_t cols, uint8_t lines)
+void OpenXLCD(unsigned char lcdtype, uint8_t cols, uint8_t lines, uint8_t dotsize)
 {
-    uint8_t _displayfunction = 0;
-    if (lines > 1) {
-      _displayfunction |= LCD_2LINE;
+    // 0b00111100 0x3C
+
+    if (lines > 1) 
+    {
+      _displayfunction |= LCD_2LINE; // 0x08 0x00001000
     }    
     _numlines = lines;
 
     SetRowOffsets(0x00, 0x40, 0x00 + cols, 0x40 + cols);      
+    
+      // for some 1 line displays you can select a 10 pixel high font
+    if ((dotsize != LCD_5x8DOTS) && (lines == 1)) 
+    {
+      _displayfunction |= LCD_5x10DOTS;
+    }
     
     
     
@@ -58,6 +266,7 @@ void OpenXLCD(unsigned char lcdtype, uint8_t cols, uint8_t lines)
         // The data bits must be either a 8-bit port or the upper or
         // lower 4-bits of a port. These pins are made into inputs
 #ifdef BIT8                             // 8-bit mode, use whole port
+        _displayfunction |= LCD_8BITMODE; // = 0x00011000
         DATA_PORT = 0;
         TRIS_DATA_PORT = 0x00;
 #else                                   // 4-bit mode
@@ -93,7 +302,7 @@ void OpenXLCD(unsigned char lcdtype, uint8_t cols, uint8_t lines)
 
         // Set data interface width, # lines, font
         while(BusyXLCD());              // Wait if LCD busy
-        WriteCmdXLCD(lcdtype);          // Function set cmd
+        WriteCmdXLCD(LCD_FUNCTIONSET | _displayfunction);          // Function set cmd lcdtype
 
         // Turn the display on then off
 
@@ -102,7 +311,9 @@ void OpenXLCD(unsigned char lcdtype, uint8_t cols, uint8_t lines)
         while(BusyXLCD());              // Wait if LCD busy
         WriteCmdXLCD(DOFF&CURSOR_OFF&BLINK_OFF);        // Display OFF/Blink OFF
         while(BusyXLCD());              // Wait if LCD busy
-        WriteCmdXLCD(DON&CURSOR_ON&BLINK_ON);           // Display ON/Blink ON
+        _displaycontrol = LCD_DISPLAYON | LCD_CURSOROFF | LCD_BLINKOFF;  
+        DisplayOn();
+        //WriteCmdXLCD(DON&CURSOR_ON&BLINK_ON);           // Display ON/Blink ON
         //WriteCmdXLCD(0b00000110);
 
         // Clear display
@@ -115,6 +326,12 @@ void OpenXLCD(unsigned char lcdtype, uint8_t cols, uint8_t lines)
 
         // Set DD Ram address to 0
         while(BusyXLCD());              // Wait if LCD busy
+        
+        DisplayCreateChar(CH_LEFT_RIGHT, CharLeftRight);
+        DisplayCreateChar(CH_GRADUS_C, CharGradusC);
+        
+        
+        while(BusyXLCD()); 
         SetDDRamAddr(LCD_SETDDRAMADDR);                // Set Display data ram address to 0
 
         return;
@@ -151,6 +368,7 @@ void DisplayScrollRight(void)
 // with custom characters
 void DisplayCreateChar(uint8_t location, uint8_t charmap[]) 
 {
+    while(BusyXLCD()); 
     location &= 0x7; // we only have 8 locations 0-7
     SetCGRamAddr(location << 3);
     for (int i=0; i<8; i++) 
@@ -321,4 +539,158 @@ char RecodeSymbol(char c)
         default:
             return c;
     }
+}
+
+// Turn the display on/off (quickly)
+void DisplayOff() 
+{
+  _displaycontrol &= ~LCD_DISPLAYON;
+  WriteCmdXLCD(LCD_DISPLAYCONTROL | _displaycontrol);
+}
+void DisplayOn() 
+{
+  _displaycontrol |= LCD_DISPLAYON;
+  WriteCmdXLCD(LCD_DISPLAYCONTROL | _displaycontrol);
+}
+
+// Turns the underline cursor on/off
+void DisplayNoCursor() 
+{
+  _displaycontrol &= ~LCD_CURSORON;
+  WriteCmdXLCD(LCD_DISPLAYCONTROL | _displaycontrol);
+}
+void DisplayCursor()
+{
+  _displaycontrol |= LCD_CURSORON;
+  WriteCmdXLCD(LCD_DISPLAYCONTROL | _displaycontrol);
+}
+
+// Turn on and off the blinking cursor
+void DisplayNoBlink() 
+{
+  _displaycontrol &= ~LCD_BLINKON;
+  WriteCmdXLCD(LCD_DISPLAYCONTROL | _displaycontrol);
+}
+void DisplayBlink() 
+{
+  _displaycontrol |= LCD_BLINKON;
+  WriteCmdXLCD(LCD_DISPLAYCONTROL | _displaycontrol);
+}
+
+
+
+void DisplayPrintProgress(uint8_t colStart, uint8_t len, uint8_t row, uint8_t percent)
+{
+    if(colStart + len > SCREEN_WIDTH)
+        len = SCREEN_WIDTH - colStart;
+    if(len == 0)
+        return;
+    
+    DisplayCreateChar(CH_PROGRESS_FULL, Progress[4]);    
+    DisplayCreateChar(CH_PROGRESS_EMPTY, Progress[9]);    
+    
+    uint8_t buf[SCREEN_WIDTH + 1];
+    //buf[sizeof(buf) - 1] = 0;
+    uint8_t *str = buf;
+
+    
+    //putcXLCD('*');
+    // вычисляем количество точек
+    uint8_t dotsAll = (len - 2) * 5 + 6;
+    //DisplayPrintUInt(dotsAll, DEC); //!!!
+    //putcXLCD(' ');
+    if(percent > 100)
+        percent = 100;
+    uint8_t dotsFill = (percent / 100.) * dotsAll;
+    //DisplayPrintUInt(dotsFill, DEC); //!!!
+//putcXLCD('*');
+    // загружаем в знакогенератор
+    
+//putcXLCD('*');    
+    // Левая граница
+    //uint8_t ind = dotsFill < 3 ? dotsFill : 3;    
+    //DisplayCreateChar(CH_PROGRESS_LEFT, Progress[ind]);
+    
+    //putcXLCD(CH_PROGRESS_LEFT);
+    // полностью заполненные элементы
+    uint8_t cnt;
+    if(dotsAll - dotsFill <= 3) // Если всё заполнено кроме концевой
+    {
+//        putcXLCD('*'); 
+//        putcXLCD('1');
+        DisplayCreateChar(CH_PROGRESS_LEFT, Progress[3]);
+        *str = CH_PROGRESS_LEFT;
+        str++;
+        //putcXLCD(CH_PROGRESS_LEFT);
+        cnt = len - 2;
+        for(uint8_t i = 0; i < cnt; i++)
+        {
+            *str = CH_PROGRESS_FULL;
+            str++;
+        }
+        DisplayCreateChar(CH_PROGRESS_RIGHT, Progress[10 + 3 - (dotsAll - dotsFill)]);
+        *str = CH_PROGRESS_RIGHT;
+        str++;
+    }
+    else if(dotsFill <= 3) // Если всё пусто кроме левой границы
+    {
+        //putcXLCD('*'); 
+        //putcXLCD('2');
+        DisplayCreateChar(CH_PROGRESS_LEFT, Progress[dotsFill]);
+        *str = CH_PROGRESS_LEFT;
+        str++;
+        
+        cnt = len - 2;
+        for(uint8_t i = 0; i < cnt; i++)
+        {
+            *str = CH_PROGRESS_EMPTY;
+            str++;
+        }
+        DisplayCreateChar(CH_PROGRESS_RIGHT, Progress[10]);
+        *str = CH_PROGRESS_RIGHT;
+        str++;
+    }
+    else
+    {
+        
+        DisplayCreateChar(CH_PROGRESS_LEFT, Progress[3]);
+        *str = CH_PROGRESS_LEFT;
+        str++;
+        
+        
+        
+        cnt = dotsFill - 3;
+        uint8_t printed = 0;
+
+        while(cnt >= 5)
+        {
+            *str = CH_PROGRESS_FULL;
+            str++;
+            cnt -= 5;
+            printed++;
+        }
+        if(cnt > 0)
+        {
+            DisplayCreateChar(CH_PROGRESS_MIDDLE, Progress[5 + cnt - 1]);
+            *str = CH_PROGRESS_MIDDLE;
+            str++;
+            printed++;
+        }
+        if(printed < len - 2)
+        {
+            cnt = len - 2 - printed;
+            for(uint8_t i = 0; i < cnt; i++)
+            {
+                *str = CH_PROGRESS_EMPTY;
+                str++;
+            }
+        }
+        DisplayCreateChar(CH_PROGRESS_RIGHT, Progress[10]);
+        *str = CH_PROGRESS_RIGHT;  
+        str++;
+             
+    } 
+    *str = 0;
+    DisplaySetCursorPos(colStart, row);
+    DisplayPrintStr(buf);
 }

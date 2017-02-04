@@ -19,6 +19,12 @@
 
 #include "system.h"
 
+#define MODBUD_INITIAL_ID       0x7F
+
+
+__EEPROM_DATA(0x11, MODBUD_INITIAL_ID, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
+
+
 /* Refer to the device datasheet for information about available
 oscillator configurations. */
 void ConfigureOscillator(void)

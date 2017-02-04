@@ -13,6 +13,10 @@
 #include "user.h"
 #include "interrupts.h"
 
+#ifdef C2000M
+#include "ParametersController.h"
+#endif
+
 #define EE_MODBUS_ID 1
 
 #define INPUT_TIME_SET 0
@@ -176,20 +180,20 @@ uint8_t ModbusValidateAnswer();
 uint8_t ModbusValidateRequest();
 void ModbusGet_FC1();
 void ModbusGet_FC3();
-int8_t ModbusProcess_FC1(uint16_t regs); // Read Coils
-int8_t ModbusProcess_FC3(uint16_t *regs, uint8_t u8size); // Read Holding Registers
-int8_t ModbusProcess_FC5(uint16_t *regs); // Write Single Coil &regs 
-int8_t ModbusProcess_FC6(uint16_t *regs, uint8_t u8size); // Write Single Register
-int8_t ModbusProcess_FC7(); //Read Exception Status
-int8_t ModbusProcess_FC15(uint16_t *regs); //Write Multiple Coils&regs 
-int8_t ModbusProcess_FC16(uint16_t *regs, uint8_t u8size); //Write Multiple registers
-int8_t ModbusProcess_FC17(); //Report Slave ID
-int8_t ModbusProcess_FC20(); // Read EEPROM
-int8_t ModbusProcess_FC21(); // Writing to EEPROM
-int8_t ModbusProcess_FC43(); // 43 / 14 (0x2B / 0x0E) Read Device Identification
-int8_t ModbusProcess_FC100(); // system commands
-int8_t ModbusProcess_FC101(); // user commands
-int8_t ModbusProcess_FC102(); // Get device state
+int8_t ModbusProcess_FC1(uint16_t regs);                    // Read Coils
+int8_t ModbusProcess_FC3(uint16_t *regs, uint8_t u8size);   // Read Holding Registers
+int8_t ModbusProcess_FC5(uint16_t *regs);                   // Write Single Coil &regs 
+int8_t ModbusProcess_FC6(uint16_t *regs, uint8_t u8size);   // Write Single Register
+int8_t ModbusProcess_FC7();                                 // Read Exception Status
+int8_t ModbusProcess_FC15(uint16_t *regs);                  // Write Multiple Coils&regs 
+int8_t ModbusProcess_FC16(uint16_t *regs, uint8_t u8size);  // Write Multiple registers
+int8_t ModbusProcess_FC17();    // Report Slave ID
+int8_t ModbusProcess_FC20();    // Read EEPROM
+int8_t ModbusProcess_FC21();    // Writing to EEPROM
+int8_t ModbusProcess_FC43();    // 43 / 14 (0x2B / 0x0E) Read Device Identification
+int8_t ModbusProcess_FC100();   // system commands
+int8_t ModbusProcess_FC101();   // user commands
+int8_t ModbusProcess_FC102();   // Get device state
 void ModbusBuildException(uint8_t u8exception); // build exception message
 /* _____PUBLIC FUNCTIONS_____________________________________________________ */
 
@@ -492,7 +496,8 @@ uint8_t ModbusPoll(uint16_t discreteInputs, uint16_t *coils, uint16_t *inputRegs
 
     uint8_t u8current = PortAvailable();
 
-    if (u8current == 0) return 0;
+    if (u8current == 0) 
+        return 0;
 
     // check T35 after frame end or still no frame end
     if (u8current != _u8lastRec)
@@ -887,10 +892,19 @@ uint8_t ModbusValidateRequest()
             if (u16regs > 15)
                 return EXC_ADDR_RANGE;
             break;
-        case MB_FC_WRITE_REGISTER:
+        case MB_FC_WRITE_REGISTER: // Адреса с 0!
             u16regs = word(_au8Buffer[ ADD_HI ], _au8Buffer[ ADD_LO ]);
+#ifdef C2000M
+            if(_au8Buffer[ ADD_HI ] == 0xFF)
+            {
+                if(_au8Buffer[ ADD_LO ] >= GetParamCount())
+                    return EXC_ADDR_RANGE;
+                break;
+            }
+#endif
             u8regs = (uint8_t) u16regs;
             if (u8regs > _holdingRegsCount) return EXC_ADDR_RANGE;
+
             break;
         case MB_FC_READ_INPUT_REGISTER: // 4
             u16regs = word(_au8Buffer[ ADD_HI ], _au8Buffer[ ADD_LO ]);
@@ -900,9 +914,26 @@ uint8_t ModbusValidateRequest()
                 return EXC_ADDR_RANGE;
             break;
         case MB_FC_READ_REGISTERS:
-        case MB_FC_WRITE_MULTIPLE_REGISTERS:
+        case MB_FC_WRITE_MULTIPLE_REGISTERS: // Адреса с 0!
+#ifdef C2000M
+            
+            if(_au8Buffer[ ADD_HI ] == 0xFF)
+            {
+                if(_au8Buffer[ NB_HI ] != 0)
+                    return EXC_ADDR_RANGE;
+                
+                u16regs = _au8Buffer[ ADD_LO ] + _au8Buffer[ NB_LO ] - 1;
+                if(u16regs >= GetParamCount())
+                    return EXC_ADDR_RANGE;
+                break;
+            }
+#else
             u16regs = word(_au8Buffer[ ADD_HI ], _au8Buffer[ ADD_LO ]);
             u16regs += word(_au8Buffer[ NB_HI ], _au8Buffer[ NB_LO ]);
+#endif
+
+
+            
             u8regs = (uint8_t) u16regs;
             if (u8regs > _holdingRegsCount)
                 return EXC_ADDR_RANGE;
@@ -1051,16 +1082,36 @@ int8_t ModbusProcess_FC1(uint16_t regs)
  */
 int8_t ModbusProcess_FC3(uint16_t *regs, uint8_t u8size)
 {
+#ifdef C2000M
+    bool isWriteParams = _au8Buffer[ ADD_HI ] == 0xFF;
+    uint8_t startAddress = _au8Buffer[ ADD_LO ];
+    
+#endif
     uint8_t u8StartAdd = word(_au8Buffer[ ADD_HI ], _au8Buffer[ ADD_LO ]);
     _lastAddress = u8StartAdd;
     uint16_t u16regsno = word(_au8Buffer[ NB_HI ], _au8Buffer[ NB_LO ]);
     _lastCount = u16regsno;
     uint8_t u8CopyBufferSize;
-    uint8_t i;
+    uint16_t i;
 
     _au8Buffer[ 2 ] = u16regsno * 2;
     _u8BufferSize = 3;
 
+#ifdef C2000M
+    
+    if(isWriteParams)
+    {
+        for (i = startAddress; i < startAddress + u16regsno; i++)
+        {
+            uint16_t par = GetParameter(i);
+            _au8Buffer[ _u8BufferSize ] = HIGH_BYTE(par);
+            _u8BufferSize++;
+            _au8Buffer[ _u8BufferSize ] = LOW_BYTE(par);
+            _u8BufferSize++;
+        }
+    }
+    else
+#endif  
     for (i = u8StartAdd; i < u8StartAdd + u16regsno; i++)
     {
         _au8Buffer[ _u8BufferSize ] = HIGH_BYTE(regs[i]);
@@ -1068,6 +1119,8 @@ int8_t ModbusProcess_FC3(uint16_t *regs, uint8_t u8size)
         _au8Buffer[ _u8BufferSize ] = LOW_BYTE(regs[i]);
         _u8BufferSize++;
     }
+  
+    
     u8CopyBufferSize = _u8BufferSize + 2;
     ModbusSendTxBuffer();
 
@@ -1125,10 +1178,32 @@ int8_t ModbusProcess_FC6(uint16_t *regs, uint8_t u8size)
     uint8_t u8CopyBufferSize;
     uint16_t u16val = word(_au8Buffer[ NB_HI ], _au8Buffer[ NB_LO ]);
 
-    regs[ u16add ] = u16val;
+#ifdef C2000M
+    if(_au8Buffer[ ADD_HI ] == 0xFF) // Это значение параметра для вывода на экран
+    {// ID параметра берётся из младшего байта
+        SetParameter(_au8Buffer[ ADD_LO ], u16val);
+        
+//        uint16_t par = GetParameter(_au8Buffer[ ADD_LO ]);
+//        _u8BufferSize = RESPONSE_SIZE;
+//        
+//        _au8Buffer[ _u8BufferSize ] = HIGH_BYTE(par);//!!!! для теста!!!
+//        _u8BufferSize++;
+//        _au8Buffer[ _u8BufferSize ] = LOW_BYTE(par);//!!!! для теста!!!
+//        _u8BufferSize++;
+//        _au8Buffer[ _u8BufferSize ] = _au8Buffer[ ADD_LO ];
+//        _u8BufferSize++;
+    }
+    else
+#endif
+    regs[ u16add ] = u16val;    
+
+
+
+
 
     // keep the same header
     _u8BufferSize = RESPONSE_SIZE;
+    
 
     u8CopyBufferSize = _u8BufferSize + 2;
     ModbusSendTxBuffer();

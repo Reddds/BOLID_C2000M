@@ -60,9 +60,9 @@
 
 #define DEFAULT_MODBUS_ID 0x7F
 
-#define DEVICE_TYPE_INDICATOR 0x01
+#define DEVICE_TYPE_PULT 0x77
 
-#define SLAVE_ID_DEVICE_TYPE DEVICE_TYPE_INDICATOR // Indicator
+#define SLAVE_ID_DEVICE_TYPE DEVICE_TYPE_PULT // Indicator
 #define SLAVE_ID_DEVICE_SUB_TYPE 0x01
 #define SLAVE_ID_DEVICE_REVISION 0x01
 #define SLAVE_ID_DEVICE_NUMBER 0x00
@@ -75,7 +75,7 @@
 #define VENDOR_URL "http://bolid.ru"
 #define PRODUCT_NAME "PULT"
 #define MODEL_NAME "MMM"
-#define USER_APPLICATION_NAME "Raspisanie"
+#define USER_APPLICATION_NAME "Monitor"
 
 //#define MODBUS_RESULT_SUCCESS 0x8080 // Result after executing user code
 

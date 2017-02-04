@@ -2,6 +2,8 @@
 #define	USER_H
 
 #include <time.h>
+#include <stdint.h>        /* For uint8_t definition */
+#include <stdbool.h>       /* For true/false definition */
 /******************************************************************************/
 /* User Level #define Macros                                                  */
 /******************************************************************************/
@@ -13,8 +15,11 @@
 /******************************************************************************/
 
 /* TODO User level functions prototypes (i.e. InitApp) go here */
-#define modbusInputBufLen 15
-#define modbusHoldingBufLen 15 // Led statuses
+
+
+// MODBUS definitions
+#define modbusInputBufLen 1
+#define modbusHoldingBufLen 1 // Led statuses
 uint16_t _MODBUSDiscreteInputs = 0;
 uint16_t _MODBUSCoils = 0;
 uint16_t _MODBUSInputRegs[modbusInputBufLen];
@@ -109,5 +114,8 @@ void SetTime(time_t *newTime);
 //void SetHourMin(int *newHour, int *newMin, int *seconds);
 void AddSecond();
 time_t *GetTime();
+
+
+void SetBakLightDuty(uint16_t dc);
 
 #endif

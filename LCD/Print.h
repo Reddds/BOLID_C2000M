@@ -25,10 +25,21 @@
 
 //#include "Printable.h"
 
-#define DEC 10
-#define HEX 16
-#define OCT 8
-#define BIN 2
+#define DEC 10 // 0x0A
+#define HEX 16 // 0x10
+#define OCT 8  // 0x08
+#define BIN 2  // 0x02
+
+#define MASK_BASE 0x001F
+#define MASK_FIELD_SIZE 0x0F00 // Ширина поля + 1.  
+
+#define FIELD_SIZE(x) (((uint16_t)(x - 1)) << 8) // Задаём ширину поля
+
+#define SHOW_SIGN 0x0020
+#define SHOW_STARTING_ZEROES 0x0040 
+#define SHOW_USE_FIELD_SIZE 0x0080
+
+
 
 
 
@@ -36,11 +47,12 @@
 //size_t DisplayPrint(const String &);
 uint8_t DisplayPrintStr(const char *str);
 uint8_t DisplayPrintChar(char);
+uint8_t DisplayPrintSymbol(uint8_t c);
 //uint8_t DisplayPrintInt(unsigned char, int = DEC);
 //uint8_t DisplayPrint(int, int = DEC);
 //uint8_t DisplayPrint(unsigned int, int = DEC);
-uint8_t DisplayPrintInt(long, int);
-uint8_t DisplayPrintUInt(unsigned long, int);
+uint8_t DisplayPrintInt(long, uint16_t);
+uint8_t DisplayPrintUInt(unsigned long, uint16_t);
 uint8_t DisplayPrintFloat(double, uint8_t);
 //size_t DisplayPrint(const Printable&);
 

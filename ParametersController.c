@@ -1,51 +1,152 @@
 #include "ParametersController.h"
 #include "LCD/xlcd.h"
 
+
+
+
+
+uint8_t _paramCount = 8;
+
+
+typedef struct
+{
+    char Name[10];
+    uint8_t Type;
+}Param;
+
+const Param Params[] =
+{
+    // Спальня
+    //{.ParamId, .Name,     .Type,          .Value}, 
+    {"Темпер.",     PT_TEMP,        }, //   0
+    {"Влажность",   PT_HYM,         }, //   1
+    // Ванная
+    {"Свет",        PT_LIGHT,       }, //   2 
+    {"Дверь",       PT_DOOR_OPEN,   }, //   3 
+    // Коридор
+    {"Свет",        PT_LIGHT,       }, //   4 
+    // Улица
+    {"Темпер.",     PT_TEMP,        }, //   5 
+    {"Влажность",   PT_HYM,         }, //   6 
+    {"Давление",    PT_PRESS,       }, //   7 
+};
+
 /**
  * Список всех параметров. Ограничен 256
  */
-ParameterTag _parameters[256];
+uint16_t _parameters[256];
 
 void InitParameters()
 {
-    _parameters[0].Type = PT_TEMP;
-    _parameters[0].Value = 22;
-  
-    _parameters[1].Type = PT_HYM;
-    _parameters[1].Value = 54;
+    _parameters[0] = 22;
+    _parameters[1] = 54;
     
-
-
-    _parameters[20].Type = PT_TEMP;
-    _parameters[20].Value = (int16_t)(-15);   
-
-    _parameters[21].Type = PT_HYM;
-    _parameters[21].Value = 96;
+    _parameters[2] = true;   
+    _parameters[3] = false;
     
-    _parameters[22].Type = PT_PRESS;
-    _parameters[22].Value = 440;
+    _parameters[4] = false;
     
+    _parameters[5] = -12;
+    _parameters[6] = 96;
+    _parameters[7] = 446;
     
 }
 
-void PrintParameter(uint8_t paramId, uint8_t col, uint8_t row)
+
+
+
+
+uint8_t GetParamCount()
+{
+    return _paramCount;
+}
+
+bool SetParameter(uint8_t id, uint16_t value)
+{
+    if(id >= _paramCount)
+        return false;
+    _parameters[id] = value;
+    return true;
+}
+
+uint16_t GetParameter(uint8_t id)
+{
+    if(id >= _paramCount)
+        return 0;
+    return _parameters[id];
+}
+
+void PrintParameter(uint8_t paramId, int8_t col, int8_t row, PrintParamName printParamName)
 {
     if(col >= 0 && row >= 0)
         DisplaySetCursorPos(col, row);
     
-    switch(_parameters[paramId].Type)
+    
+    switch(printParamName)
+    {
+        case PPN_FULL:
+        {
+            DisplayPrintStr(Params[paramId].Name);
+            DisplayPrintChar(' ');
+        }
+            break;
+        case PPN_SHORT:
+        {
+            
+        }
+            break;
+    }
+    
+    switch(Params[paramId].Type)
     {
         case PT_TEMP:
-            DisplayPrintInt(_parameters[paramId].Value, DEC);
-            DisplayPrintChar(CH_GRADUS);
+        {
+            if(printParamName == PPN_SHORT)
+                DisplayPrintStr("t ");
+            int16_t t = (int16_t)(_parameters[paramId]);
+            if(t > 0)
+                DisplayPrintChar('+');
+            DisplayPrintInt(t, DEC);
+            DisplayPrintSymbol(CH_GRADUS_C);
+            
+        }
             break;
         case PT_HYM:
-            DisplayPrintUInt(_parameters[paramId].Value, DEC);
+        {
+            if(printParamName == PPN_SHORT)
+                DisplayPrintStr("h ");
+            DisplayPrintUInt(_parameters[paramId], DEC);
             DisplayPrintChar('%');
+        }
             break;
         case PT_PRESS:
-            DisplayPrintUInt(_parameters[paramId].Value, DEC);
+        {
+            if(printParamName == PPN_SHORT)
+                DisplayPrintStr("p ");
+            DisplayPrintUInt(_parameters[paramId], DEC);
             DisplayPrintStr("mm");
-            break;            
+        }
+            break;  
+        case PT_LIGHT:
+        {
+            if(printParamName == PPN_SHORT)
+                DisplayPrintStr("с ");
+            if(_parameters[paramId] != 0)
+                DisplayPrintStr("Вкл");
+            else
+                DisplayPrintStr("Выкл");
+        }
+            break;  
+        case PT_DOOR_OPEN:
+        {
+            if(printParamName == PPN_SHORT)
+                DisplayPrintStr("д ");
+            if(_parameters[paramId] != 0)
+                DisplayPrintStr("Отк");
+            else
+                DisplayPrintStr("Закр");
+        }
+            break;  
+            
     }
 }

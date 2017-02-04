@@ -56,6 +56,7 @@ void WriteCmdXLCD(unsigned char cmd)
         TRIS_DATA_PORT |= 0x0f;
 #endif
 #endif
+        
         return;
 }
 

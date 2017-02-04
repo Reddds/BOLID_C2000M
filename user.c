@@ -52,6 +52,87 @@ void PortBegin()
     
 }
 
+
+uint8_t Char0[] = 
+{
+    0b00000001,
+    0b00000011,
+    0b00000111,
+    0b00010011,
+    0b00011001,
+    0b00011100,
+    0b00011000,
+    0b00010000,
+};
+
+void InitBacklight()
+{
+    // LCD Backlight
+    //RC2|CPP1
+    #define CCP1    TRISCbits.TRISC2
+    #define CCP4    TRISGbits.TRISG3
+
+    T2CONbits.TMR2ON = 1;
+    // Set CCP1 to PWM mode
+    CCP1CONbits.CCP1M = 0x0f;
+    CCP4CONbits.CCP4M = 0x0f;
+    // Set PR2
+    // Period = 4 * (1/SYS_FREQ) * 16 * (scaling value + 1) 
+    // PWM period=[(PR2)+1]*4*Tosc*(TMR2 preScalevalue)
+    // 0x90 3229 ??
+    // [144 + 1] * 4/10 000 000 * 16 = 0,000928 = 1/1077  1/3229
+    // [0 + 1] * 4 / 9 216 000 * 16 = 1/144000
+    // 
+    //PR2 = 255;
+    PR2 = 0;
+    // Set the prescaler to 16
+    T2CONbits.T2CKPS1 = 1;
+    T2CONbits.T2CKPS0 = 0;
+
+    // Set the PWM pin to be an output
+    CCP1 = 0; 
+    CCP4 = 0;
+}
+
+
+
+void InitKeyBacklight()
+{
+    //CCP4;
+/*    // LCD Backlight
+    //RC2|CPP1
+    #define CCP1    TRISCbits.TRISC2
+    CCP1 = 0; 
+    T2CONbits.TMR2ON = 1;
+    // Set CCP1 to PWM mode
+    CCP1CONbits.CCP1M = 0x0f;
+    // Set PR2
+    // Period = 4 * (1/SYS_FREQ) * 16 * (scaling value + 1) 
+    // PWM period=[(PR2)+1]*4*Tosc*(TMR2 preScalevalue)
+    // 0x90 3229 ??
+    // [144 + 1] * 4/10 000 000 * 16 = 0,000928 = 1/1077  1/3229
+    // [0 + 1] * 4 / 9 216 000 * 16 = 1/144000
+    // 
+    //PR2 = 255;
+    PR2 = 0;
+    // Set the prescaler to 16
+    T2CONbits.T2CKPS1 = 1;
+    T2CONbits.T2CKPS0 = 0;
+
+    // Set the PWM pin to be an output
+    TRISCbits.RC2 = 0;*/
+}
+
+// 0 .. 3FF
+void SetBakLightDuty(uint16_t dc) 
+{
+    // PWM duty cycle = (CCPR1L:CCP1CON<5:4>) *
+    // TOSC * (TMR2 prescale value)
+    //u16 tempValue = 0;
+    CCP1CONbits.DC1B = dc & 0x03;
+    CCPR1L = (uint8_t)(dc >> 2);
+}  
+
 void InitApp(void)
 {
     /* TODO Initialize User Ports/Peripherals/Project here */
@@ -120,7 +201,7 @@ void InitApp(void)
     
     //T0CONbits.TMR0ON = 1; // Switch on timer
     //--------------------------------------------------------------------------
-    
+    InitBacklight();
     
     // Usart
     InitUartBuffer();   
@@ -154,9 +235,10 @@ void InitApp(void)
     
     
     InitButtons();
-
-    OpenXLCD(0b00111100, 16, 2); //LINES_5X8
+    // LCD
+    OpenXLCD(0b00111100, 16, 2, LCD_5x8DOTS); //LINES_5X8
     while(BusyXLCD());
+    //DisplayCreateChar(0x00, Char0);
     
     
     

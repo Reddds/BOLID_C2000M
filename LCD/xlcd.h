@@ -21,6 +21,7 @@
  *              - DelayXLCD() provides at least 5ms delay
  */
 
+#define SCREEN_WIDTH 16
 /* Interface type 8-bit or 4-bit
  * For 8-bit operation uncomment the #define BIT8
  */
@@ -68,6 +69,8 @@
 #define LINE_5X7   0b00110000  /* 5x7 characters, single line   */
 #define LINE_5X10  0b00110100  /* 5x10 characters               */
 #define LINES_5X7  0b00111000  /* 5x7 characters, multiple line */
+#define LCD_5x10DOTS 0x04
+#define LCD_5x8DOTS 0x00
 
 // commands
 #define LCD_CLEARDISPLAY 0x01
@@ -81,6 +84,15 @@
 
 
 
+#define CH_LEFT_RIGHT 0x00
+#define CH_GRADUS_C 0x01
+
+#define CH_PROGRESS_LEFT 0x02
+#define CH_PROGRESS_FULL 0x03
+#define CH_PROGRESS_MIDDLE 0x04
+#define CH_PROGRESS_EMPTY 0x05
+#define CH_PROGRESS_RIGHT 0x06
+
 #define CH_10 0x7B
 #define CH_12 0x7C
 #define CH_15 0x7D
@@ -91,7 +103,10 @@
 #define CH_3_4 0xF3
 #define CH_ARROW_UP 0xD9
 #define CH_ARROW_DOWN 0xDA
-#define CH_GRADUS 0xDF
+
+#define CH_HOME 0xF4
+
+
 
 #ifdef _OMNI_CODE_
 #define PARAM_SCLASS
@@ -110,7 +125,7 @@
 /* OpenXLCD
  * Configures I/O pins for external LCD cols, lines
  */
-void OpenXLCD(PARAM_SCLASS unsigned char, PARAM_SCLASS unsigned char, PARAM_SCLASS unsigned char);
+void OpenXLCD(PARAM_SCLASS unsigned char, PARAM_SCLASS unsigned char, PARAM_SCLASS unsigned char, uint8_t dotsize);
 
 /* SetCGRamAddr
  * Sets the character generator address
@@ -150,7 +165,7 @@ void WriteDataXLCD(PARAM_SCLASS char);
 /* putcXLCD
  * A putc is a write
  */
-#define putcXLCD(c) WriteDataXLCD(RecodeSymbol(c))
+#define putcXLCD(c) WriteDataXLCD(c)
 
 /* putsXLCD
  * Writes a string of characters to the LCD
@@ -164,12 +179,15 @@ void putrsXLCD(const char *);
 
 
 
+void DisplayCreateChar(uint8_t location, uint8_t charmap[]);
+
 /**
  * Set cursor pos 
  * @param column
  * @param row
  */
 void DisplaySetCursorPos(PARAM_SCLASS unsigned char, PARAM_SCLASS unsigned char);
+
 
 void DisplayScrollLeft(void);
 void DisplayScrollRight(void);
@@ -178,6 +196,22 @@ void DisplayScrollRight(void);
 #define DisplayHome() WriteCmdXLCD(LCD_RETURNHOME)
 
 char RecodeSymbol(char c);
+
+void DisplayOff();
+void DisplayOn();
+void DisplayNoBlink();
+void DisplayBlink();
+void DisplayNoCursor();
+void DisplayCursor();
+
+/**
+ * Печать линии прогресса
+ * @param colStart  Начальная колонка
+ * @param len       Ширина
+ * @param row       Ряд
+ * @param percent   Значение в процентах
+ */
+void DisplayPrintProgress(uint8_t colStart, uint8_t len, uint8_t row, uint8_t percent);
 
 /* User defines these routines according to the oscillator frequency */
 extern void DelayFor18TCY(void);

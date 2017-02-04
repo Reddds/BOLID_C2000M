@@ -28,7 +28,7 @@
 
 #include "xlcd.h"
 
-uint8_t DisplayPrintNumber(unsigned long n, uint8_t base);
+uint8_t DisplayPrintNumber(unsigned long n, uint16_t base);
 char RecodeSymbol(char c);
 // Public Methods //////////////////////////////////////////////////////////////
 
@@ -67,17 +67,24 @@ char RecodeSymbol(char c);
 
 uint8_t DisplayPrintStr(const char *str)
 {
+    while(BusyXLCD());
     putsXLCD(str);
     return 0;
 }
 
 uint8_t DisplayPrintChar(char c)
 {
+    while(BusyXLCD());
     putcXLCD(RecodeSymbol(c));
     return 0;
 }
 
-
+uint8_t DisplayPrintSymbol(uint8_t c)
+{
+    while(BusyXLCD());
+    putcXLCD(c);
+    return 0;
+}
 
 
 //uint8_t DisplayPrint(unsigned char b, int base)
@@ -95,7 +102,7 @@ uint8_t DisplayPrintChar(char c)
 //  return DisplayPrint((unsigned long) n, base);
 //}
 
-uint8_t DisplayPrintInt(long n, int base)
+uint8_t DisplayPrintInt(long n, uint16_t base)
 {
     if (base == 0) 
     {
@@ -116,15 +123,15 @@ uint8_t DisplayPrintInt(long n, int base)
     }
 }
 
-uint8_t DisplayPrintUInt(unsigned long n, int base)
+uint8_t DisplayPrintUInt(unsigned long n, uint16_t options)
 {
-    if (base == 0) 
+    if (options == 0) 
     {
         putcXLCD(n);
         return 0;
     }
     else 
-        return DisplayPrintNumber(n, base);
+        return DisplayPrintNumber(n, options);
 }
 
 //uint8_t DisplayPrintDouble(double n, int digits)
@@ -221,9 +228,17 @@ uint8_t DisplayPrintUInt(unsigned long n, int base)
 
 // Private Methods /////////////////////////////////////////////////////////////
 
-uint8_t DisplayPrintNumber(unsigned long n, uint8_t base)
+uint8_t DisplayPrintNumber(unsigned long n, uint16_t options)
 {
-    char buf[8 * sizeof(long) + 1]; // Assumes 8-bit chars plus zero byte.
+    uint8_t base = options & MASK_BASE;
+    
+//    uint8_t bufSize;
+//    if(options & SHOW_USE_FIELD_SIZE)
+//        bufSize = (options & MASK_FIELD_SIZE) + 1 + 1;
+//    else
+    
+    
+    char buf[SCREEN_WIDTH + 1]; //8 * sizeof(long) + 1 Assumes 8-bit chars plus zero byte.
     char *str = &buf[sizeof(buf) - 1];
 
     *str = '\0';
@@ -231,13 +246,26 @@ uint8_t DisplayPrintNumber(unsigned long n, uint8_t base)
     // prevent crash if called with base == 1
     if (base < 2) base = 10;
 
-    do {
-      char c = n % base;
-      n /= base;
+    uint8_t alreadyPrinted = 0;
+    do 
+    {
+        char c = n % base;
+        n /= base;
 
-      *--str = c < 10 ? c + '0' : c + 'A' - 10;
-    } while(n);
+        *--str = c < 10 ? c + '0' : c + 'A' - 10;
+        alreadyPrinted++;
+    } while(n && (str - buf > 0));
 
+    
+    
+    if(options & SHOW_USE_FIELD_SIZE)
+    {
+        uint8_t fieldSize = ((options & MASK_FIELD_SIZE) >> 8) + 1;
+        char symToFill = (options & SHOW_STARTING_ZEROES) ? '0' : ' ';
+        for(uint8_t i = alreadyPrinted; i < fieldSize && (str - buf > 0); i++)
+            *--str = symToFill;
+    }
+    
     putsXLCD(str);
     return 0;
 }
