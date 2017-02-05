@@ -35,6 +35,15 @@
 #include "Sections/SectionSettings.h"
 
 
+
+
+
+
+#include "SettingsController.h"
+
+
+
+
 //**** Delay functions for xlcd.h **************************************************************************
 
 void DelayFor18TCY(void) // dalay for 20 TCY
@@ -81,7 +90,7 @@ uint8_t _currentSection;
 
 // Настройки    
 // Сколько миллисекунд до хранителя экрана
-uint16_t _mSecondsToScreenSave = 30000; // До минуты
+//uint16_t _mSecondsToScreenSave = 30000; // До минуты
 
 
 
@@ -242,8 +251,7 @@ void main(void)
     //LATCbits.LC1 = 0;
     
     
-    _currentSection = SECTION_IDLE;
-    IdleStart();
+    
     
     //DisplayPrintChar(':');
     //int8_t res = EEByteWrite(0x00, 0x01, 0xA5);
@@ -287,17 +295,20 @@ void main(void)
     
     
     
+    //ParamTypes pt = GetParameterTypeByRoom(1, 2);
     
     
     
+    //SettingsStart();
+    InitSettings();
+    InitParameters();//!!!!
     
-    
-    
-    
-    
+    _currentSection = SECTION_IDLE;
+    IdleStart();
+    //uint16_t val = GetSettingsValue(0);
     
     unsigned long lastMs = millis();
-    unsigned long screenSaveStart = lastMs + _mSecondsToScreenSave;
+    unsigned long screenSaveStart = lastMs + GetSettingValue(SETTING_SAVESCREEN_TIMEOUT) * 1000;
 
     while(1)
     {
@@ -319,8 +330,13 @@ void main(void)
         uint8_t butChanged = IsButtonChanged();
         if(butChanged != BTN_NONE && ButtonStates[butChanged] == BUTTON_PRESSED)
         {
-            screenSaveStart = curMs + _mSecondsToScreenSave;
-            timeScreenShown = false;
+            screenSaveStart = curMs + GetSettingValue(SETTING_SAVESCREEN_TIMEOUT) * 1000;
+            if(timeScreenShown)
+            {
+                SetBakLightDuty(GetSettingValue(SETTING_LCD_BK) / 50);
+                SetKbBakLightDuty(GetSettingValue(SETTING_KB_BK) / 50);
+                timeScreenShown = false;
+            }
             switch(butChanged)
             {
                 case BTN_LEFT:
@@ -391,10 +407,15 @@ void main(void)
                     switch(_currentSection)
                     {
                         case SECTION_IDLE:
-                            screenSaveStart = curMs;
-                            ShowTimeScreen();
-                            
-                            //IdleOnButton(butChanged);
+                            if(IdleIsRoot())
+                            {
+                                screenSaveStart = curMs;
+                                SetBakLightDuty(GetSettingValue(SETTING_SAVESCREEN_BK) / 50);
+                                SetKbBakLightDuty(GetSettingValue(SETTING_SAVESCREEN_KB_BK) / 50);
+                                ShowTimeScreen();
+                            }
+                            else
+                                IdleOnButton(butChanged);
                             break;
                         case SECTION_ROOMS:
                             if(RoomsIsRoot())
@@ -520,6 +541,9 @@ void main(void)
                 if(!timeScreenShown)
                 {
                     _currentSection = SECTION_IDLE;
+                    SetBakLightDuty(GetSettingValue(SETTING_SAVESCREEN_BK) / 50);
+                    SetKbBakLightDuty(GetSettingValue(SETTING_SAVESCREEN_KB_BK) / 50);
+                    
                     IdleStart(); // Перекидываем на начальный экран                    
                 }
                 ShowTimeScreen();

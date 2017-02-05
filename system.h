@@ -14,6 +14,9 @@
 #define _XTAL_FREQ      SYS_FREQ
 #define TIMER_TICKS_IN_1_MS 0x10000 - FCY / 1000
 
+
+
+
 // 1 sec = FCY = 2 500 000 
 // 1 min = FCY * 60 = 150000000
 // 1/10 min = FCY * 6 = 15 000 000

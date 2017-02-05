@@ -13,14 +13,16 @@
 *                       the display data RAM depending on what the
 *                       previous SetxxRamAddr routine was called.
 ********************************************************************/
-void putsXLCD(const char *buffer)
+uint8_t putsXLCD(const char *buffer)
 {
-        while(*buffer)                  // Write data to LCD up to null
-        {
-                while(BusyXLCD());      // Wait while LCD is busy
-                WriteDataXLCD(RecodeSymbol(*buffer)); // Write character to LCD
-                buffer++;               // Increment buffer
-        }
-        return;
+    uint8_t cnt = 0;
+    while(*buffer)                  // Write data to LCD up to null
+    {
+        while(BusyXLCD());      // Wait while LCD is busy
+        WriteDataXLCD(RecodeSymbol(*buffer)); // Write character to LCD
+        buffer++;               // Increment buffer
+        cnt++;
+    }
+    return cnt;
 }
 

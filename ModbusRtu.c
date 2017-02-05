@@ -1103,7 +1103,7 @@ int8_t ModbusProcess_FC3(uint16_t *regs, uint8_t u8size)
     {
         for (i = startAddress; i < startAddress + u16regsno; i++)
         {
-            uint16_t par = GetParameter(i);
+            uint16_t par = GetParameterValue(i);
             _au8Buffer[ _u8BufferSize ] = HIGH_BYTE(par);
             _u8BufferSize++;
             _au8Buffer[ _u8BufferSize ] = LOW_BYTE(par);
@@ -1181,7 +1181,7 @@ int8_t ModbusProcess_FC6(uint16_t *regs, uint8_t u8size)
 #ifdef C2000M
     if(_au8Buffer[ ADD_HI ] == 0xFF) // Это значение параметра для вывода на экран
     {// ID параметра берётся из младшего байта
-        SetParameter(_au8Buffer[ ADD_LO ], u16val);
+        SetParameterValue(_au8Buffer[ ADD_LO ], u16val);
         
 //        uint16_t par = GetParameter(_au8Buffer[ ADD_LO ]);
 //        _u8BufferSize = RESPONSE_SIZE;

@@ -85,10 +85,17 @@ void InitBacklight()
     // 
     //PR2 = 255;
     PR2 = 0;
-    // Set the prescaler to 16
-    T2CONbits.T2CKPS1 = 1;
-    T2CONbits.T2CKPS0 = 0;
+    CCPR1L = 0;
+    CCPR4L = 0;
+    
+    // Set the prescaler to 4
+    T2CONbits.T2CKPS1 = 0;
+    T2CONbits.T2CKPS0 = 1;
 
+    
+    SetBakLightDuty(0);
+    SetKbBakLightDuty(0);
+    
     // Set the PWM pin to be an output
     CCP1 = 0; 
     CCP4 = 0;
@@ -96,42 +103,31 @@ void InitBacklight()
 
 
 
-void InitKeyBacklight()
-{
-    //CCP4;
-/*    // LCD Backlight
-    //RC2|CPP1
-    #define CCP1    TRISCbits.TRISC2
-    CCP1 = 0; 
-    T2CONbits.TMR2ON = 1;
-    // Set CCP1 to PWM mode
-    CCP1CONbits.CCP1M = 0x0f;
-    // Set PR2
-    // Period = 4 * (1/SYS_FREQ) * 16 * (scaling value + 1) 
-    // PWM period=[(PR2)+1]*4*Tosc*(TMR2 preScalevalue)
-    // 0x90 3229 ??
-    // [144 + 1] * 4/10 000 000 * 16 = 0,000928 = 1/1077  1/3229
-    // [0 + 1] * 4 / 9 216 000 * 16 = 1/144000
-    // 
-    //PR2 = 255;
-    PR2 = 0;
-    // Set the prescaler to 16
-    T2CONbits.T2CKPS1 = 1;
-    T2CONbits.T2CKPS0 = 0;
-
-    // Set the PWM pin to be an output
-    TRISCbits.RC2 = 0;*/
-}
-
-// 0 .. 3FF
+//-- 0 .. 3FF
+//++ 0..3
 void SetBakLightDuty(uint16_t dc) 
 {
     // PWM duty cycle = (CCPR1L:CCP1CON<5:4>) *
     // TOSC * (TMR2 prescale value)
     //u16 tempValue = 0;
+  
     CCP1CONbits.DC1B = dc & 0x03;
-    CCPR1L = (uint8_t)(dc >> 2);
+    //CCPR1L = (uint8_t)(dc >> 2);
+    
+    
 }  
+
+void SetKbBakLightDuty(uint16_t dc) 
+{
+    // PWM duty cycle = (CCPR1L:CCP1CON<5:4>) *
+    // TOSC * (TMR2 prescale value)
+    //u16 tempValue = 0;
+  
+    CCP4CONbits.DC4B = dc & 0x03;
+    //CCPR1L = (uint8_t)(dc >> 2);
+    
+    
+} 
 
 void InitApp(void)
 {

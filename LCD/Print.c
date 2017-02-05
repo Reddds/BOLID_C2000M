@@ -68,8 +68,7 @@ char RecodeSymbol(char c);
 uint8_t DisplayPrintStr(const char *str)
 {
     while(BusyXLCD());
-    putsXLCD(str);
-    return 0;
+    return putsXLCD(str);
 }
 
 uint8_t DisplayPrintChar(char c)

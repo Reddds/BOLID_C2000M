@@ -58,6 +58,9 @@
 #define MODBUS_ON 0xff
 #define MODBUS_OFF 0x00
 
+#define MODBUS_TRUE 0xff00
+#define MODBUS_FALSE 0x0000
+
 #define DEFAULT_MODBUS_ID 0x7F
 
 #define DEVICE_TYPE_PULT 0x77

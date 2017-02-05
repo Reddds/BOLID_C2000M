@@ -9,6 +9,7 @@
 /******************************************************************************/
 
 /* TODO Application specific user parameters used in user.c may go here */
+#define EXT_MEM_CHIP_SIZE 0x10000
 
 /******************************************************************************/
 /* User Function Prototypes                                                   */
@@ -81,7 +82,7 @@ void InitApp(void);         /* I/O and Peripheral Initialization */
 
 #define _EEREG_EEPROM_WRITE(addr, value)	\
 do{											\
-	while (WR) { 							\
+	while (EECON1bits.WR) { 				\
 		continue; 							\
 	} 										\
 	EEADR = (addr);							\
@@ -96,7 +97,7 @@ do{											\
 	WREN = 1;								\
 	EECON2 = 0x55;							\
 	EECON2 = 0xAA;							\
-	WR = 1;									\
+	EECON1bits.WR = 1;						\
 	WREN = 0;								\
 	if (CARRY) {							\
 		GIE = 1;							\
@@ -117,5 +118,6 @@ time_t *GetTime();
 
 
 void SetBakLightDuty(uint16_t dc);
+void SetKbBakLightDuty(uint16_t dc) ;
 
 #endif

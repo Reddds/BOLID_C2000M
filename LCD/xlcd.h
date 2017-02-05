@@ -170,7 +170,7 @@ void WriteDataXLCD(PARAM_SCLASS char);
 /* putsXLCD
  * Writes a string of characters to the LCD
  */
-void putsXLCD(PARAM_SCLASS const char *);
+uint8_t putsXLCD(PARAM_SCLASS const char *);
 
 /* putrsXLCD
  * Writes a string of characters in ROM to the LCD

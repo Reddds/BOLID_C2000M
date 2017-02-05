@@ -1,4 +1,5 @@
 #include "SectionRooms.h"
+#include "../ModbusRtu.h"
 #include "../LCD/xlcd.h"
 #include "../buttons.h"
 #include "../ParametersController.h"
@@ -6,23 +7,19 @@
 
 
 
-#define DUMMY_ROOM_COUNT 4
+
 // Заготовки данных, которые потом будут в EEPROM
 uint8_t roomsCount = DUMMY_ROOM_COUNT;
-char *roomNames[] = 
-{
-    "Спальня",
-    "Ванная",
-    "Коридор",
-    "Улица"
-};
+//char *roomNames[] = 
+//{
+//    "Спальня",
+//    "Ванная",
+//    "Коридор",
+//    "Улица"
+//};
 
 
-typedef struct
-{
-    uint8_t Count;
-    uint16_t *ParamAddresses;// Адрес в EEPROM, где расположена структура с параметром
-}RoomParams;
+
 
 
 
@@ -33,7 +30,7 @@ typedef struct
     uint8_t Type;
 }Param;*/
 
-uint8_t _paramCount = 8;
+uint8_t _paramCount = DUMMY_PARAMS_COUNT;
 /*const Param Params[] =
 {
     // Спальня
@@ -53,23 +50,8 @@ uint8_t _paramCount = 8;
 
 
 
-const uint16_t ParamAddresses_0[] = {0, 1};
-const uint16_t ParamAddresses_1[] = {2, 3};
-const uint16_t ParamAddresses_2[] = {4};
-const uint16_t ParamAddresses_3[] = {5, 6, 7};
 
-const RoomParams roomParams[] =
-{
-    // Спальня
-    //{.Count, .ParamAddresses},
-    {2, ParamAddresses_0},
-    // Ванная
-    {2, ParamAddresses_1},
-    // Коридор
-    {1, ParamAddresses_2}, 
-    // Улица
-    {3, ParamAddresses_3}
-};
+
 
 uint8_t _currentRoom;
 uint8_t _currentParam;
@@ -78,25 +60,26 @@ typedef enum
 {
     VS_ROOT,
     VS_SELECT_ROOM,
-    VS_SHOW_PARAMS
+    VS_SHOW_PARAMS,
+    VS_EDIT_PARAM        
 }ViewStates;
 
-ViewStates _currentState;
+ViewStates _currentSrState;
 
 void RoomDisplayRedraw();
 
-bool inited = false;
-
+//bool inited = false;
+uint16_t tempParam;
 
 void RoomsStart()
 {
-    if(!inited)
-    {
-        InitParameters();//!!!!
-        inited = true;
-    }
+//    if(!inited)
+//    {
+//        InitParameters();//!!!!
+//        inited = true;
+//    }
     
-    _currentState = VS_ROOT;
+    _currentSrState = VS_ROOT;
     //DisplayClear();
     //DisplayPrintChar(CH_LEFT_RIGHT);
     //DisplayPrintStr("Выбор комнаты");
@@ -115,18 +98,18 @@ void RoomDisplayRedraw()
     
     DisplayClear();
     
-    switch(_currentState)
+    switch(_currentSrState)
     {
         case VS_ROOT:
         case VS_SELECT_ROOM:
         {
-            if(_currentState == VS_ROOT)
+            if(_currentSrState == VS_ROOT)
             DisplayPrintChar(CH_LEFT_RIGHT);
             else
                 DisplayPrintChar(' ');
             DisplayPrintStr("Выбор комнаты");
             DisplaySetCursorPos(0, 1);
-            if(_currentState == VS_SELECT_ROOM)
+            if(_currentSrState == VS_SELECT_ROOM)
                 DisplayPrintChar(CH_LEFT_RIGHT);
             if(_currentRoom >= roomsCount)
             {
@@ -143,7 +126,42 @@ void RoomDisplayRedraw()
             // Вторая строка название параметра и значение
             DisplaySetCursorPos(0, 1);
             DisplayPrintChar(CH_LEFT_RIGHT);
-            PrintParameter(roomParams[_currentRoom].ParamAddresses[_currentParam], -1, -1, PPN_FULL);
+            
+            PrintParameterByRoom(_currentRoom, _currentParam, -1, -1, PPN_FULL);
+            if(IsParamEditable(_currentRoom, _currentParam))
+            {
+                DisplayPrintChar('*');
+            }
+        }
+        break;
+        case VS_EDIT_PARAM:
+        {
+            // Первая строка - название комнаты  и параметра
+            DisplayPrintStr(roomNames[_currentRoom]);
+            DisplayPrintChar(' ');
+            char buf[9];
+            GetParameterNameByRoom(_currentRoom, _currentParam, buf);
+            DisplayPrintStr(buf);
+            // Вторая строка -название параметра и- значение
+            DisplaySetCursorPos(0, 1);
+            DisplayPrintSymbol(CH_LEFT_RIGHT);
+            PrintParameterByRoomAndValue(_currentRoom, _currentParam, tempParam, -1, -1, PPN_NONE);
+            switch(GetParameterTypeByRoom(_currentRoom, _currentParam))
+            {
+                case PT_LIGHT:
+                case PT_DOOR_OPEN:
+                case PT_YES_NO:
+                {
+                    //DisplayPrintChar('&');
+                }
+                break;
+                default:
+                {
+                    DisplayPrintProgress(8, 8, 1, (tempParam - GetParameterMaxByRoom(_currentRoom, _currentParam)) / (float)(GetParameterMaxByRoom(_currentRoom, _currentParam) - GetParameterMinByRoom(_currentRoom, _currentParam)) * 100);
+                }
+                break;
+            }
+
         }
         break;
     }
@@ -160,7 +178,7 @@ void RoomsOnButton(uint8_t button)
     {
         case BTN_LEFT:
         {
-            switch(_currentState)
+            switch(_currentSrState)
             {
                 case VS_SELECT_ROOM:// выход в корень
                 {
@@ -169,7 +187,6 @@ void RoomsOnButton(uint8_t button)
                     else
                         _currentRoom--;
                     _currentParam = 0;
-                    RoomDisplayRedraw();
                 }
                 break;
                 case VS_SHOW_PARAMS:
@@ -178,15 +195,42 @@ void RoomsOnButton(uint8_t button)
                         _currentParam = roomParams[_currentRoom].Count - 1;
                     else
                         _currentParam--;
-                    RoomDisplayRedraw();
                 }
-                break;        
+                break;  
+                case VS_EDIT_PARAM:
+                {
+                    switch(GetParameterTypeByRoom(_currentRoom, _currentParam))
+                    {
+                        case PT_LIGHT:
+                        case PT_DOOR_OPEN:
+                        case PT_YES_NO:
+                        {
+                            if(tempParam == MODBUS_TRUE)
+                                tempParam = MODBUS_FALSE;
+                            else
+                                tempParam = MODBUS_TRUE;
+                        }
+                        break;
+                        default:
+                        {
+                            if(tempParam >= GetParameterMinByRoom(_currentRoom, _currentParam) + GetParameterStepByRoom(_currentRoom, _currentParam))
+                            {
+                                tempParam -= GetParameterStepByRoom(_currentRoom, _currentParam);                        
+                            }
+                            else
+                                tempParam = GetParameterStepByRoom(_currentRoom, _currentParam);
+                            
+                        }
+                    }
+                }
+                break;
             }
+            RoomDisplayRedraw();
         }
         break;
         case BTN_RIGHT:
         {
-            switch(_currentState)
+            switch(_currentSrState)
             {
                 case VS_SELECT_ROOM:// выход в корень
                 {
@@ -195,7 +239,6 @@ void RoomsOnButton(uint8_t button)
                     else
                         _currentRoom++;
                     _currentParam = 0;
-                    RoomDisplayRedraw();
                 }
                 break;
                 case VS_SHOW_PARAMS:
@@ -204,27 +247,65 @@ void RoomsOnButton(uint8_t button)
                         _currentParam = 0;
                     else
                         _currentParam++;
-                    RoomDisplayRedraw();
                 }
-                break;        
+                break;  
+                case VS_EDIT_PARAM:
+                {
+                    switch(GetParameterTypeByRoom(_currentRoom, _currentParam))
+                    {
+                        case PT_LIGHT:
+                        case PT_DOOR_OPEN:
+                        case PT_YES_NO:
+                        {
+                            if(tempParam == MODBUS_TRUE)
+                                tempParam = MODBUS_FALSE;
+                            else
+                                tempParam = MODBUS_TRUE;
+                        }
+                        break;
+                        default:
+                        {
+                            if(tempParam <= GetParameterMaxByRoom(_currentRoom, _currentParam) - GetParameterStepByRoom(_currentRoom, _currentParam))
+                                tempParam += GetParameterStepByRoom(_currentRoom, _currentParam);  
+                            else
+                                tempParam = GetParameterMaxByRoom(_currentRoom, _currentParam);
+                        }
+                    }
+                }
+                break;
             }
+            RoomDisplayRedraw();
         }
         break;   
         
         
         case BTN_ENT: 
         {
-            switch(_currentState)
+            switch(_currentSrState)
             {
                 case VS_ROOT:// Вход в режим выбора комнат
                 {
-                    _currentState = VS_SELECT_ROOM;
+                    _currentSrState = VS_SELECT_ROOM;
                 }
                 break;
                 case VS_SELECT_ROOM:
                 {
-                    _currentState = VS_SHOW_PARAMS;
+                    _currentSrState = VS_SHOW_PARAMS;
                 }
+                break;
+                case VS_SHOW_PARAMS:
+                {
+                    if(!IsParamEditable(_currentRoom, _currentParam))
+                        break;
+                    _currentSrState = VS_EDIT_PARAM;
+                    tempParam = GetParameterValueByRoom(_currentRoom, _currentParam);
+                }
+                break;
+                case VS_EDIT_PARAM: // Сохраняем параметр
+                {
+                    _currentSrState = VS_SHOW_PARAMS;
+                    SetParameterValueByRoom(_currentRoom, _currentParam, tempParam);
+                }               
                 break;
             }
             RoomDisplayRedraw();
@@ -232,17 +313,22 @@ void RoomsOnButton(uint8_t button)
             break;
         case BTN_CLR:
         {
-            switch(_currentState)
+            switch(_currentSrState)
             {
                 case VS_SELECT_ROOM:// выход в корень
                 {
-                    _currentState = VS_ROOT;
+                    _currentSrState = VS_ROOT;
                 }
                 break;
                 case VS_SHOW_PARAMS:
                 {
-                    _currentState = VS_SELECT_ROOM;
+                    _currentSrState = VS_SELECT_ROOM;
                 }
+                break;
+                case VS_EDIT_PARAM: // Отменяем изменения
+                {
+                    _currentSrState = VS_SHOW_PARAMS;
+                }               
                 break;
             }
             RoomDisplayRedraw();
@@ -253,5 +339,5 @@ void RoomsOnButton(uint8_t button)
 
 bool RoomsIsRoot()
 {
-    return _currentState == VS_ROOT;
+    return _currentSrState == VS_ROOT;
 }

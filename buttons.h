@@ -15,7 +15,7 @@ extern "C" {
 #endif
 
     
-enum 
+typedef enum 
 {
     BTN_ARM,
     BTN_DISARM,
@@ -38,6 +38,31 @@ enum
     BTN_9,
     BTN_ENT,
     BTN_NONE = 0xff
+}Buttons;
+
+char *ButtonNames[] = 
+{
+    "ARM",
+    "DISARM",
+    "BPS",
+    "TRBL",
+    "MEM",
+    "LEFT",
+    "1",
+    "4",
+    "7",
+    "CLR",
+    "PRG",
+    "2",
+    "5",
+    "8",
+    "0",                
+    "RIGHT",
+    "3",
+    "6",
+    "9",
+    "ENT",
+    "Нет"           
 };
 
 #define BUTTONS_COUNT 20
