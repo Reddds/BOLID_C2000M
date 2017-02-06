@@ -789,11 +789,13 @@ void OpenI2C( uint8_t sync_mode,  uint8_t slew );
 int8_t WriteI2C( uint8_t data_out );
 int8_t WriteI2C_W( uint16_t data_out );
 
-int8_t putsI2C(  unsigned char *wrptr );
+#define putsI2C(wrptr) putBufI2C(wrptr, 0)
 
-uint8_t ReadI2C( void );
+int8_t putBufI2C(uint8_t *wrptr, uint16_t length);
 
-void CloseI2C( void );
+uint8_t ReadI2C(void);
+
+void CloseI2C(void);
 
 #endif
 
@@ -918,17 +920,18 @@ signed char getsI2C(  unsigned char *rdptr,  unsigned char length );
 
 int8_t EEAckPolling( uint8_t control );
 
-int8_t EEByteWrite( uint8_t control,
-                            uint8_t address,
-                            uint8_t data );
+int8_t EEByteWrite(uint8_t control,
+                    uint16_t address,
+                    uint8_t data );
 
-int16_t EECurrentAddRead(  unsigned char control );
+int16_t EECurrentAddRead( uint8_t control );
 
 int8_t EEPageWrite( uint8_t control,
-                            uint8_t address,
-                            uint8_t *wrptr );
+                    uint16_t address,
+                    uint8_t *wrptr,
+                    uint16_t length);
 
-int16_t EERandomRead( uint8_t control,  uint8_t address );
+int16_t EERandomRead( uint8_t control,  uint16_t address );
 
 int8_t EESequentialRead( uint8_t control,
                            uint16_t address,

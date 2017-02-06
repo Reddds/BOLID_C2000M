@@ -897,7 +897,7 @@ uint8_t ModbusValidateRequest()
 #ifdef C2000M
             if(_au8Buffer[ ADD_HI ] == 0xFF)
             {
-                if(_au8Buffer[ ADD_LO ] >= GetParamCount())
+                if(_au8Buffer[ ADD_LO ] >= ParamCount)
                     return EXC_ADDR_RANGE;
                 break;
             }
@@ -923,7 +923,7 @@ uint8_t ModbusValidateRequest()
                     return EXC_ADDR_RANGE;
                 
                 u16regs = _au8Buffer[ ADD_LO ] + _au8Buffer[ NB_LO ] - 1;
-                if(u16regs >= GetParamCount())
+                if(u16regs >= ParamCount)
                     return EXC_ADDR_RANGE;
                 break;
             }

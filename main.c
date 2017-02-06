@@ -167,16 +167,21 @@ void main(void)
     
     Modbus(0, 0);
     
+    LED_ALARM_OFF;
+    LED_FIRE_OFF;
+    LED_FAILURE_OFF;
+    LED_CRASH_OFF;
+    
     TRISDbits.RD0 = 0;
     TRISDbits.RD1 = 0;
     TRISDbits.RD2 = 0;
     TRISDbits.RD3 = 0;
     TRISDbits.RD4 = 0;
     
-    LATDbits.LD0 = 0;
-    LATDbits.LD1 = 1;
-    LATDbits.LD2 = 0;
-    
+    //LATDbits.LD0 = 0;
+    //LATDbits.LD1 = 1;
+    //LATDbits.LD2 = 0;
+    LED_WORK_ON;
     
     
     
@@ -239,8 +244,8 @@ void main(void)
     
     
 
-    LATDbits.LD3 = 1;
-    LATDbits.LD4 = 0;
+    //LATDbits.LD3 = 1;
+    //LATDbits.LD4 = 0;
     
     
     TRISAbits.RA4 = 1;
@@ -301,231 +306,257 @@ void main(void)
     
     //SettingsStart();
     InitSettings();
-    InitParameters();//!!!!
     
-    _currentSection = SECTION_IDLE;
-    IdleStart();
+    
+    
+    int8_t initRes = InitParameters();//!!!!
+    if(initRes != 0)
+    {        
+        LED_FAILURE_ON;
+        DisplayClear();
+        DisplayPrintStr("Ошибка EEPROM!");
+    }
+    else
+    {
+        _currentSection = SECTION_IDLE;
+        IdleStart();
+    }
     //uint16_t val = GetSettingsValue(0);
     
     unsigned long lastMs = millis();
     unsigned long screenSaveStart = lastMs + GetSettingValue(SETTING_SAVESCREEN_TIMEOUT) * 1000;
-
+    unsigned long nextKeyPressAvailable = 0;
     while(1)
     {
-        //__delay_us(5);
+        __delay_ms(5);
         
         unsigned long curMs = millis();
         
         
-        if(PORTAbits.RA4 == 0)
-            LATDbits.LD1 = 0; 
+        if(CASE_OPEN)
+            LED_ALARM_ON; 
         else
-            LATDbits.LD1 = 1; 
+            LED_ALARM_OFF; 
         
         
         
 
         
         // buttons
-        uint8_t butChanged = IsButtonChanged();
-        if(butChanged != BTN_NONE && ButtonStates[butChanged] == BUTTON_PRESSED)
+        while(initRes == 0) // Чтобы break'ами выходить
         {
-            screenSaveStart = curMs + GetSettingValue(SETTING_SAVESCREEN_TIMEOUT) * 1000;
-            if(timeScreenShown)
+            uint8_t butChanged = IsButtonChanged();
+            if(curMs >= nextKeyPressAvailable
+                    && butChanged != BTN_NONE && ButtonStates[butChanged] == BUTTON_PRESSED)
             {
-                SetBakLightDuty(GetSettingValue(SETTING_LCD_BK) / 50);
-                SetKbBakLightDuty(GetSettingValue(SETTING_KB_BK) / 50);
-                timeScreenShown = false;
-            }
-            switch(butChanged)
-            {
-                case BTN_LEFT:
-                    switch(_currentSection)
-                    {
-                        case SECTION_IDLE:
-                            if(IdleIsRoot())
-                            {
-                                _currentSection = SECTION_SETTINGS;
-                                SettingsStart();
-                            }
-                            else
+
+
+                if(timeScreenShown)
+                {
+                    if(butChanged == BTN_CLR)
+                        break;
+                    screenSaveStart = curMs + GetSettingValue(SETTING_SAVESCREEN_TIMEOUT) * 1000;
+                    SetBakLightDuty(GetSettingValue(SETTING_LCD_BK) / 50);
+                    SetKbBakLightDuty(GetSettingValue(SETTING_KB_BK) / 50);
+                    timeScreenShown = false;
+                    IdleStart();
+                    nextKeyPressAvailable = curMs + INTERVAL_BETWEEN_KEYPRESS_AFTER_SCREENSAVER_MS;
+                    break;
+                }
+                else
+                    nextKeyPressAvailable = curMs + INTERVAL_BETWEEN_KEYPRESS_MS;
+                screenSaveStart = curMs + GetSettingValue(SETTING_SAVESCREEN_TIMEOUT) * 1000;
+                switch(butChanged)
+                {
+                    case BTN_LEFT:
+                        switch(_currentSection)
+                        {
+                            case SECTION_IDLE:
+                                if(IdleIsRoot())
+                                {
+                                    _currentSection = SECTION_SETTINGS;
+                                    SettingsStart();
+                                }
+                                else
+                                    IdleOnButton(butChanged);
+                                break;
+                            case SECTION_SETTINGS:
+                                if(SettingsIsRoot())
+                                {
+                                    _currentSection = SECTION_ROOMS;
+                                    RoomsStart();
+                                }
+                                else
+                                    SettingsOnButton(butChanged);        
+                                break;
+                            case SECTION_ROOMS:
+                                if(RoomsIsRoot())
+                                {
+                                    _currentSection = SECTION_IDLE;
+                                    IdleStart();
+                                }
+                                else
+                                    RoomsOnButton(butChanged);       
+                                break;
+                        }                    
+                        break;
+                    case BTN_RIGHT:
+                        switch(_currentSection)
+                        {
+                            case SECTION_IDLE:
+                                if(IdleIsRoot())
+                                {
+                                    _currentSection = SECTION_ROOMS;
+                                    RoomsStart();
+                                }
+                                else
+                                    IdleOnButton(butChanged);
+                                break;
+                            case SECTION_ROOMS:
+                                if(RoomsIsRoot())
+                                {
+                                    _currentSection = SECTION_SETTINGS;
+                                    SettingsStart();
+                                }
+                                else
+                                    RoomsOnButton(butChanged);    
+                                break;
+                            case SECTION_SETTINGS:
+                                if(SettingsIsRoot())
+                                {
+                                    _currentSection = SECTION_IDLE;
+                                    IdleStart();
+                                }
+                                else
+                                    SettingsOnButton(butChanged);       
+                                break;
+                        }
+                        break;
+                    case BTN_CLR: // Переходим в начальный экран
+                        switch(_currentSection)
+                        {
+                            case SECTION_IDLE:
+                                if(IdleIsRoot())
+                                {
+                                    screenSaveStart = curMs;
+                                    SetBakLightDuty(GetSettingValue(SETTING_SAVESCREEN_BK) / 50);
+                                    SetKbBakLightDuty(GetSettingValue(SETTING_SAVESCREEN_KB_BK) / 50);
+                                    ShowTimeScreen();
+                                }
+                                else
+                                    IdleOnButton(butChanged);
+                                break;
+                            case SECTION_ROOMS:
+                                if(RoomsIsRoot())
+                                {
+                                    _currentSection = SECTION_IDLE;
+                                    IdleStart();
+                                }
+                                else
+                                    RoomsOnButton(butChanged);    
+                                break;
+                            case SECTION_SETTINGS:
+                                if(SettingsIsRoot())
+                                {
+                                    _currentSection = SECTION_IDLE;
+                                    IdleStart();
+                                }
+                                else
+                                    SettingsOnButton(butChanged);       
+                                break;
+
+
+                        }
+                    break;
+                    default:
+                        switch(_currentSection)
+                        {
+                            case SECTION_IDLE:
                                 IdleOnButton(butChanged);
-                            break;
-                        case SECTION_SETTINGS:
-                            if(SettingsIsRoot())
-                            {
-                                _currentSection = SECTION_ROOMS;
-                                RoomsStart();
-                            }
-                            else
-                                SettingsOnButton(butChanged);        
-                            break;
-                        case SECTION_ROOMS:
-                            if(RoomsIsRoot())
-                            {
-                                _currentSection = SECTION_IDLE;
-                                IdleStart();
-                            }
-                            else
-                                RoomsOnButton(butChanged);       
-                            break;
-                    }                    
-                    break;
-                case BTN_RIGHT:
-                    switch(_currentSection)
-                    {
-                        case SECTION_IDLE:
-                            if(IdleIsRoot())
-                            {
-                                _currentSection = SECTION_ROOMS;
-                                RoomsStart();
-                            }
-                            else
-                                IdleOnButton(butChanged);
-                            break;
-                        case SECTION_ROOMS:
-                            if(RoomsIsRoot())
-                            {
-                                _currentSection = SECTION_SETTINGS;
-                                SettingsStart();
-                            }
-                            else
-                                RoomsOnButton(butChanged);    
-                            break;
-                        case SECTION_SETTINGS:
-                            if(SettingsIsRoot())
-                            {
-                                _currentSection = SECTION_IDLE;
-                                IdleStart();
-                            }
-                            else
-                                SettingsOnButton(butChanged);       
-                            break;
-                    }
-                    break;
-                case BTN_CLR: // Переходим в начальный экран
-                    switch(_currentSection)
-                    {
-                        case SECTION_IDLE:
-                            if(IdleIsRoot())
-                            {
-                                screenSaveStart = curMs;
-                                SetBakLightDuty(GetSettingValue(SETTING_SAVESCREEN_BK) / 50);
-                                SetKbBakLightDuty(GetSettingValue(SETTING_SAVESCREEN_KB_BK) / 50);
-                                ShowTimeScreen();
-                            }
-                            else
-                                IdleOnButton(butChanged);
-                            break;
-                        case SECTION_ROOMS:
-                            if(RoomsIsRoot())
-                            {
-                                _currentSection = SECTION_IDLE;
-                                IdleStart();
-                            }
-                            else
-                                RoomsOnButton(butChanged);    
-                            break;
-                        case SECTION_SETTINGS:
-                            if(SettingsIsRoot())
-                            {
-                                _currentSection = SECTION_IDLE;
-                                IdleStart();
-                            }
-                            else
-                                SettingsOnButton(butChanged);       
-                            break;
-           
-                            
-                    }
-                break;
-                default:
-                    switch(_currentSection)
-                    {
-                        case SECTION_IDLE:
-                            IdleOnButton(butChanged);
-                            break;
-                        case SECTION_ROOMS:
-                            RoomsOnButton(butChanged);
-                            break;
-                        case SECTION_SETTINGS:
-                            SettingsOnButton(butChanged);    
-                            break;
-                    }
-                    break;
+                                break;
+                            case SECTION_ROOMS:
+                                RoomsOnButton(butChanged);
+                                break;
+                            case SECTION_SETTINGS:
+                                SettingsOnButton(butChanged);    
+                                break;
+                        }
+                        break;
+                }
+
+
+                /*char c = 'Z';
+                switch(butChanged)
+                {
+                    case BTN_ARM:
+                        c = '0';
+                        break;
+                    case BTN_DISARM:
+                        c = '1';
+                        break;
+                    case BTN_BPS:
+                        c = '2';
+                        break;
+                    case BTN_TRBL:
+                        c = '3';
+                        break;
+                    case BTN_MEM:
+                        c = '4';
+                        break;
+                    case BTN_LEFT:
+                        c = '5';
+                        DisplayScrollLeft();
+                        break;
+                    case BTN_1:
+                        c = '6';
+                        break;
+                    case BTN_4:
+                        c = '7';
+                        break;
+                    case BTN_7:
+                        c = '8';
+                        break;
+                    case BTN_CLR:
+                        c = '9';
+                        DisplayClear();
+                        break;
+                    case BTN_PRG:
+                        c = 'A';
+                        break;
+                    case BTN_2:
+                        c = 'B';
+                        break;
+                    case BTN_5:
+                        c = 'C';
+                        break;
+                    case BTN_8:
+                        c = 'D';
+                        break;
+                    case BTN_0:
+                        c = 'E';
+                        break;                
+                    case BTN_RIGHT:                    
+                        c = 'F';
+                        DisplayScrollRight();
+                        break;
+                    case BTN_3:
+                        c = 'G';
+                        break;
+                    case BTN_6:
+                        c = 'H';
+                        break;
+                    case BTN_9:
+                        c = 'I';
+                        break;
+                    case BTN_ENT:
+                        c = 'J';
+                        break;
+                }
+                WriteDataXLCD(c);
+                while(BusyXLCD());*/
+
             }
-            
-            
-            /*char c = 'Z';
-            switch(butChanged)
-            {
-                case BTN_ARM:
-                    c = '0';
-                    break;
-                case BTN_DISARM:
-                    c = '1';
-                    break;
-                case BTN_BPS:
-                    c = '2';
-                    break;
-                case BTN_TRBL:
-                    c = '3';
-                    break;
-                case BTN_MEM:
-                    c = '4';
-                    break;
-                case BTN_LEFT:
-                    c = '5';
-                    DisplayScrollLeft();
-                    break;
-                case BTN_1:
-                    c = '6';
-                    break;
-                case BTN_4:
-                    c = '7';
-                    break;
-                case BTN_7:
-                    c = '8';
-                    break;
-                case BTN_CLR:
-                    c = '9';
-                    DisplayClear();
-                    break;
-                case BTN_PRG:
-                    c = 'A';
-                    break;
-                case BTN_2:
-                    c = 'B';
-                    break;
-                case BTN_5:
-                    c = 'C';
-                    break;
-                case BTN_8:
-                    c = 'D';
-                    break;
-                case BTN_0:
-                    c = 'E';
-                    break;                
-                case BTN_RIGHT:                    
-                    c = 'F';
-                    DisplayScrollRight();
-                    break;
-                case BTN_3:
-                    c = 'G';
-                    break;
-                case BTN_6:
-                    c = 'H';
-                    break;
-                case BTN_9:
-                    c = 'I';
-                    break;
-                case BTN_ENT:
-                    c = 'J';
-                    break;
-            }
-            WriteDataXLCD(c);
-            while(BusyXLCD());*/
-            
+            break;
         }
         
         

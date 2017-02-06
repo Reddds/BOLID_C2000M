@@ -9,7 +9,7 @@
 
 
 // Заготовки данных, которые потом будут в EEPROM
-uint8_t roomsCount = DUMMY_ROOM_COUNT;
+
 //char *roomNames[] = 
 //{
 //    "Спальня",
@@ -30,7 +30,7 @@ uint8_t roomsCount = DUMMY_ROOM_COUNT;
     uint8_t Type;
 }Param;*/
 
-uint8_t _paramCount = DUMMY_PARAMS_COUNT;
+//uint8_t ParamCount;// = DUMMY_PARAMS_COUNT;
 /*const Param Params[] =
 {
     // Спальня
@@ -55,6 +55,7 @@ uint8_t _paramCount = DUMMY_PARAMS_COUNT;
 
 uint8_t _currentRoom;
 uint8_t _currentParam;
+uint8_t _currentRoomParamCount;
 
 typedef enum 
 {
@@ -97,7 +98,8 @@ void RoomDisplayRedraw()
 {
     
     DisplayClear();
-    
+    char buf[9];
+    GetRoomName(_currentRoom, buf);
     switch(_currentSrState)
     {
         case VS_ROOT:
@@ -111,18 +113,18 @@ void RoomDisplayRedraw()
             DisplaySetCursorPos(0, 1);
             if(_currentSrState == VS_SELECT_ROOM)
                 DisplayPrintChar(CH_LEFT_RIGHT);
-            if(_currentRoom >= roomsCount)
+            if(_currentRoom >= RoomsCount)
             {
                 DisplayPrintStr("Ошибка");
                 return;
             }
-            DisplayPrintStr(roomNames[_currentRoom]);
+            DisplayPrintStr(buf);
         }
         break;
         case VS_SHOW_PARAMS:
         {
             // Первая строка - название комнаты
-            DisplayPrintStr(roomNames[_currentRoom]);
+            DisplayPrintStr(buf);
             // Вторая строка название параметра и значение
             DisplaySetCursorPos(0, 1);
             DisplayPrintChar(CH_LEFT_RIGHT);
@@ -137,9 +139,9 @@ void RoomDisplayRedraw()
         case VS_EDIT_PARAM:
         {
             // Первая строка - название комнаты  и параметра
-            DisplayPrintStr(roomNames[_currentRoom]);
+            DisplayPrintStr(buf);
             DisplayPrintChar(' ');
-            char buf[9];
+            //char buf[9];
             GetParameterNameByRoom(_currentRoom, _currentParam, buf);
             DisplayPrintStr(buf);
             // Вторая строка -название параметра и- значение
@@ -183,7 +185,7 @@ void RoomsOnButton(uint8_t button)
                 case VS_SELECT_ROOM:// выход в корень
                 {
                     if(_currentRoom == 0)
-                        _currentRoom = roomsCount - 1;
+                        _currentRoom = RoomsCount - 1;
                     else
                         _currentRoom--;
                     _currentParam = 0;
@@ -192,7 +194,7 @@ void RoomsOnButton(uint8_t button)
                 case VS_SHOW_PARAMS:
                 {
                     if(_currentParam == 0)
-                        _currentParam = roomParams[_currentRoom].Count - 1;
+                        _currentParam = _currentRoomParamCount - 1;
                     else
                         _currentParam--;
                 }
@@ -234,7 +236,7 @@ void RoomsOnButton(uint8_t button)
             {
                 case VS_SELECT_ROOM:// выход в корень
                 {
-                    if(_currentRoom == roomsCount - 1)
+                    if(_currentRoom == RoomsCount - 1)
                         _currentRoom = 0;
                     else
                         _currentRoom++;
@@ -243,7 +245,7 @@ void RoomsOnButton(uint8_t button)
                 break;
                 case VS_SHOW_PARAMS:
                 {
-                    if(_currentParam == roomParams[_currentRoom].Count - 1)
+                    if(_currentParam == _currentRoomParamCount - 1)
                         _currentParam = 0;
                     else
                         _currentParam++;
@@ -291,6 +293,7 @@ void RoomsOnButton(uint8_t button)
                 case VS_SELECT_ROOM:
                 {
                     _currentSrState = VS_SHOW_PARAMS;
+                    _currentRoomParamCount = GetRoomParamsCount(_currentRoom);
                 }
                 break;
                 case VS_SHOW_PARAMS:

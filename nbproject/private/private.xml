@@ -4,12 +4,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/ModbusRtu.c</file>
-            <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/LCD/xlcd.h</file>
             <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/user.h</file>
-            <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/Sections/SectionRooms.c</file>
             <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/ParametersController.c</file>
-            <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/Sections/SectionSettings.c</file>
-            <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/LCD/openxlcd.c</file>
+            <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/Sections/SectionIdle.c</file>
+            <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/system.h</file>
+            <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/user.c</file>
             <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/main.c</file>
             <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/ParametersController.h</file>
         </group>

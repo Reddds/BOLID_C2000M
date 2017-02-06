@@ -11,6 +11,25 @@
 /* TODO Application specific user parameters used in user.c may go here */
 #define EXT_MEM_CHIP_SIZE 0x10000
 
+#define INTERVAL_BETWEEN_KEYPRESS_MS 100
+#define INTERVAL_BETWEEN_KEYPRESS_AFTER_SCREENSAVER_MS 1000
+
+#define LED_ALARM_ON    (LATDbits.LATD0 = 0)
+#define LED_ALARM_OFF   (LATDbits.LATD0 = 1)
+#define LED_FIRE_ON     (LATDbits.LATD1 = 0)
+#define LED_FIRE_OFF    (LATDbits.LATD1 = 1)
+#define LED_FAILURE_ON  (LATDbits.LATD2 = 0)
+#define LED_FAILURE_OFF (LATDbits.LATD2 = 1)
+#define LED_CRASH_ON    (LATDbits.LATD3 = 0)
+#define LED_CRASH_OFF   (LATDbits.LATD3 = 1)
+#define LED_WORK_ON     (LATDbits.LATD4 = 0)
+#define LED_WORK_OFF    (LATDbits.LATD4 = 1)
+
+
+
+
+#define CASE_OPEN   (PORTAbits.RA4 == 1)
+
 /******************************************************************************/
 /* User Function Prototypes                                                   */
 /******************************************************************************/

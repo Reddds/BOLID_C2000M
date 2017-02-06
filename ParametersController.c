@@ -1,12 +1,27 @@
 #include "ParametersController.h"
 #include "ModbusRtu.h"
-#include "LCD/xlcd.h"
+
+#include "i2c/i2c.h"
 
 
+#define ROOM_NAME_LEN 7
+#define PARAM_NAME_LEN 8
+#define MAX_PARAM_COUNT 0x100
+
+#define PI_SIZE 16
+#define PI_TYPE_OFFSET 8
+#define PI_EDITABLE_OFFSET 9
+#define PI_MIN_OFFSET 10
+#define PI_MAX_OFFSET 12
+#define PI_STEP_OFFSET 14
+
+#define MIT_COL_OFFSET 0
+#define MIT_ROW_OFFSET 1
+#define MIT_TYPE_OFFSET 2
+#define MIT_VALUE_OFFSET 3
 
 
-
-uint8_t _paramCount = 8;
+//  uint8_t _paramCount = 8;
 
 
 typedef struct
@@ -18,25 +33,31 @@ typedef struct
     uint16_t max;  // Максимальное знавчение при возможности изменения
     uint16_t step; // Шаг изменения
 }Param;
-
-const Param Params[] =
-{
-    // Спальня
-    //{.ParamId, .Name,     .Type,          .Value}, 
-    // макс 8 символов
-    {"Темпер. ", PT_TEMP,      false, 0, 0, 0}, //   0
-    {"Влажн.  ", PT_HYM,       false, 0, 0, 0}, //   1
-    // Ванная
-    {"Свет    ", PT_LIGHT,     false, 0, 0, 0}, //   2 
-    {"Дверь   ", PT_DOOR_OPEN, false, 0, 0, 0}, //   3 
-    {"Игн.дв. ", PT_YES_NO,    true,  0, 1, 1}, //   3 
-    // Коридор
-    {"Свет    ", PT_LIGHT,     false, 0, 0, 0}, //   4 
-    // Улица
-    {"Темпер. ", PT_TEMP,      false, 0, 0, 0}, //   5 
-    {"Влажн.  ", PT_HYM,       false, 0, 0, 0}, //   6 
-    {"Давление", PT_PRESS,     false, 0, 0, 0}, //   7 
-};
+//char *roomNames[] = 
+//{
+//    "Спальня",
+//    "Ванная ",
+//    "Коридор",
+//    "Улица  "
+//};
+//const Param Params[] =
+//{
+//    // Спальня
+//    //{.ParamId, .Name,     .Type,          .Value}, 
+//    // макс 8 символов
+//    {"Темпер. ", PT_TEMP,      false, 0, 0, 0}, //   0
+//    {"Влажн.  ", PT_HYM,       false, 0, 0, 0}, //   1
+//    // Ванная
+//    {"Свет    ", PT_LIGHT,     false, 0, 0, 0}, //   2 
+//    {"Дверь   ", PT_DOOR_OPEN, false, 0, 0, 0}, //   3 
+//    {"Игн.дв. ", PT_YES_NO,    true,  0, 1, 1}, //   3 
+//    // Коридор
+//    {"Свет    ", PT_LIGHT,     false, 0, 0, 0}, //   4 
+//    // Улица
+//    {"Темпер. ", PT_TEMP,      false, 0, 0, 0}, //   5 
+//    {"Влажн.  ", PT_HYM,       false, 0, 0, 0}, //   6 
+//    {"Давление", PT_PRESS,     false, 0, 0, 0}, //   7 
+//};
 
 
 /**
@@ -44,8 +65,162 @@ const Param Params[] =
  */
 uint16_t _parameters[256];
 
-void InitParameters()
+
+uint8_t dummyEe[] =
 {
+    //Настройки главного экрана
+    5,
+  //col row    type     len? value
+    1,  0, MIT_LITERAL, 6, 'У','л','и','ц','а',':',
+    8,  0, MIT_PARAM,   6,
+    // 2 строка
+    1,  1, MIT_LITERAL, 4, 'Д','о','м',':',
+    6,  1, MIT_PARAM,   0,
+    11, 1, MIT_PARAM,   1,
+    
+    // QuickButtons
+    //Button,ParamId,ValuesCount, Value1, Value2, Value3 16-битные значения сохраняем HI-LO
+    BTN_ARM,    4, 1, HIGH_BYTE(MODBUS_TRUE), LOW_BYTE(MODBUS_TRUE),   0,0,                                             0,0, // 0
+    BTN_DISARM, 4, 1, HIGH_BYTE(MODBUS_FALSE), LOW_BYTE(MODBUS_FALSE), 0,0,                                             0,0, // 1
+    BTN_BPS,    4, 2, HIGH_BYTE(MODBUS_TRUE), LOW_BYTE(MODBUS_TRUE),   HIGH_BYTE(MODBUS_FALSE), LOW_BYTE(MODBUS_FALSE), 0,0, // 2
+    BTN_TRBL,   0, 0, 0,0,                                             0,0,                                             0,0, // 3
+    BTN_MEM,    0, 0, 0,0,                                             0,0,                                             0,0, // 4
+    BTN_1,      0, 0, 0,0,                                             0,0,                                             0,0, // 5
+    BTN_2,      0, 0, 0,0,                                             0,0,                                             0,0, // 6
+    BTN_3,      0, 0, 0,0,                                             0,0,                                             0,0, // 7
+    BTN_4,      0, 0, 0,0,                                             0,0,                                             0,0, // 8
+    BTN_5,      0, 0, 0,0,                                             0,0,                                             0,0, // 9
+    BTN_6,      0, 0, 0,0,                                             0,0,                                             0,0, // 10
+    BTN_7,      0, 0, 0,0,                                             0,0,                                             0,0, // 11
+    BTN_8,      0, 0, 0,0,                                             0,0,                                             0,0, // 12
+    BTN_9,      0, 0, 0,0,                                             0,0,                                             0,0, // 13
+    BTN_0,      0, 0, 0,0,                                             0,0,                                             0,0, // 14
+    
+    
+    
+    
+    
+    
+    
+    
+    4, // 4 комнаты
+    'С','п','а','л','ь','н','я',
+    'В','а','н','н','а','я',' ',
+    'К','о','р','и','д','о','р',
+    'У','л','и','ц','а',' ',' ',
+    // roomParams
+    2,  0, 1,
+    3,  2, 3, 4,
+    1,  5,
+    3,  6, 7, 8,
+    
+    DUMMY_PARAMS_COUNT,
+    
+    //Params 16-битные значения сохраняем HI-LO
+    'Т','е','м','п','е','р','.',' ', PT_TEMP,      false, 0,0, 0,0, 0,0, //   0 
+    'В','л','а','ж','н','.',' ',' ', PT_HYM,       false, 0,0, 0,0, 0,0, //   1
+    // Ванная
+    'С','в','е','т',' ',' ',' ',' ', PT_LIGHT,     false, 0,0, 0,0, 0,0, //   2 
+    'Д','в','е','р','ь',' ',' ',' ', PT_DOOR_OPEN, false, 0,0, 0,0, 0,0, //   3 
+    'И','г','н','.','д','в','.',' ', PT_YES_NO,    true,  0,0, 0,0, 0,0, //   3 
+    // Коридор
+    'С','в','е','т',' ',' ',' ',' ', PT_LIGHT,     false, 0,0, 0,0, 0,0, //   4 
+    // Улица
+    'Т','е','м','п','е','р','.',' ', PT_TEMP,      false, 0,0, 0,0, 0,0, //   5 
+    'В','л','а','ж','н','.',' ',' ', PT_HYM,       false, 0,0, 0,0, 0,0, //   6 
+    'Д','а','в','л','е','н','и','е', PT_PRESS,     false, 0,0, 0,0, 0,0, //   7 
+
+};
+
+int16_t roomNamesStartAddr = 0;
+int16_t roomParamsStartAddr = 0;
+int16_t paramsInfoStartAddr = 0;
+
+bool initialized = false;
+
+
+int16_t DummyEERandomRead( uint8_t control,  uint16_t address )
+{
+    return dummyEe[address];
+}
+int8_t DummyEESequentialRead(uint8_t control, uint16_t address, uint8_t *rdptr, uint8_t length)
+{
+    for(uint16_t i = 0; i < length; i++)
+    {
+        rdptr[i] = dummyEe[address + i];
+    }
+}
+
+int8_t InitParameters()
+{
+    // Начальное заполнение для теста
+    uint8_t as =  sizeof(dummyEe);
+//    EEPageWrite(0xA0, 0, dummyEe, sizeof(dummyEe));
+    
+    
+    MainParamCount = dummyEe[0];
+    if(MainParamCount == 0 || MainParamCount == 0xff) // Данные незагружены или неверны
+        return -1;
+    
+    int16_t res;
+    uint16_t curAddress = 1;
+    // Пропускаем параметры
+    for(uint8_t i = 0; i < MainParamCount; i++) // Пропускаем предыдущие параметры
+    {
+        res = DummyEERandomRead(0xA0, curAddress + MIT_TYPE_OFFSET);
+        if(res < 0)
+            return -2;
+        switch(res)
+        {
+            case MIT_LITERAL:
+                res = DummyEERandomRead(0xA0, curAddress + MIT_VALUE_OFFSET);
+                if(res < 0)
+                    return -2;
+                curAddress += 4 + res;
+                break;
+            default:
+                curAddress += 4;
+                break;
+        }
+    }
+    
+    uint8_t as =  sizeof(QuickButtonParams);
+    DummyEESequentialRead(0xA0, curAddress, QuickButtonParams, sizeof(QuickButtonParams));
+    curAddress += sizeof(QuickButtonParams);
+    
+    
+    RoomsCount = dummyEe[curAddress];
+    
+    roomNamesStartAddr = curAddress + 1; 
+    
+
+    roomParamsStartAddr = roomNamesStartAddr + RoomsCount * ROOM_NAME_LEN;
+    
+    
+
+    curAddress = roomParamsStartAddr;
+    uint16_t allRoomsParamCount = 0;
+    for(uint8_t i = 0; i < RoomsCount; i++) // Пропускаем предыдущие параметры
+    {
+        res = DummyEERandomRead(0xA0, curAddress);
+        if(res < 0)
+            return -2;
+        allRoomsParamCount += res;
+        curAddress += 1 + res;
+    }
+    if(allRoomsParamCount > MAX_PARAM_COUNT)
+        return -4;
+    
+    res = DummyEERandomRead(0xA0, curAddress);
+    if(res < 0 || res < allRoomsParamCount || res > MAX_PARAM_COUNT)
+        return -3;
+    
+    ParamCount = res;
+    paramsInfoStartAddr = curAddress + 1;
+    
+    
+    initialized = true;
+    
     _parameters[0] = 22;
     _parameters[1] = 54;
     
@@ -59,23 +234,156 @@ void InitParameters()
     _parameters[7] = 96;
     _parameters[8] = 446;
     
+    
+    return 0;
 }
 
 
 
-uint8_t GetParamCount()
+
+
+
+void GetMainScreenParam(uint8_t paramId, MainScreenItem *paramStruct)
 {
-    return _paramCount;
+    if(paramId >= MainParamCount)
+        return;
+    paramStruct->Type = MIT_UNKNOWN;
+    int16_t res;
+    uint16_t curAddress = 1;
+    // Пропускаем параметры
+    for(uint8_t i = 0; i < paramId; i++) // Пропускаем предыдущие параметры
+    {
+        res = DummyEERandomRead(0xA0, curAddress + MIT_TYPE_OFFSET);
+        if(res < 0)
+        {
+            paramStruct->Type = MIT_UNKNOWN;
+            return;
+        }
+        switch(res)
+        {
+            case MIT_LITERAL:
+                res = DummyEERandomRead(0xA0, curAddress + MIT_VALUE_OFFSET);
+                if(res < 0 || res > SCREEN_WIDTH)
+                    return;
+                curAddress += 4 + res;
+                break;
+            default:
+                curAddress += 4;
+                break;
+        }
+    }
+    
+    res = DummyEERandomRead(0xA0, curAddress + MIT_VALUE_OFFSET);
+    if(res < 0)
+        return;
+    
+    DummyEESequentialRead(0xA0, curAddress, (uint8_t *)paramStruct, 4);
+
+    
+    switch(paramStruct->Type)
+    {
+        case MIT_LITERAL:            
+        {
+            uint8_t lenToRead = paramStruct->Value.paramId;
+            DummyEESequentialRead(0xA0, curAddress + MIT_VALUE_OFFSET + 1, paramStruct->Value.str, lenToRead);
+            paramStruct->Value.str[lenToRead] = 0;
+        }
+            break;
+    }
+
+}
+
+
+
+
+
+void GetRoomName(uint8_t room, char* buf)
+{
+    if(!initialized || room >= RoomsCount)
+        return;
+    
+    
+    DummyEESequentialRead(0xA0, roomNamesStartAddr + ROOM_NAME_LEN * room, buf, ROOM_NAME_LEN);
+    
+    
+    
+//    for(i = 0; i < ROOM_NAME_LEN; i++)
+//    {
+//        buf[i] = roomNames[i];
+//    }
+    buf[ROOM_NAME_LEN] = 0;
+}
+uint8_t GetRoomParamsCount(uint8_t room)
+{
+    if(!initialized || room >= RoomsCount)
+        return 0; 
+    uint16_t curAddress = roomParamsStartAddr;
+    int16_t paramsCount = 0;
+    for(uint8_t i = 0; i <= room; i++) // Пропускаем предыдущие параметры
+    {
+        paramsCount = DummyEERandomRead(0xA0, curAddress);
+        if(paramsCount < 0)
+            return 0;
+        curAddress += 1 + paramsCount;
+    }
+    return paramsCount;
+}
+
+//uint8_t GetParamCount()
+//{
+//    return ParamCount;
+//}
+
+
+
+//#define ParamInfoStartAdd(param) (paramsInfoStartAddr + PI_SIZE * + PI_EDITABLE_OFFSET)
+
+uint8_t GetParamInfoId(uint8_t room, uint8_t param)
+{
+    uint16_t curAddress = roomParamsStartAddr;
+    int16_t res = 0;
+    for(uint8_t i = 0; i < room; i++) // Пропускаем предыдущие параметры
+    {
+        res = DummyEERandomRead(0xA0, curAddress);
+        if(res < 0)
+            return 0;
+        curAddress += 1 + res;
+    }
+    res = DummyEERandomRead(0xA0, curAddress); // count
+    if(res < param - 1)
+        return 0;
+    curAddress += 1 + param;
+    res = DummyEERandomRead(0xA0, curAddress); // paramInfoId
+    if(res < 0)
+        return 0;
+    return res;
+}
+
+
+uint16_t GetParamInfoStartAdd(uint8_t room, uint8_t param)
+{
+    return paramsInfoStartAddr + PI_SIZE * GetParamInfoId(room, param);
 }
 
 bool IsParamEditable(uint8_t room, uint8_t param)
 {
-    return Params[roomParams[room].ParamAddresses[param]].editable;
+    if(!initialized || room >= RoomsCount)
+        return false;
+    
+    uint16_t addr = GetParamInfoStartAdd(room, param);
+    if(addr == 0)
+        return false;
+    
+    int16_t res = DummyEERandomRead(0xA0, addr + PI_EDITABLE_OFFSET);
+    if(res < 0)
+        return false;
+    
+    return res;
 }
 
 bool SetParameterValue(uint8_t id, uint16_t value)
 {
-    if(id >= _paramCount)
+    if(id >= ParamCount)
         return false;
     _parameters[id] = value;
     return true;
@@ -83,12 +391,12 @@ bool SetParameterValue(uint8_t id, uint16_t value)
 
 void SetParameterValueByRoom(uint8_t room, uint8_t param, uint16_t value)
 {
-    _parameters[roomParams[room].ParamAddresses[param]] = value;
+    _parameters[GetParamInfoId(room, param)] = value;
 }
 
 uint16_t GetParameterValue(uint8_t id)
 {
-    if(id >= _paramCount)
+    if(id >= ParamCount)
         return 0;
     return _parameters[id];
 }
@@ -99,42 +407,133 @@ uint16_t GetParameterValue(uint8_t id)
  */
 void GetParameterNameByRoom(uint8_t room, uint8_t param, char* buf)
 {
-    GetParameterName(roomParams[room].ParamAddresses[param], buf);
+    if(!initialized || room >= RoomsCount)
+        return;
+    
+    GetParameterName(GetParamInfoId(room, param), buf);
+    
+    
+//    uint16_t addr = GetParamInfoStartAdd(room, param);
+//    if(addr == 0)
+//        return false;
+//    
+//    DummyEESequentialRead(0xA0, addr, buf, PARAM_NAME_LEN);
+    
 }
 
 void GetParameterName(uint8_t id, char* buf)
 {
-    //Пока тупо, потом сделать заполнение массива из еепром
-    uint8_t i;
-    for(i = 0; i < 8; i++)
-        buf[i] = Params[id].Name[i];
-    buf[i] = 0;    
+
+    DummyEESequentialRead(0xA0, paramsInfoStartAddr + PI_SIZE * id, buf, PARAM_NAME_LEN);
+
+
+//    //Пока тупо, потом сделать заполнение массива из еепром
+//    uint8_t i;
+//    for(i = 0; i < 8; i++)
+//        buf[i] = Params[id].Name[i];
+    buf[PARAM_NAME_LEN] = 0;    
 }
 
 uint16_t GetParameterValueByRoom(uint8_t room, uint8_t param)
 {
-    return _parameters[roomParams[room].ParamAddresses[param]];
+    return _parameters[GetParamInfoId(room, param)];
 }
+
+ParamTypes GetParameterType(uint8_t paramId)
+{
+    
+    int16_t res = DummyEERandomRead(0xA0, paramsInfoStartAddr + PI_SIZE * paramId + PI_TYPE_OFFSET);
+    if(res < 0)
+        return 0;
+}
+
 ParamTypes GetParameterTypeByRoom(uint8_t room, uint8_t param)
 {
-    return Params[roomParams[room].ParamAddresses[param]].Type;
+    if(!initialized || room >= RoomsCount)
+        return 0;
+
+    return GetParameterType(GetParamInfoId(room, param));
+    
+//    uint16_t addr = GetParamInfoStartAdd(room, param);
+//    if(addr == 0)
+//        return 0;
+//
+//    int16_t res = DummyEERandomRead(0xA0, addr + PI_TYPE_OFFSET);
+//    if(res < 0)
+//        return 0;
+//    
+//    return res;
 }
 uint16_t GetParameterMinByRoom(uint8_t room, uint8_t param)
 {
-    return Params[roomParams[room].ParamAddresses[param]].min;
+    if(!initialized || room >= RoomsCount)
+        return 0;
+
+    uint16_t addr = GetParamInfoStartAdd(room, param);
+    if(addr == 0)
+        return 0;
+
+    int16_t res = DummyEERandomRead(0xA0, addr + PI_MIN_OFFSET);
+    if(res < 0)
+        return 0;
+    
+    uint16_t min = (res & 0xFF) << 8;
+
+    int16_t res = DummyEERandomRead(0xA0, addr + PI_MIN_OFFSET + 1);
+    if(res < 0)
+        return 0;
+
+    min |= (res & 0xFF);
+    return min;
 }
 uint16_t GetParameterMaxByRoom(uint8_t room, uint8_t param)
 {
-    return Params[roomParams[room].ParamAddresses[param]].max;
+    if(!initialized || room >= RoomsCount)
+        return 0;
+
+    uint16_t addr = GetParamInfoStartAdd(room, param);
+    if(addr == 0)
+        return 0;
+
+    int16_t res = DummyEERandomRead(0xA0, addr + PI_MAX_OFFSET);
+    if(res < 0)
+        return 0;
+    
+    uint16_t max = (res & 0xFF) << 8;
+
+    int16_t res = DummyEERandomRead(0xA0, addr + PI_MAX_OFFSET + 1);
+    if(res < 0)
+        return 0;
+
+    max |= (res & 0xFF);
+    return max;
 }
 uint16_t GetParameterStepByRoom(uint8_t room, uint8_t param)
 {
-    return Params[roomParams[room].ParamAddresses[param]].step;
+    if(!initialized || room >= RoomsCount)
+        return 0;
+
+    uint16_t addr = GetParamInfoStartAdd(room, param);
+    if(addr == 0)
+        return 0;
+
+    int16_t res = DummyEERandomRead(0xA0, addr + PI_STEP_OFFSET);
+    if(res < 0)
+        return 0;
+    
+    uint16_t step = (res & 0xFF) << 8;
+
+    int16_t res = DummyEERandomRead(0xA0, addr + PI_STEP_OFFSET + 1);
+    if(res < 0)
+        return 0;
+
+    step |= (res & 0xFF);
+    return step;
 }
 
 void PrintParameterByRoom(uint8_t room, uint8_t param, int8_t col, int8_t row, PrintParamName printParamName)
 {
-    PrintParameter(roomParams[room].ParamAddresses[param], col, row, printParamName);
+    PrintParameter(GetParamInfoId(room, param), col, row, printParamName);
 }
 
 void PrintParameter(uint8_t paramId, int8_t col, int8_t row, PrintParamName printParamName)
@@ -144,7 +543,7 @@ void PrintParameter(uint8_t paramId, int8_t col, int8_t row, PrintParamName prin
 
 void PrintParameterByRoomAndValue(uint8_t room, uint8_t param, uint16_t value, int8_t col, int8_t row, PrintParamName printParamName)
 {
-    PrintParameterByValue(roomParams[room].ParamAddresses[param], value, col, row, printParamName);
+    PrintParameterByValue(GetParamInfoId(room, param), value, col, row, printParamName);
 }
 
 void PrintParameterByValue(uint8_t paramId, uint16_t value, int8_t col, int8_t row, PrintParamName printParamName)
@@ -157,7 +556,9 @@ void PrintParameterByValue(uint8_t paramId, uint16_t value, int8_t col, int8_t r
     {
         case PPN_FULL:
         {
-            DisplayPrintStr(Params[paramId].Name);
+            char *buf[PARAM_NAME_LEN + 1];
+            GetParameterName(paramId, buf);
+            DisplayPrintStr(buf);
             DisplayPrintChar(' ');
         }
             break;
@@ -168,7 +569,7 @@ void PrintParameterByValue(uint8_t paramId, uint16_t value, int8_t col, int8_t r
             break;
     }
     
-    switch(Params[paramId].Type)
+    switch(GetParameterType(paramId))
     {
         case PT_TEMP:
         {

@@ -229,6 +229,14 @@ void InitApp(void)
     ADCON0bits.ADON = 1;
     
     
+    // Светодиоды
+    TRISDbits.RD0 = 0;
+    TRISDbits.RD1 = 0;
+    TRISDbits.RD2 = 0;
+    TRISDbits.RD3 = 0;
+    TRISDbits.RD4 = 0;
+    
+    
     
     InitButtons();
     // LCD

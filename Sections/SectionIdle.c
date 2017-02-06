@@ -3,7 +3,7 @@
 
 #include "SectionIdle.h"
 #include "../ModbusRtu.h"
-#include "../i2c/i2c.h"
+//#include "../i2c/i2c.h"
 #include "../LCD/xlcd.h"
 #include "../buttons.h"
 #include "../interrupts.h"
@@ -16,47 +16,30 @@
 // * 
 // * Позиция (Кол, ряд) / Тип / Значение
 
-typedef enum
-{
-    MIT_LITERAL, // Строка текста
-    MIT_PARAM, // Значение параметра
-    MIT_SHORT, // Значение параметра с коротким названием
-    MIT_FULL, // Значение параметра с длинным названием        
-}MainItemTypes;
 
 
-typedef struct
-{
-    Buttons Button;
-    uint8_t ParamId;
-    // Количество значений, которые будут переключаться по кругу 1-2-3
-    // 0 - кнопка ничего не делает
-    uint8_t ValuesCount;
-    uint16_t Value1;
-    uint16_t Value2;
-    uint16_t Value3;
-}QuickButtonParam;
 
 
-#define QUICK_BUTTON_COUNT 15
-QuickButtonParam QuickButtonParams[] = 
-{
-    {BTN_ARM,    4, 1,  MODBUS_TRUE,            0, 0}, // 0
-    {BTN_DISARM, 4, 1, MODBUS_FALSE,            0, 0}, // 1
-    {BTN_BPS,    4, 2,  MODBUS_TRUE, MODBUS_FALSE, 0}, // 2
-    {BTN_TRBL,   0, 0,            0,            0, 0}, // 3
-    {BTN_MEM,    0, 0,            0,            0, 0}, // 4
-    {BTN_1,      0, 0,            0,            0, 0}, // 5
-    {BTN_2,      0, 0,            0,            0, 0}, // 6
-    {BTN_3,      0, 0,            0,            0, 0}, // 7
-    {BTN_4,      0, 0,            0,            0, 0}, // 8
-    {BTN_5,      0, 0,            0,            0, 0}, // 9
-    {BTN_6,      0, 0,            0,            0, 0}, // 10
-    {BTN_7,      0, 0,            0,            0, 0}, // 11
-    {BTN_8,      0, 0,            0,            0, 0}, // 12
-    {BTN_9,      0, 0,            0,            0, 0}, // 13
-    {BTN_0,      0, 0,            0,            0, 0}, // 14
-};
+
+//#define QUICK_BUTTON_COUNT 15
+//QuickButtonParam QuickButtonParams[] = 
+//{
+//    {BTN_ARM,    4, 1,  MODBUS_TRUE,            0, 0}, // 0
+//    {BTN_DISARM, 4, 1, MODBUS_FALSE,            0, 0}, // 1
+//    {BTN_BPS,    4, 2,  MODBUS_TRUE, MODBUS_FALSE, 0}, // 2
+//    {BTN_TRBL,   0, 0,            0,            0, 0}, // 3
+//    {BTN_MEM,    0, 0,            0,            0, 0}, // 4
+//    {BTN_1,      0, 0,            0,            0, 0}, // 5
+//    {BTN_2,      0, 0,            0,            0, 0}, // 6
+//    {BTN_3,      0, 0,            0,            0, 0}, // 7
+//    {BTN_4,      0, 0,            0,            0, 0}, // 8
+//    {BTN_5,      0, 0,            0,            0, 0}, // 9
+//    {BTN_6,      0, 0,            0,            0, 0}, // 10
+//    {BTN_7,      0, 0,            0,            0, 0}, // 11
+//    {BTN_8,      0, 0,            0,            0, 0}, // 12
+//    {BTN_9,      0, 0,            0,            0, 0}, // 13
+//    {BTN_0,      0, 0,            0,            0, 0}, // 14
+//};
 
 
 
@@ -72,33 +55,36 @@ uint8_t _currentButtonInfo;
 
 
 
-typedef struct 
-{
-    uint8_t Column;
-    uint8_t Row;
-    MainItemTypes Type;
-//    void* Value;
-    union Value
-    {
-        const char* str;
-        uint8_t paramId;
-    }Value;
+//typedef struct 
+//{
+//    uint8_t Column;
+//    uint8_t Row;
+//    MainItemTypes Type;
+////    void* Value;
+//    union Value
+//    {
+//        const char* str;
+//        uint8_t paramId;
+//    }Value;
+//
+//}MainScreenItem;
 
-}MainScreenItem;
+
+//uint8_t mainParamCount = 5;
+//
+//MainScreenItem MainConfig[]=
+//{
+//    {1, 0, MIT_LITERAL, {"Улица:"}},
+//    {8, 0, MIT_PARAM, {6}},
+//    
+//    {1, 1, MIT_LITERAL, {"Дом:"}},
+//    {6, 1, MIT_PARAM, {0}},
+//    {11, 1, MIT_PARAM, {1}},
+//    
+//};
 
 
-uint8_t mainParamCount = 5;
 
-MainScreenItem MainConfig[]=
-{
-    {1, 0, MIT_LITERAL, {"Улица:"}},
-    {8, 0, MIT_PARAM, {5}},
-    
-    {1, 1, MIT_LITERAL, {"Дом:"}},
-    {6, 1, MIT_PARAM, {0}},
-    {11, 1, MIT_PARAM, {1}},
-    
-};
 
 
 bool isRoot = false;
@@ -115,35 +101,38 @@ void IdleDisplayRedraw()
     DisplayClear();
     
     
-    
     switch(_currentSiState)
     {
         case VS_ROOT:
         {
             DisplayPrintSymbol(CH_HOME);
-            for(uint8_t i = 0; i < mainParamCount; i++)
+            for(uint8_t i = 0; i < MainParamCount; i++)
             {
-                DisplaySetCursorPos(MainConfig[i].Column, MainConfig[i].Row);
-                switch(MainConfig[i].Type)
+                MainScreenItem mainParamData;
+                GetMainScreenParam(i, &mainParamData);
+                if(mainParamData.Type == MIT_UNKNOWN)
+                    continue;
+                DisplaySetCursorPos(mainParamData.Column, mainParamData.Row);
+                switch(mainParamData.Type)
                 {
                     case MIT_LITERAL:
                     {
-                        DisplayPrintStr(MainConfig[i].Value.str);
+                        DisplayPrintStr(mainParamData.Value.str);
                     }
                         break;
                     case MIT_PARAM:               
                     {
-                        PrintParameter(MainConfig[i].Value.paramId, -1, -1, PPN_NONE);
+                        PrintParameter(mainParamData.Value.paramId, -1, -1, PPN_NONE);
                     }
                         break;
                     case MIT_SHORT:               
                     {
-                        PrintParameter(MainConfig[i].Value.paramId, -1, -1, PPN_SHORT);
+                        PrintParameter(mainParamData.Value.paramId, -1, -1, PPN_SHORT);
                     }
                         break;
                     case MIT_FULL:               
                     {
-                        PrintParameter(MainConfig[i].Value.paramId, -1, -1, MIT_FULL);
+                        PrintParameter(mainParamData.Value.paramId, -1, -1, MIT_FULL);
                     }
                         break;
                 }
@@ -233,6 +222,7 @@ void QuickButtonPress(uint8_t id)
     DisplayClear();
     char buf[9];
     GetParameterName(QuickButtonParams[id].ParamId, buf);
+    DisplayPrintStr(buf);
     DisplayPrintStr(" = ");
                        
     
@@ -577,7 +567,8 @@ void IdleOnButton(uint8_t button)
                 case VS_PRESS_BUTTON:
                 {
                     _currentSiState = VS_BUTTON_INFO;
-                    _currentButtonInfo = 0;
+                    _currentButtonInfo = QUICK_BUTTON_COUNT - 1;
+                    
                 }
                 break;
                 case VS_BUTTON_INFO:// Вход в режим выбора комнат
@@ -597,7 +588,7 @@ void IdleOnButton(uint8_t button)
                 case VS_PRESS_BUTTON:
                 {
                     _currentSiState = VS_BUTTON_INFO;
-                    _currentButtonInfo = QUICK_BUTTON_COUNT - 1;
+                    _currentButtonInfo = 0;
                 }
                 break;
                 case VS_BUTTON_INFO:// Вход в режим выбора комнат
