@@ -462,6 +462,33 @@ void main(void)
 
 }
 
+const char *daysOfWeek[] =
+{
+    "Воскр.",
+    "Порнед.",
+    "Втор.",
+    "Среда",
+    "Четв.",
+    "Пятн.",
+    "Субб.",            
+};
+
+const char *monthes[] = 
+{
+    " Январь ",
+    "Февраль ",
+    "  Март  ",
+    " Апрель ",
+    "  Май   ",
+    "  Июнь  ",
+    "  Июль  ",            
+    " Август ",            
+    "Сентябрь",            
+    "Октябрь ",            
+    " Ноябрь ",            
+    "Декабрь ",            
+};
+
 uint8_t oldMin = 0xff;
 
 void ShowTimeScreen()
@@ -475,13 +502,13 @@ void ShowTimeScreen()
     
     oldMin = min;
     
-    
+    struct tm *timeStruct = localtime(GetTime());    
     DisplayClear();
-    DisplayPrintStr("Время: ");
+    //DisplayPrintStr("Время: ");
+    DisplayPrintStr(daysOfWeek[timeStruct->tm_wday]);
     
     
-    
-    
+    DisplaySetCursorPos(8, 0);
     if(getTimeRes)
     {
         DisplayPrintUInt(hour, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
@@ -496,12 +523,11 @@ void ShowTimeScreen()
         DisplayPrintUInt(min, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
     }
     DisplaySetCursorPos(0, 1);
-    DisplayPrintStr("Дата: ");
-    struct tm *timeStruct = localtime(GetTime());
     DisplayPrintUInt(timeStruct->tm_mday, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
-    DisplayPrintChar('.');
-    DisplayPrintUInt(timeStruct->tm_mon, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
-    DisplayPrintChar('.');
+    DisplaySetCursorPos(3, 1);
+//    DisplayPrintStr("Дата: ");
+    DisplayPrintStr(monthes[timeStruct->tm_mon]);
+    DisplaySetCursorPos(12, 1);
     DisplayPrintUInt(timeStruct->tm_year + 1900, DEC);
     
 }
