@@ -12,6 +12,7 @@
 #include "ModbusRtu.h"
 #include "user.h"
 #include "interrupts.h"
+#include "i2c/i2c.h"
 
 #ifdef C2000M
 #include "ParametersController.h"
@@ -137,7 +138,7 @@ const unsigned char fctsupported[] = {
 };
 
 #define T35  5
-#define MAX_BUFFER  140	//!< maximum size for the communication buffer in bytes
+#define MAX_BUFFER  256	//!< maximum size for the communication buffer in bytes
 
 uint8_t _deviceStatus; // 0- Time set, 1 - need time set and sync
 uint8_t _u8id; //!< 0=master, 1..247=slave number
@@ -156,9 +157,11 @@ uint32_t _u32time, _u32timeOut;
 uint8_t _exceptionStatus = 0;
 
 uint8_t _lastFunction = 0;
+uint16_t _lastFileNum = 0;
 uint16_t _lastAddress = 0;
 uint16_t _lastCount = 0; // number of coils or registers or file length in bytes in last command 
 uint8_t _lastCommand = 0;
+
 
 
 uint8_t ModbusUserCommandId;
@@ -220,6 +223,8 @@ void ModbusBuildException(uint8_t u8exception); // build exception message
   uint8_t *ModbusGetUserCommandAdditional3Lo(){return &ModbusUserCommandAdditional3Lo;}
 
 
+  
+
 /**
  * @brief
  * Full constructor for a Master/Slave through USB/RS232C/RS485
@@ -236,18 +241,7 @@ void ModbusBuildException(uint8_t u8exception); // build exception message
 void Modbus(uint8_t u8serno, uint8_t u8txenpin)
 {
     uint8_t tmpModbusId = eeprom_read(EE_MODBUS_ID);
-    if(tmpModbusId == 0)
-    {
-        // cheat!!!!
-        // after power off EEPROM readed as zeroes
-        // and after first write reading is normal
-        // TODO make klever
-        eeprom_write(0, 5);
-        while(EECON1bits.WR)
-            continue;
-    }
-    tmpModbusId = eeprom_read(EE_MODBUS_ID);
-    if(tmpModbusId == 0xff) 
+    if(tmpModbusId == 0xff || tmpModbusId == 0) 
         tmpModbusId = DEFAULT_MODBUS_ID;
     ModbusInit(tmpModbusId, u8serno, u8txenpin);
 }
@@ -798,7 +792,7 @@ uint16_t ModbusCalcCRC(uint8_t u8length)
 }
 #endif
 
-
+#define FILE_MAX_SIZE 128
 uint8_t CheckFunc20()
 {
     uint8_t bytesCount = _au8Buffer[ FILE_DATA_LEN ];
@@ -812,13 +806,29 @@ uint8_t CheckFunc20()
     {
         if (_au8Buffer[offset + FILE_REF_TYPE ] != 6)
             return EXC_ADDR_RANGE;
-        // Support only file # 0x0001
-       if (_au8Buffer[offset + FILE_NUM_HI ] != 0x00 || _au8Buffer[offset +  FILE_NUM_LO ] != 0x01)
-           return EXC_ADDR_RANGE;
-        unsigned long startAddrBytes = ((_au8Buffer[offset + FILE_REC_HI ] << 8) | _au8Buffer[offset + FILE_REC_LO ]) << 1;
-        unsigned long recLenBytes = ((_au8Buffer[offset + FILE_REC_LEN_HI ] << 8) | _au8Buffer[offset + FILE_REC_LEN_LO ]) << 1;
-        if (startAddrBytes + recLenBytes >= _EEPROMSIZE)
+        // File #1 - EEPROM на чипе
+        // File 2.. - внешний EEPROM
+        uint16_t fileNo = word(_au8Buffer[ FILE_NUM_HI ], _au8Buffer[ FILE_NUM_LO ]);
+
+        unsigned long startAddrBytes = word(_au8Buffer[offset + FILE_REC_HI ], _au8Buffer[offset + FILE_REC_LO ]) << 1;
+        unsigned long recLenBytes = word(_au8Buffer[offset + FILE_REC_LEN_HI ], _au8Buffer[offset + FILE_REC_LEN_LO ]) << 1;
+        
+        if(fileNo == 1)
+        {
+            if (startAddrBytes + recLenBytes >= _EEPROMSIZE)
+                return EXC_ADDR_RANGE;
+        }
+        else if(fileNo > 1)
+        {
+            if(recLenBytes > FILE_MAX_SIZE)
+                return EXC_ADDR_RANGE;
+            if ((fileNo - 2) * FILE_MAX_SIZE + startAddrBytes + recLenBytes > EXT_MEM_CHIP_SIZE * 2)
+                return EXC_ADDR_RANGE;
+
+        }
+        else
             return EXC_ADDR_RANGE;
+        
         if(resultLen + recLenBytes + 2 > MAX_BUFFER - 3)
             return EXC_ADDR_RANGE;
         resultLen += recLenBytes + 2;
@@ -830,6 +840,9 @@ uint8_t CheckFunc20()
     }
     return 0;
 }
+
+
+
 
 
 /**
@@ -952,14 +965,26 @@ uint8_t ModbusValidateRequest()
         case MB_FC_WRITE_FILE_RECORD:
             if (_au8Buffer[ FILE_REF_TYPE ] != 6)
                 return EXC_ADDR_RANGE;
-            // Support only file # 0x0001
-            if (_au8Buffer[ FILE_NUM_HI ] != 0x00 || _au8Buffer[ FILE_NUM_LO ] != 0x01)
-                return EXC_ADDR_RANGE;
-            // Test for EEPROM range
-            unsigned long startAddrBytes = ((_au8Buffer[ FILE_REC_HI ] << 8) | _au8Buffer[ FILE_REC_LO ]) << 1;
-            unsigned long recLenBytes = ((_au8Buffer[ FILE_REC_LEN_HI ] << 8) | _au8Buffer[ FILE_REC_LEN_LO ]) << 1;
-
-            if (startAddrBytes + recLenBytes >= _EEPROMSIZE)
+            
+            unsigned long startAddrBytes = word(_au8Buffer[ FILE_REC_HI ], _au8Buffer[ FILE_REC_LO ]) << 1;
+            unsigned long recLenBytes = word(_au8Buffer[ FILE_REC_LEN_HI ], _au8Buffer[ FILE_REC_LEN_LO ]) << 1;
+            // File #1 - EEPROM на чипе
+            // File 2.. - внешний EEPROM
+            uint16_t fileNo = word(_au8Buffer[ FILE_NUM_HI ], _au8Buffer[ FILE_NUM_LO ]);
+            if(fileNo == 1)
+            {
+                if (startAddrBytes + recLenBytes >= _EEPROMSIZE)
+                    return EXC_ADDR_RANGE;
+            }
+            else if(fileNo > 1)
+            {
+                if(recLenBytes > FILE_MAX_SIZE)
+                    return EXC_ADDR_RANGE;
+                if ((fileNo - 2) * FILE_MAX_SIZE + startAddrBytes + recLenBytes > EXT_MEM_CHIP_SIZE * 2)
+                    return EXC_ADDR_RANGE;
+                
+            }
+            else
                 return EXC_ADDR_RANGE;
             break;
         case MB_FC_READ_DEVICE_ID:
@@ -968,7 +993,7 @@ uint8_t ModbusValidateRequest()
             uint8_t readDevId = _au8Buffer[ MEI_READ_DEV_ID ];
             if(readDevId != 0x01 && readDevId != 0x02 && readDevId != 0x04)
                 return EXC_REGS_QUANT;
-            if(readDevId == 0x04 && _au8Buffer[ MEI_OBJ_ID ] > 0x06)
+            if(readDevId == 0x04 && (_au8Buffer[ MEI_OBJ_ID ] > 0x06 && _au8Buffer[ MEI_OBJ_ID ] != 0x80))
                 return EXC_ADDR_RANGE;
             break;
             
@@ -1004,8 +1029,10 @@ void ModbusBuildException(uint8_t u8exception)
 }
 
 
-uint8_t *ModbusGetLastCommand(uint16_t *address, uint16_t *count, uint8_t *command)
+uint8_t *ModbusGetLastCommand(uint16_t *fileNum, uint16_t *address, uint16_t *count, uint8_t *command)
 {
+    if (fileNum != NULL)
+        *fileNum = _lastFileNum;    
     if (address != NULL)
         *address = _lastAddress;
     if (count != NULL)
@@ -1014,6 +1041,8 @@ uint8_t *ModbusGetLastCommand(uint16_t *address, uint16_t *count, uint8_t *comma
         *command = _lastCommand;
     return &_lastFunction;
 }
+
+
 
 /**
  * @brief
@@ -1348,6 +1377,12 @@ int8_t ModbusProcess_FC17()
  * This method processes function 20
  * This method read a word array from EEPROM 
  *
+ * File No - номер страницы по 128 байт каждая
+ * Record No - позиция внутри страницы 0..64
+ * 
+ * Чтение первой страницы внешней памяти
+ * [addr] 20 07 06 00 02 00 00 00 64
+ * 
  * @return u8BufferSize Response to master length
  * @ingroup register
  */
@@ -1356,7 +1391,9 @@ int8_t ModbusProcess_FC20()
     //uint8_t u8func = au8Buffer[ FUNC ];  // get the original FUNC code
 
     uint8_t requestDataLen = _au8Buffer[ FILE_DATA_LEN ];
-
+    // File #1 - EEPROM на чипе
+    // File 2..1026 - внешний EEPROM
+    _lastFileNum = word(_au8Buffer[ FILE_NUM_HI ], _au8Buffer[ FILE_NUM_LO ]);
     uint8_t offset = 0;
 
     
@@ -1382,14 +1419,24 @@ int8_t ModbusProcess_FC20()
         if(startAddrBytes[r] < _lastAddress)
             _lastAddress = startAddrBytes[r];
         
-        for(uint8_t i = 0; i < recLenBytes[r]; i++)
+        if(_lastFileNum == 1) // Из внутреннего EEPROM
         {
-            _au8Buffer[offset++] = eeprom_read(startAddrBytes[r] + i);//_EEREG_EEPROM_READ
+            for(uint8_t i = 0; i < recLenBytes[r]; i++)
+            {
+                _au8Buffer[offset++] = eeprom_read(startAddrBytes[r] + i);//_EEREG_EEPROM_READ
+            }
+        }
+        else if(_lastFileNum > 1) // Из внешнего EEPROM
+        {
+            //uint8_t chipAddress = (fileNo - 2) < EXT_MEM_CHIP_PAGES ? EXT_MEM_CHIP_0 : EXT_MEM_CHIP_1;
+            
+            EESequentialRead(EXT_MEM_COMMAND, (_lastFileNum - 2) * PAGE_SIZE + startAddrBytes[r], &(_au8Buffer[offset]), recLenBytes[r]);
+            offset += recLenBytes[r];
         }
         if(startAddrBytes[r] + recLenBytes[r] > _lastCount)
             _lastCount = startAddrBytes[r] + recLenBytes[r];
     }
-    _au8Buffer[ FILE_DATA_LEN ] = offset - 2;// += recLenBytes[r] + 2;
+    _au8Buffer[ FILE_DATA_LEN ] = offset - 3;// += recLenBytes[r] + 2;
     //        _EEREG_EEPROM_READ
 
     
@@ -1400,7 +1447,7 @@ int8_t ModbusProcess_FC20()
     // build header
     //au8Buffer[ NB_HI ]   = 0;
     //au8Buffer[ NB_LO ]   = u8regsno;
-    _u8BufferSize = _au8Buffer[ FILE_DATA_LEN ] + 1;
+    _u8BufferSize = _au8Buffer[ FILE_DATA_LEN ] + 3;
 
     u8CopyBufferSize = _u8BufferSize; // +2;
     ModbusSendTxBuffer();
@@ -1412,6 +1459,9 @@ int8_t ModbusProcess_FC20()
  * @brief
  * This method processes function 21
  * This method writes a word array to EEPROM assigned by the master
+ * 
+ * 
+ * [addr] 21 09 06 00 01 00 01 00 01 50 50
  *
  * @return u8BufferSize Response to master length
  * @ingroup register
@@ -1421,10 +1471,12 @@ int8_t ModbusProcess_FC21()
     //uint8_t u8func = au8Buffer[ FUNC ];  // get the original FUNC code
 
     uint8_t requestDataLen = _au8Buffer[ FILE_DATA_LEN ];
-
-    uint16_t startAddrsBytes = (word(_au8Buffer[ FILE_REC_HI ], _au8Buffer[ FILE_REC_LO ])) << 1;
+    // File #1 - EEPROM на чипе
+    // File 2..1026 - внешний EEPROM
+    _lastFileNum = word(_au8Buffer[ FILE_NUM_HI ], _au8Buffer[ FILE_NUM_LO ]);
+    uint16_t startAddrsBytes = word(_au8Buffer[ FILE_REC_HI ], _au8Buffer[ FILE_REC_LO ]) << 1;
     _lastAddress = startAddrsBytes;
-    uint16_t recLenBytes = (word(_au8Buffer[ FILE_REC_LEN_HI ], _au8Buffer[ FILE_REC_LEN_LO ])) << 1;
+    uint16_t recLenBytes = word(_au8Buffer[ FILE_REC_LEN_HI ], _au8Buffer[ FILE_REC_LEN_LO ]) << 1;
     _lastCount = recLenBytes;
     uint8_t u8CopyBufferSize;
     uint8_t i;
@@ -1436,15 +1488,26 @@ int8_t ModbusProcess_FC21()
     _u8BufferSize = requestDataLen + 1;
 
 
-    // write EEPROM
-    for (i = 0; i < recLenBytes; i++)
+    if(_lastFileNum == 1)
     {
-        eeprom_write(startAddrsBytes + i, _au8Buffer[ FILE_FIRST_BYTE + i ]);
+        // write internsl EEPROM
+        for (i = 0; i < recLenBytes; i++)
+        {
+            eeprom_write(startAddrsBytes + i, _au8Buffer[ FILE_FIRST_BYTE + i ]);
+        }
+        // wait for write end
+        while(EECON1bits.WR)
+            continue;
     }
-    // wait for write end
-    while(EECON1bits.WR)
-        continue;
-    u8CopyBufferSize = _u8BufferSize; // +2;
+    else if(_lastFileNum > 1) // write external EEPROM
+    {
+        WP_LATCH = 0; // Снимаем защиту от записи
+        __delay_ms(5);
+        EEPageWrite(EXT_MEM_COMMAND, (_lastFileNum - 2) * PAGE_SIZE + startAddrsBytes, &(_au8Buffer[ FILE_FIRST_BYTE ]), recLenBytes);
+        WP_LATCH = 1;
+        __delay_ms(5);
+    }
+    u8CopyBufferSize = _u8BufferSize + 2; // +2;
     ModbusSendTxBuffer();
 
     return u8CopyBufferSize;
@@ -1479,6 +1542,22 @@ int8_t ModbusProcess_FC43()
         0x82: regular identification (stream access and individual access)
         0x83: extended identification(stream access and individual
         access)
+     */
+    /*
+     
+     Objects:
+     * 0 - VENDOR_NAME
+     * 1 - PRODUCT_CODE
+     * 2 - MAJOR_MINOR_REVISION
+     * 3 - VENDOR_URL
+     * 4 - PRODUCT_NAME
+     * 5 - MODEL_NAME
+     * 6 - USER_APPLICATION_NAME
+     * 
+     * 0x80 - Информация о EEPROM
+     * 
+     
+     
      */
     _au8Buffer[ 5 ] = 0x00; // More Follows
     _au8Buffer[ 6 ] = 0x00; //Next Object Id
@@ -1533,6 +1612,13 @@ int8_t ModbusProcess_FC43()
                     _au8Buffer[ 4 ] = 0x82; // Conformity level
                     CopyStringToBuffer(objId, USER_APPLICATION_NAME, sizeof(USER_APPLICATION_NAME));
                     break;
+                    
+                    
+                case 0x80:
+                    _au8Buffer[ 4 ] = 0x83; //??????? Conformity level
+                    CopyStringToBuffer(objId, EepromInfoDesc, sizeof(EepromInfoDesc));
+                    break;
+                    
             }
             break;
     }
@@ -1550,9 +1636,7 @@ int8_t ModbusProcess_FC100()
     switch(_lastCommand)
     {
         case MB_COMMAND_RESET:
-            #asm
-                RESET; 
-            #endasm
+            Reset();
             break;
         case MB_COMMAND_SET_ADDRESS:
             _u8id = _au8Buffer[COM_DATA];

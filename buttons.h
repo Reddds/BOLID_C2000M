@@ -40,30 +40,7 @@ typedef enum
     BTN_NONE = 0xff
 }Buttons;
 
-char *ButtonNames[] = 
-{
-    "ARM",
-    "DISARM",
-    "BPS",
-    "TRBL",
-    "MEM",
-    "LEFT",
-    "1",
-    "4",
-    "7",
-    "CLR",
-    "PRG",
-    "2",
-    "5",
-    "8",
-    "0",                
-    "RIGHT",
-    "3",
-    "6",
-    "9",
-    "ENT",
-    "Нет"           
-};
+//const char *ButtonNames[];
 
 #define BUTTONS_COUNT 20
 #define BUTTONS_ROWS 5
@@ -78,6 +55,7 @@ uint8_t ButtonStates[BUTTONS_COUNT];
 
 void InitButtons();
 uint8_t IsButtonChanged();
+char* GetButtonName(Buttons button);
 
 
 #ifdef	__cplusplus

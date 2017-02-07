@@ -91,10 +91,10 @@ bool isRoot = false;
 
 
 
-#define RBUF_LEN 0x20
-
-
-unsigned char arrayrd[RBUF_LEN];
+//#define RBUF_LEN 0x20
+//
+//
+//unsigned char arrayrd[RBUF_LEN];
 
 void IdleDisplayRedraw()
 {
@@ -149,7 +149,7 @@ void IdleDisplayRedraw()
         case VS_BUTTON_INFO:
         {
             DisplayPrintSymbol(CH_LEFT_RIGHT);
-            DisplayPrintStr(ButtonNames[QuickButtonParams[_currentButtonInfo].Button]);
+            DisplayPrintStr(GetButtonName(QuickButtonParams[_currentButtonInfo].Button));
             DisplayPrintStr(": ");
             if(QuickButtonParams[_currentButtonInfo].ValuesCount == 0)
             {
@@ -180,6 +180,11 @@ void IdleDisplayRedraw()
     
     
 
+}
+
+void IdleUpdateView()
+{
+    IdleDisplayRedraw();
 }
 
 void IdleStart()

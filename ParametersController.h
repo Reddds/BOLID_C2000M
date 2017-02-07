@@ -28,7 +28,9 @@ typedef enum
     PT_PRESS, // Давление
     PT_LIGHT, // Свет вкл-выкл
     PT_DOOR_OPEN, // Дверь откр-закр
-    PT_YES_NO // Да или нет
+    PT_YES_NO, // Да или нет
+     
+    PT_UNKNOWN = 0xFF        
 }ParamTypes;
 
 // Печать названия параметра перед значением

@@ -1,21 +1,55 @@
 #include <p18cxxx.h>
 #include "i2c.h"
 
-
+#include "../system.h" // дл€ delay
 /********************************************************************
  *     Function Name:    EEPageWrite                                 *
  *     Return Value:     error condition status                      *
  *     Parameters:       EE memory control, address and pointer 1    *
  *                       length длина массива.                       *
- *                              ≈сли 0, то до первого 0
+ *                              
  *     Description:      Writes data string to I2C EE memory         *
  *                       device.                                     *
  *                                                                   *  
  ********************************************************************/
 #if defined (I2C_V1) 
 
-int8_t EEPageWrite(uint8_t control, uint16_t address, unsigned char *wrptr, uint16_t length)
+#define PAGE_MASK 0x7F
+
+int8_t EEArrayWrite(uint8_t control, uint24_t address, uint8_t *wrptr, uint24_t length)
 {
+    uint24_t bytesWrote = 0;
+    uint8_t pageCnt = 0;
+    while(bytesWrote < length)
+    {
+        uint8_t bytesToWrite = PAGE_SIZE;
+        if(pageCnt == 0) //  Ќадо чтобы при записи не пересекались границы страниц
+        {
+            uint8_t addrStart = address & PAGE_MASK;
+            if(address != 0)
+                bytesToWrite = PAGE_SIZE - addrStart;
+            if(bytesToWrite > length)
+                bytesToWrite = length;
+        }
+        else if(length - bytesWrote < PAGE_SIZE)
+            bytesToWrite = length - bytesWrote;
+        int8_t res = EEPageWrite(control, address + bytesWrote, wrptr + bytesWrote, bytesToWrite);        
+        if(res != 0)
+            return res - pageCnt * 10;
+        bytesWrote += bytesToWrite;
+        pageCnt++;
+        
+        // ѕаксимальное врем€ записи одной страницы - 5 мс
+        __delay_ms(6);
+    }
+    return 0;
+}
+
+
+
+int8_t EEPageWrite(uint8_t control, uint24_t address, uint8_t *wrptr, uint8_t length)
+{
+    control |= (address >> 16) << 1; // ≈сли адрес больше размера первого чипа, то переходим ко второму
     IdleI2C(); // ensure module is idle
     StartI2C(); // initiate START condition
     while (SSPCON2bits.SEN); // wait until start condition is over 
@@ -34,7 +68,7 @@ int8_t EEPageWrite(uint8_t control, uint16_t address, unsigned char *wrptr, uint
         //IdleI2C();                    // ensure module is idle
         if (!SSPCON2bits.ACKSTAT) // test for ACK condition, if received 
         {
-            if (WriteI2C_W(address)) // write address byte to EEPROM
+            if (WriteI2C_W(address & 0xFFFF)) // write address byte to EEPROM
             {
                 StopI2C();
                 return ( -3); // return with write collision error
@@ -69,6 +103,7 @@ int8_t EEPageWrite(uint8_t control, uint16_t address, unsigned char *wrptr, uint
     {
         return ( -1); // return with Bus Collision error 
     }
+   
     return ( 0); // return with no error
 }
 

@@ -11,6 +11,11 @@
 void IdleStart();
 
 /**
+ * Обновление отображения
+ */
+void IdleUpdateView();
+
+/**
  * Обработка нажатия кнопок
  * 
  * @param button ID кнопки

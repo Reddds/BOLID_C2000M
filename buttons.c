@@ -8,6 +8,32 @@
 #define BTN_LAT_COL3 LATAbits.LA3
 #define BTN_LAT_COL4 LATCbits.LC0
 
+
+
+const char *ButtonNames[] = 
+{
+    "ARM",
+    "DISARM",
+    "BPS",
+    "TRBL",
+    "MEM",
+    "LEFT",
+    "1",
+    "4",
+    "7",
+    "CLR",
+    "PRG",
+    "2",
+    "5",
+    "8",
+    "0",                
+    "RIGHT",
+    "3",
+    "6",
+    "9",
+    "ENT",
+    "Нет"           
+};
 void InitButtons()
 {
     // Button scaner
@@ -27,6 +53,11 @@ void InitButtons()
     
     for(uint8_t i = 0; i < BUTTONS_COUNT; i++)
         ButtonStates[i] = BUTTON_RELEASED;
+}
+
+char* GetButtonName(Buttons button)
+{
+    return ButtonNames[button];
 }
 
 void SetColumnPin(uint8_t col)

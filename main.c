@@ -92,10 +92,27 @@ uint8_t _currentSection;
 // Сколько миллисекунд до хранителя экрана
 //uint16_t _mSecondsToScreenSave = 30000; // До минуты
 
-
+int8_t initRes = 0;
 
   
-
+void LoadParamsFromEeprom()
+{
+    DisplayClear();
+    initRes = InitParameters();//!!!!
+    if(initRes != 0)
+    {        
+        LED_FAILURE_ON;
+        DisplayPrintInt(initRes, DEC);
+        DisplaySetCursorPos(0, 1);
+        DisplayPrintStr("Ошибка EEPROM!");
+    }
+    else
+    {
+        LED_FAILURE_OFF;
+        _currentSection = SECTION_IDLE;
+        IdleStart();
+    }
+}
 
 
 
@@ -149,6 +166,11 @@ uint8_t _currentSection;
  
  
  */
+
+
+
+
+
 uint16_t modbusState;
 bool timeScreenShown = false;
 
@@ -161,7 +183,6 @@ void main(void)
     InitApp();
 
 
-    
     
     /* TODO <INSERT USER APPLICATION CODE HERE> */
     
@@ -177,44 +198,10 @@ void main(void)
     TRISDbits.RD2 = 0;
     TRISDbits.RD3 = 0;
     TRISDbits.RD4 = 0;
-    
-    //LATDbits.LD0 = 0;
-    //LATDbits.LD1 = 1;
-    //LATDbits.LD2 = 0;
+
     LED_WORK_ON;
     
-    
-    
 
-    /*
-     
-     Function Set 0 0    0 0 1 DL N F * *
-        Set interface data length
-        (DL:8-bit/4-bit), numbers of
-        display line (N:2-line/1-line)and,
-        display font type (F:5?11 dots/5?
-        8 dots) 
-     
-     */
-    //int8_t res = -3;
-    //DisplayPrintInt(res, DEC);
-    
-   
-    //WriteCmdXLCD(SHIFT_DISP_LEFT);
-    //while(BusyXLCD());
-    
-    //WriteCmdXLCD(DON);
-    //while(BusyXLCD());
- 
-    /*WriteDataXLCD('A');
-    while(BusyXLCD());
-
-    WriteDataXLCD('t');
-    while(BusyXLCD());
-
-    WriteDataXLCD(' ');
-    while(BusyXLCD());*/
-    
     
     // 100 kbps
     // 2 k for 400 kHz and 1 MHz
@@ -224,113 +211,36 @@ void main(void)
                 //400kHz Baud clock(4) @9MHz
                 //100kHz Baud clock(22) @9MHz
     
-
-    /*eeprom_write(20, 123);
-    while(EECON1bits.WR)
-        continue;
-    DisplayPrintInt(eeprom_read(20), DEC);*/
-    
-    
-    //DisplayPrintStr( "яюёжлфыпэцщ" );
-    //while(BusyXLCD());
-
-    //WriteCmdXLCD(0xC0);
-    //while(BusyXLCD());
-
-    //putrsXLCD( "thanks Ian" );
-    //while(BusyXLCD());
-    
-    
-    
-    
-
-    //LATDbits.LD3 = 1;
-    //LATDbits.LD4 = 0;
-    
     
     TRISAbits.RA4 = 1;
     
     
-    // i2c WP
-    //TRISCbits.RC1 = 0;
-    //LATCbits.LC1 = 0;
-    
-    
-    
-    
-    //DisplayPrintChar(':');
-    //int8_t res = EEByteWrite(0x00, 0x01, 0xA5);
-    //DisplayPrintInt(res, DEC);    
-    
-    
-    
-    //SetParameter(0, 30);
-    //uint16_t par = GetParameter(0);
-    
-    
-    //DisplayPrintProgress(4, 10, 1, 35);
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-//            struct tm newTime;
-//            newTime.tm_year = 17 + 100; // since 1900
-//            newTime.tm_mon = 2;
-//            newTime.tm_mday = 4;
-//            newTime.tm_hour = 11;
-//            newTime.tm_min = 45;
-//            newTime.tm_sec = 30;
-//            time_t newRawTime = mktime(&newTime);
-//            SetTime(&newRawTime);
-//  
-//    
-//    
-//    struct tm *timeStruct = localtime(GetTime());
-//    DisplayPrintUInt(timeStruct->tm_mday, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
-//    DisplayPrintChar('/');
-//    DisplayPrintUInt(timeStruct->tm_mon, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
-//    DisplayPrintChar('/');
-//    DisplayPrintUInt(timeStruct->tm_year, DEC);   
-    
-    
-    
-    //ParamTypes pt = GetParameterTypeByRoom(1, 2);
-    
-    
-    
-    //SettingsStart();
     InitSettings();
     
     
     
-    int8_t initRes = InitParameters();//!!!!
-    if(initRes != 0)
-    {        
-        LED_FAILURE_ON;
-        DisplayClear();
-        DisplayPrintStr("Ошибка EEPROM!");
-    }
-    else
-    {
-        _currentSection = SECTION_IDLE;
-        IdleStart();
-    }
+    LoadParamsFromEeprom();
     //uint16_t val = GetSettingsValue(0);
     
-    unsigned long lastMs = millis();
-    unsigned long screenSaveStart = lastMs + GetSettingValue(SETTING_SAVESCREEN_TIMEOUT) * 1000;
+    
+    //initRes = 1;////!!!!!!!!!
+    
+    //while(1);
+    
+    unsigned long curMs = millis();
+    unsigned long nextSec = curMs + 1000;
+    unsigned long screenSaveStart = curMs + GetSettingValue(SETTING_SAVESCREEN_TIMEOUT) * 1000;
     unsigned long nextKeyPressAvailable = 0;
+    
+    
+    
+    
+    
     while(1)
     {
         __delay_ms(5);
         
-        unsigned long curMs = millis();
+        curMs = millis();
         
         
         if(CASE_OPEN)
@@ -341,265 +251,200 @@ void main(void)
         
         
 
-        
-        // buttons
-        while(initRes == 0) // Чтобы break'ами выходить
+        if(initRes == 0)
         {
-            uint8_t butChanged = IsButtonChanged();
-            if(curMs >= nextKeyPressAvailable
-                    && butChanged != BTN_NONE && ButtonStates[butChanged] == BUTTON_PRESSED)
+            // buttons
+            while(1) // Чтобы break'ами выходить
             {
-
-
-                if(timeScreenShown)
+                uint8_t butChanged = IsButtonChanged();
+                if(curMs >= nextKeyPressAvailable
+                        && butChanged != BTN_NONE && ButtonStates[butChanged] == BUTTON_PRESSED)
                 {
-                    if(butChanged == BTN_CLR)
+
+
+                    if(timeScreenShown)
+                    {
+                        if(butChanged == BTN_CLR)
+                            break;
+                        screenSaveStart = curMs + GetSettingValue(SETTING_SAVESCREEN_TIMEOUT) * 1000;
+                        SetBakLightDuty(GetSettingValue(SETTING_LCD_BK) / 50);
+                        SetKbBakLightDuty(GetSettingValue(SETTING_KB_BK) / 50);
+                        timeScreenShown = false;
+                        IdleStart();
+                        nextKeyPressAvailable = curMs + INTERVAL_BETWEEN_KEYPRESS_AFTER_SCREENSAVER_MS;
                         break;
+                    }
+                    else
+                        nextKeyPressAvailable = curMs + INTERVAL_BETWEEN_KEYPRESS_MS;
                     screenSaveStart = curMs + GetSettingValue(SETTING_SAVESCREEN_TIMEOUT) * 1000;
-                    SetBakLightDuty(GetSettingValue(SETTING_LCD_BK) / 50);
-                    SetKbBakLightDuty(GetSettingValue(SETTING_KB_BK) / 50);
-                    timeScreenShown = false;
-                    IdleStart();
-                    nextKeyPressAvailable = curMs + INTERVAL_BETWEEN_KEYPRESS_AFTER_SCREENSAVER_MS;
-                    break;
-                }
-                else
-                    nextKeyPressAvailable = curMs + INTERVAL_BETWEEN_KEYPRESS_MS;
-                screenSaveStart = curMs + GetSettingValue(SETTING_SAVESCREEN_TIMEOUT) * 1000;
-                switch(butChanged)
-                {
-                    case BTN_LEFT:
-                        switch(_currentSection)
-                        {
-                            case SECTION_IDLE:
-                                if(IdleIsRoot())
-                                {
-                                    _currentSection = SECTION_SETTINGS;
-                                    SettingsStart();
-                                }
-                                else
+                    switch(butChanged)
+                    {
+                        case BTN_LEFT:
+                            switch(_currentSection)
+                            {
+                                case SECTION_IDLE:
+                                    if(IdleIsRoot())
+                                    {
+                                        _currentSection = SECTION_SETTINGS;
+                                        SettingsStart();
+                                    }
+                                    else
+                                        IdleOnButton(butChanged);
+                                    break;
+                                case SECTION_SETTINGS:
+                                    if(SettingsIsRoot())
+                                    {
+                                        _currentSection = SECTION_ROOMS;
+                                        RoomsStart();
+                                    }
+                                    else
+                                        SettingsOnButton(butChanged);        
+                                    break;
+                                case SECTION_ROOMS:
+                                    if(RoomsIsRoot())
+                                    {
+                                        _currentSection = SECTION_IDLE;
+                                        IdleStart();
+                                    }
+                                    else
+                                        RoomsOnButton(butChanged);       
+                                    break;
+                            }                    
+                            break;
+                        case BTN_RIGHT:
+                            switch(_currentSection)
+                            {
+                                case SECTION_IDLE:
+                                    if(IdleIsRoot())
+                                    {
+                                        _currentSection = SECTION_ROOMS;
+                                        RoomsStart();
+                                    }
+                                    else
+                                        IdleOnButton(butChanged);
+                                    break;
+                                case SECTION_ROOMS:
+                                    if(RoomsIsRoot())
+                                    {
+                                        _currentSection = SECTION_SETTINGS;
+                                        SettingsStart();
+                                    }
+                                    else
+                                        RoomsOnButton(butChanged);    
+                                    break;
+                                case SECTION_SETTINGS:
+                                    if(SettingsIsRoot())
+                                    {
+                                        _currentSection = SECTION_IDLE;
+                                        IdleStart();
+                                    }
+                                    else
+                                        SettingsOnButton(butChanged);       
+                                    break;
+                            }
+                            break;
+                        case BTN_CLR: // Переходим в начальный экран
+                            switch(_currentSection)
+                            {
+                                case SECTION_IDLE:
+                                    if(IdleIsRoot())
+                                    {
+                                        screenSaveStart = curMs;
+                                        SetBakLightDuty(GetSettingValue(SETTING_SAVESCREEN_BK) / 50);
+                                        SetKbBakLightDuty(GetSettingValue(SETTING_SAVESCREEN_KB_BK) / 50);
+                                        ShowTimeScreen();
+                                    }
+                                    else
+                                        IdleOnButton(butChanged);
+                                    break;
+                                case SECTION_ROOMS:
+                                    if(RoomsIsRoot())
+                                    {
+                                        _currentSection = SECTION_IDLE;
+                                        IdleStart();
+                                    }
+                                    else
+                                        RoomsOnButton(butChanged);    
+                                    break;
+                                case SECTION_SETTINGS:
+                                    if(SettingsIsRoot())
+                                    {
+                                        _currentSection = SECTION_IDLE;
+                                        IdleStart();
+                                    }
+                                    else
+                                        SettingsOnButton(butChanged);       
+                                    break;
+
+
+                            }
+                        break;
+                        default:
+                            switch(_currentSection)
+                            {
+                                case SECTION_IDLE:
                                     IdleOnButton(butChanged);
-                                break;
-                            case SECTION_SETTINGS:
-                                if(SettingsIsRoot())
-                                {
-                                    _currentSection = SECTION_ROOMS;
-                                    RoomsStart();
-                                }
-                                else
-                                    SettingsOnButton(butChanged);        
-                                break;
-                            case SECTION_ROOMS:
-                                if(RoomsIsRoot())
-                                {
-                                    _currentSection = SECTION_IDLE;
-                                    IdleStart();
-                                }
-                                else
-                                    RoomsOnButton(butChanged);       
-                                break;
-                        }                    
-                        break;
-                    case BTN_RIGHT:
-                        switch(_currentSection)
-                        {
-                            case SECTION_IDLE:
-                                if(IdleIsRoot())
-                                {
-                                    _currentSection = SECTION_ROOMS;
-                                    RoomsStart();
-                                }
-                                else
-                                    IdleOnButton(butChanged);
-                                break;
-                            case SECTION_ROOMS:
-                                if(RoomsIsRoot())
-                                {
-                                    _currentSection = SECTION_SETTINGS;
-                                    SettingsStart();
-                                }
-                                else
-                                    RoomsOnButton(butChanged);    
-                                break;
-                            case SECTION_SETTINGS:
-                                if(SettingsIsRoot())
-                                {
-                                    _currentSection = SECTION_IDLE;
-                                    IdleStart();
-                                }
-                                else
-                                    SettingsOnButton(butChanged);       
-                                break;
-                        }
-                        break;
-                    case BTN_CLR: // Переходим в начальный экран
-                        switch(_currentSection)
-                        {
-                            case SECTION_IDLE:
-                                if(IdleIsRoot())
-                                {
-                                    screenSaveStart = curMs;
-                                    SetBakLightDuty(GetSettingValue(SETTING_SAVESCREEN_BK) / 50);
-                                    SetKbBakLightDuty(GetSettingValue(SETTING_SAVESCREEN_KB_BK) / 50);
-                                    ShowTimeScreen();
-                                }
-                                else
-                                    IdleOnButton(butChanged);
-                                break;
-                            case SECTION_ROOMS:
-                                if(RoomsIsRoot())
-                                {
-                                    _currentSection = SECTION_IDLE;
-                                    IdleStart();
-                                }
-                                else
-                                    RoomsOnButton(butChanged);    
-                                break;
-                            case SECTION_SETTINGS:
-                                if(SettingsIsRoot())
-                                {
-                                    _currentSection = SECTION_IDLE;
-                                    IdleStart();
-                                }
-                                else
-                                    SettingsOnButton(butChanged);       
-                                break;
+                                    break;
+                                case SECTION_ROOMS:
+                                    RoomsOnButton(butChanged);
+                                    break;
+                                case SECTION_SETTINGS:
+                                    SettingsOnButton(butChanged);    
+                                    break;
+                            }
+                            break;
+                    }
 
 
-                        }
-                    break;
-                    default:
-                        switch(_currentSection)
-                        {
-                            case SECTION_IDLE:
-                                IdleOnButton(butChanged);
-                                break;
-                            case SECTION_ROOMS:
-                                RoomsOnButton(butChanged);
-                                break;
-                            case SECTION_SETTINGS:
-                                SettingsOnButton(butChanged);    
-                                break;
-                        }
-                        break;
+
+
                 }
-
-
-                /*char c = 'Z';
-                switch(butChanged)
-                {
-                    case BTN_ARM:
-                        c = '0';
-                        break;
-                    case BTN_DISARM:
-                        c = '1';
-                        break;
-                    case BTN_BPS:
-                        c = '2';
-                        break;
-                    case BTN_TRBL:
-                        c = '3';
-                        break;
-                    case BTN_MEM:
-                        c = '4';
-                        break;
-                    case BTN_LEFT:
-                        c = '5';
-                        DisplayScrollLeft();
-                        break;
-                    case BTN_1:
-                        c = '6';
-                        break;
-                    case BTN_4:
-                        c = '7';
-                        break;
-                    case BTN_7:
-                        c = '8';
-                        break;
-                    case BTN_CLR:
-                        c = '9';
-                        DisplayClear();
-                        break;
-                    case BTN_PRG:
-                        c = 'A';
-                        break;
-                    case BTN_2:
-                        c = 'B';
-                        break;
-                    case BTN_5:
-                        c = 'C';
-                        break;
-                    case BTN_8:
-                        c = 'D';
-                        break;
-                    case BTN_0:
-                        c = 'E';
-                        break;                
-                    case BTN_RIGHT:                    
-                        c = 'F';
-                        DisplayScrollRight();
-                        break;
-                    case BTN_3:
-                        c = 'G';
-                        break;
-                    case BTN_6:
-                        c = 'H';
-                        break;
-                    case BTN_9:
-                        c = 'I';
-                        break;
-                    case BTN_ENT:
-                        c = 'J';
-                        break;
-                }
-                WriteDataXLCD(c);
-                while(BusyXLCD());*/
-
+                break;
             }
-            break;
-        }
-        
-        
-        if(curMs - lastMs >= 1000)
-        {            
-            lastMs = curMs;
-            AddSecond();
-            
-            
-            // Показ заставки со временем
-            if(curMs >= screenSaveStart)
-            {
-                if(!timeScreenShown)
-                {
-                    _currentSection = SECTION_IDLE;
-                    SetBakLightDuty(GetSettingValue(SETTING_SAVESCREEN_BK) / 50);
-                    SetKbBakLightDuty(GetSettingValue(SETTING_SAVESCREEN_KB_BK) / 50);
-                    
-                    IdleStart(); // Перекидываем на начальный экран                    
-                }
-                ShowTimeScreen();
-            }
-            
-            
-            
-            
-            // measure 12V
-            /*ADCON0bits.GO = 1;          //start the conversion
-            while(ADCON0bits.GO == 1){};  //wait for the conversion to end
 
-            uint16_t result = (ADRESH << 8)+ADRESL;	//combine the 10 bits of the conversion
-            double voltage = result * 0.00047169811320754716981132075471698;// 2120.0;
-            DisplayClear();
-            DisplayPrintFloat(voltage, 2);
-            */
-            
-            /*
-             12.4 - 26368 --- 2126,4516129032258064516129032258
-             * 12 - 25472 --- 2122,6666666666666666666666666667
-             * 14 - 29632 --- 2116,5714285714285714285714285714
-             * 13 - 27648 --- 2126,7692307692307692307692307692
-             
-             */
+
+            if(curMs >= nextSec)
+            {            
+                nextSec += 1000; 
+                //lastMs = curMs;
+                AddSecond();
+
+
+                // Показ заставки со временем
+                if(curMs >= screenSaveStart)
+                {
+                    if(!timeScreenShown)
+                    {
+                        _currentSection = SECTION_IDLE;
+                        SetBakLightDuty(GetSettingValue(SETTING_SAVESCREEN_BK) / 50);
+                        SetKbBakLightDuty(GetSettingValue(SETTING_SAVESCREEN_KB_BK) / 50);
+
+                        IdleStart(); // Перекидываем на начальный экран                    
+                    }
+                    ShowTimeScreen();
+                }
+
+
+
+
+//                // measure 12V
+//               ADCON0bits.GO = 1;          //start the conversion
+//                while(ADCON0bits.GO == 1){};  //wait for the conversion to end
+//
+//                uint16_t result = (ADRESH << 8)+ADRESL;	//combine the 10 bits of the conversion
+//                double voltage = result * 0.00047169811320754716981132075471698;// 2120.0;
+//                DisplayClear();
+//                DisplayPrintFloat(voltage, 2);
+//                
+//
+//                
+//                 12.4 - 26368 --- 2126,4516129032258064516129032258
+//                 * 12 - 25472 --- 2122,6666666666666666666666666667
+//                 * 14 - 29632 --- 2116,5714285714285714285714285714
+//                 * 13 - 27648 --- 2126,7692307692307692307692307692
+
+                 
+            }
         }
         
         //Чтение из регистров хранения
@@ -617,15 +462,27 @@ void main(void)
 
 }
 
+uint8_t oldMin = 0xff;
+
 void ShowTimeScreen()
 {
+    uint8_t hour, min;
+    bool getTimeRes = getHourMin(&hour, &min);
+    
+    if(timeScreenShown && (min == oldMin))
+        return;
     timeScreenShown = true;
+    
+    oldMin = min;
+    
+    
     DisplayClear();
     DisplayPrintStr("Время: ");
     
     
-    uint8_t hour, min;
-    if(getHourMin(&hour, &min))
+    
+    
+    if(getTimeRes)
     {
         DisplayPrintUInt(hour, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
         DisplayPrintChar(':');
@@ -652,11 +509,12 @@ void ShowTimeScreen()
 
 void io_poll() 
 {
+    uint16_t lastFileNum;
     uint16_t lastAddress;
     uint16_t lastEndAddress;
     uint8_t lastCommand;
     //uint16_t lastCount;
-    uint8_t *lastFunction = ModbusGetLastCommand(&lastAddress, &lastEndAddress, &lastCommand);
+    uint8_t *lastFunction = ModbusGetLastCommand(&lastFileNum, &lastAddress, &lastEndAddress, &lastCommand);
     if(*lastFunction == MB_FC_NONE)
         return;
     
@@ -677,19 +535,61 @@ void io_poll()
         ProcessUserCommands();
         return;
     }
-    
+    */
     if(*lastFunction == MB_FC_WRITE_REGISTER || *lastFunction == MB_FC_WRITE_MULTIPLE_REGISTERS)
     {
-
+        switch(_currentSection)
+         {
+            case SECTION_IDLE:
+                IdleUpdateView();        
+                break;
+            case SECTION_SETTINGS:
+                //SettingsUpdateView();        
+                break;
+            case SECTION_ROOMS:    
+                RoomsUpdateView();        
+                break;
+        }     
     }
     
-
+    
     if(*lastFunction == MB_FC_WRITE_FILE_RECORD)
     {
-        InitFromEeprom();
-        ModbusSetExceptionStatusBit(MB_EXCEPTION_LAST_COMMAND_STATE, true);
+        if(lastFileNum == 1) // nternal EEPROM settings
+        {
+            InitSettings();
+            ModbusSetExceptionStatusBit(MB_EXCEPTION_LAST_COMMAND_STATE, true);
+            switch(_currentSection)
+            {
+                case SECTION_IDLE:
+                    break;
+                case SECTION_SETTINGS:
+                    SettingsUpdateView();        
+                    break;
+                case SECTION_ROOMS:    
+                    break;
+            }                 
+        }
+        else if(lastFileNum > 1) // External EEPROM param settings 
+        {
+            LoadParamsFromEeprom();
+            ModbusSetExceptionStatusBit(MB_EXCEPTION_LAST_COMMAND_STATE, true);
+            switch(_currentSection)
+            {
+                case SECTION_IDLE:
+                    IdleStart();
+                    break;
+                case SECTION_SETTINGS:
+//                    SettingsUpdateView();        
+                    break;
+                case SECTION_ROOMS:
+                    RoomsStart();
+                    break;
+            }    
+        }
+        
 //        for(uint8_t i = 0; i < eventCount && i < MAX_EVENTS; i++)
 //            LightLed(i + 1, LED_GREEN, false);
         return;
-    }*/
+    }
 }

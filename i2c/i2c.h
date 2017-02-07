@@ -48,11 +48,11 @@
 
 
 // MY
-//#define WP_TRIS TRISCbits.RC1
-//#define WP_LATCH LATCbits.LC1
+#define WP_TRIS TRISCbits.RC1
+#define WP_LATCH LATCbits.LC1
 
 
-
+#define PAGE_SIZE 128
 
 
 #if defined (I2C_V2) || defined (I2C_V3) || defined (I2C_V5) || defined (I2C_V6) || defined (I2C_V6_1) || defined (I2C_V6_2)/* These versions have MSSP1 */
@@ -789,9 +789,9 @@ void OpenI2C( uint8_t sync_mode,  uint8_t slew );
 int8_t WriteI2C( uint8_t data_out );
 int8_t WriteI2C_W( uint16_t data_out );
 
-#define putsI2C(wrptr) putBufI2C(wrptr, 0)
+//#define putsI2C(wrptr) putBufI2C(wrptr, 0)
 
-int8_t putBufI2C(uint8_t *wrptr, uint16_t length);
+int8_t putBufI2C(uint8_t *wrptr, uint8_t length);
 
 uint8_t ReadI2C(void);
 
@@ -921,22 +921,27 @@ signed char getsI2C(  unsigned char *rdptr,  unsigned char length );
 int8_t EEAckPolling( uint8_t control );
 
 int8_t EEByteWrite(uint8_t control,
-                    uint16_t address,
+                    uint24_t address,
                     uint8_t data );
 
 int16_t EECurrentAddRead( uint8_t control );
 
 int8_t EEPageWrite( uint8_t control,
-                    uint16_t address,
+                    uint24_t address,
                     uint8_t *wrptr,
-                    uint16_t length);
+                    uint8_t length);
+// Array Может быть больше, чем 1 страница
+int8_t EEArrayWrite( uint8_t control,
+                    uint24_t address,
+                    uint8_t *wrptr,
+                    uint24_t length);
 
-int16_t EERandomRead( uint8_t control,  uint16_t address );
+int16_t EERandomRead( uint8_t control,  uint24_t address );
 
 int8_t EESequentialRead( uint8_t control,
-                           uint16_t address,
+                           uint24_t address,
                            uint8_t *rdptr,
-                           uint8_t length );
+                           uint24_t length );
 #endif
 
 

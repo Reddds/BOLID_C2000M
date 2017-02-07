@@ -15,12 +15,10 @@
  ********************************************************************/
 #if defined (I2C_V1) 
 
-int8_t EEByteWrite(uint8_t control, uint16_t address, uint8_t data)
+int8_t EEByteWrite(uint8_t control, uint24_t address, uint8_t data)
 {
+    control |= (address >> 16) << 1; // Если адрес больше размера первого чипа, то переходим ко второму
     IdleI2C(); // ensure module is idle
-#ifdef WP_LATCH
-    WP_LATCH = 0;
-#endif
     StartI2C(); // initiate START condition
     while (SSPCON2bits.SEN); // wait until start condition is over 
     if (PIR2bits.BCLIF) // test for bus collision
@@ -32,21 +30,15 @@ int8_t EEByteWrite(uint8_t control, uint16_t address, uint8_t data)
         if (WriteI2C(control)) // write byte - R/W bit should be 0
         {
             StopI2C();
-#ifdef WP_LATCH
-            WP_LATCH = 1;
-#endif
             return ( -3); // set error for write collision
         }
 
         //IdleI2C();                    // ensure module is idle
         if (!SSPCON2bits.ACKSTAT) // test for ACK condition received
         {
-            if (WriteI2C_W(address)) // write word address for EEPROM
+            if (WriteI2C_W(address & 0xFFFF)) // write word address for EEPROM
             {
                 StopI2C();
-#ifdef WP_LATCH
-                WP_LATCH = 1;
-#endif
                 return ( -3); // set error for write collision
             }
 
@@ -56,36 +48,24 @@ int8_t EEByteWrite(uint8_t control, uint16_t address, uint8_t data)
                 if (WriteI2C(data)) // data byte for EEPROM
                 {
                     StopI2C();
-#ifdef WP_LATCH
-                    WP_LATCH = 1;
-#endif          
                     return ( -3); // set error for write collision
                 }
             }
             else
             {
                 StopI2C();
-#ifdef WP_LATCH
-                WP_LATCH = 1;
-#endif        
                 return ( -2); // return with Not Ack error condition   
             }
         }
         else
         {
             StopI2C();
-#ifdef WP_LATCH
-            WP_LATCH = 1;
-#endif      
             return ( -2); // return with Not Ack error condition   
         }
     }
 
     //IdleI2C();                      // ensure module is idle  
     StopI2C(); // send STOP condition
-#ifdef WP_LATCH
-    WP_LATCH = 1;
-#endif
     while (SSPCON2bits.PEN); // wait until stop condition is over 
     if (PIR2bits.BCLIF) // test for bus collision
     {

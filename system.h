@@ -17,7 +17,6 @@
 
 
 
-// 1 sec = FCY = 2 500 000 
 // 1 min = FCY * 60 = 150000000
 // 1/10 min = FCY * 6 = 15 000 000
 #define WATCH_TIMER_PRESCALER 256

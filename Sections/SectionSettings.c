@@ -112,6 +112,11 @@ void SettingsDisplayRedraw()
 
 }
 
+void SettingsUpdateView()
+{
+    SettingsDisplayRedraw();
+}
+
 bool inited = false;
 void SettingsStart()
 {

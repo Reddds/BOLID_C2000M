@@ -10,6 +10,11 @@
 
 /* TODO Application specific user parameters used in user.c may go here */
 #define EXT_MEM_CHIP_SIZE 0x10000
+#define EXT_MEM_CHIP_PAGES 512
+#define EXT_MEM_CHIP_0 0x00
+#define EXT_MEM_CHIP_1 0x02
+#define EXT_MEM_COMMAND 0xA0
+
 
 #define INTERVAL_BETWEEN_KEYPRESS_MS 100
 #define INTERVAL_BETWEEN_KEYPRESS_AFTER_SCREENSAVER_MS 1000
@@ -122,6 +127,14 @@ do{											\
 		GIE = 1;							\
 	}										\
 } while (0)
+
+#define	_EEREG_EEPROM_READ(addr) (	\
+        EEPGD = 0,                  \
+        CFGS = 0,                  \
+		EEADR = addr,				\
+		_ADJ_EECON1(),				\
+		RD = 1,						\
+		EEDATA)		
 
 #define eeprom_read(a) _EEREG_EEPROM_READ(a)
 #define eeprom_write(a, v) _EEREG_EEPROM_WRITE(a, v)

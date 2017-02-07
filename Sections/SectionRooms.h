@@ -10,6 +10,11 @@
 void RoomsStart();
 
 /**
+ * Обновление отображения
+ */
+void RoomsUpdateView();
+
+/**
  * Обработка нажатия кнопок
  * 
  * @param button ID кнопки

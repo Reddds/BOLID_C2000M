@@ -7,7 +7,7 @@
  *     Return Value:     error condition status                      *
  *     Parameters:       address of write string storage location    *
  *                       length длина массива.                       *
- *                              Если 0, то до первого 0              *
+ *                                      *
  *     Description:      This routine writes a string to the I2C bus,*
  *                       until a null character is reached. If Master*
  *                       function putcI2C is called. When trans-     *
@@ -19,11 +19,11 @@
 #if defined (I2C_V1)
 
 //int8_t putsI2C(unsigned char *wrptr)
-int8_t putBufI2C(uint8_t *wrptr, uint16_t length)
+int8_t putBufI2C(uint8_t *wrptr, uint8_t length)
 {
     unsigned char temp;
-    uint16_t wrote = 0;
-    while (length == 0 ? *wrptr : wrote < length) // transmit data until null character 
+    uint8_t wrote = 0;
+    while (wrote < length) // transmit data until null character 
     {
         if (SSPCON1bits.SSPM3) // if Master transmitter then execute the following
         {

@@ -1,3 +1,8 @@
+#ifndef MODBUSRTU_H
+#define MODBUSRTU_H
+
+
+
 /*
  * @file 		ModbusRtu.h
  * @version     1.20
@@ -80,6 +85,27 @@
 #define MODEL_NAME "MMM"
 #define USER_APPLICATION_NAME "Monitor"
 
+const char EepromInfoDesc[] = 
+"Internal: 1024 Bytes (File #1).\nExternal: 2x64 kB (File #2..1026). Page size 128 B (64 words).";
+
+const char ParamStructDesc[] = 
+"Main screen params - What show in main screen,\n\
+Quick buttons - Actions on press button in main screen,\n\
+Room params - Rooms descriptions,\n\
+Param list - List of params description";
+
+const char MainScreenDesc[] =
+"Main screen params\n\
+00: Number of params\n\
+01: Sequense:\n\
+  00: Column\n\
+  01: Row\n\
+  02: Type\n\
+  03: Value or literal length\n\
+  04: Literal";
+
+
+
 //#define MODBUS_RESULT_SUCCESS 0x8080 // Result after executing user code
 
 //#define INPUT_REG_LAST_COMMAND_STATE 0 // State after execution last command 0x8080 - All Right
@@ -148,7 +174,7 @@ enum MB_FC
   uint8_t ModbusGetLastError(); //!<get last error message
   void ModbusSetID( uint8_t u8id ); //!<write new ID for the slave
   void ModbusEnd(); //!<finish any communication and release serial communication port
-  uint8_t *ModbusGetLastCommand(uint16_t *address, uint16_t *count, uint8_t *command);
+  uint8_t *ModbusGetLastCommand(uint16_t *fileNum, uint16_t *address, uint16_t *count, uint8_t *command);
   void ModbusSetExceptionStatusBit(uint8_t bitNum, bool value);
   
   uint8_t *ModbusGetUserCommandId();
@@ -162,3 +188,4 @@ enum MB_FC
   uint16_t ModbusGetUserCommandAdditional3();
   uint8_t *ModbusGetUserCommandAdditional3Hi();
   uint8_t *ModbusGetUserCommandAdditional3Lo();
+#endif

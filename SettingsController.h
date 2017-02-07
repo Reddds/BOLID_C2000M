@@ -43,27 +43,27 @@ typedef struct
     
 }SettingTag;    
    
-SettingTag settingsNames[] = 
-{
-    {   "Подсв.экр.", "Подсветка экра-", "на",        2,  ST_0_100, 2, 0, 100, 50},
-    {    "Подсв.кн.", "Подсветка кно-", "пок",        3,  ST_0_100, 3, 0, 100, 50},
-    {"Заде. застав.", "Задержка перед", "заставкой",  9,  ST_0_100, 4, 5,  60,  5},
-    // Подсвечивать ли заставку
-    {"Подсв.застав.", "Подсветка при", "заставке",    8,  ST_0_100, 5, 0, 100, 50},   
-    {"Подсв.кн.зас.", "Подсв.кнопки при", "заставке", 8,  ST_0_100, 6, 0, 100, 50},
-};
+//SettingTag settingsNames[] = 
+//{
+//    {   "Подсв.экр.", "Подсветка экра-", "на",        2,  ST_0_100, 2, 0, 100, 50},
+//    {    "Подсв.кн.", "Подсветка кно-", "пок",        3,  ST_0_100, 3, 0, 100, 50},
+//    {"Заде. застав.", "Задержка перед", "заставкой",  9,  ST_0_100, 4, 5,  60,  5},
+//    // Подсвечивать ли заставку
+//    {"Подсв.застав.", "Подсветка при", "заставке",    8,  ST_0_100, 5, 0, 100, 50},   
+//    {"Подсв.кн.зас.", "Подсв.кнопки при", "заставке", 8,  ST_0_100, 6, 0, 100, 50},
+//};
 
 void InitSettings(); // !!! временно
     
 //uint8_t GetSettingsCount();
-#define GetSettingName(settingId) (settingsNames[settingId].Name)
-#define GetSettingFullName1Line(settingId) (settingsNames[settingId].FullName1Line)
-#define GetSettingFullName2Line(settingId) (settingsNames[settingId].FullName2Line)
-#define GetSettingLine2Size(settingId) (settingsNames[settingId].Line2Size)
-#define GetSettingType(settingId) (settingsNames[settingId].Type)
-#define GetSettingMin(settingId) (settingsNames[settingId].minValue)
-#define GetSettingMax(settingId) (settingsNames[settingId].maxValue)
-#define GetSettingStep(settingId) (settingsNames[settingId].step)
+char* GetSettingName(uint8_t settingId);
+char* GetSettingFullName1Line(uint8_t settingId);
+char* GetSettingFullName2Line(uint8_t settingId);
+uint8_t GetSettingLine2Size(uint8_t settingId);
+SettingTypes GetSettingType(uint8_t settingId);
+uint8_t GetSettingMin(uint8_t settingId);
+uint8_t GetSettingMax(uint8_t settingId);
+uint8_t GetSettingStep(uint8_t settingId);
 
 uint16_t GetSettingValue(uint8_t settingId);
 

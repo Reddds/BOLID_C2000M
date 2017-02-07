@@ -48,7 +48,7 @@ int8_t WriteI2C_W(uint16_t data_out)
 {
     if(WriteI2C(data_out >> 8))
         return -1;
-    if(WriteI2C(data_out && 0xFF))
+    if(WriteI2C(data_out & 0xFF))
         return -2;
     return 0;
 }

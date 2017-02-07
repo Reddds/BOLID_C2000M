@@ -172,6 +172,11 @@ void RoomDisplayRedraw()
     
 }
 
+void RoomsUpdateView()
+{
+    RoomDisplayRedraw();
+}
+
 void RoomsOnButton(uint8_t button)
 {
     if (ButtonStates[button] != BUTTON_PRESSED)

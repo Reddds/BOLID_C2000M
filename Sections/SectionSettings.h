@@ -11,6 +11,10 @@
 void SettingsStart();
 
 /**
+ * Обновление отображения
+ */
+void SettingsUpdateView();
+/**
  * Обработка нажатия кнопок
  * 
  * @param button ID кнопки

@@ -23,6 +23,7 @@
 #include "LCD/xlcd.h"
 #include "interrupts.h"
 #include "ModbusRtu.h"
+#include "i2c/i2c.h"
 
 /******************************************************************************/
 /* User Functions                                                             */
@@ -245,7 +246,8 @@ void InitApp(void)
     //DisplayCreateChar(0x00, Char0);
     
     
-    
+    WP_LATCH = 1;
+    WP_TRIS = 1;
     
     
     /* Configure the IPEN bit (1=on) in RCON to turn on/off int priorities */

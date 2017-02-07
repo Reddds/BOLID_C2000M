@@ -16,8 +16,9 @@
  ********************************************************************/
 #if defined (I2C_V1) 
 
-int8_t EESequentialRead(uint8_t control, uint16_t address, uint8_t *rdptr, uint8_t length)
+int8_t EESequentialRead(uint8_t control, uint24_t address, uint8_t *rdptr, uint24_t length)
 {
+    control |= (address >> 16) << 1; // Если адрес больше размера первого чипа, то переходим ко второму
     IdleI2C(); // ensure module is idle
     StartI2C(); // initiate START condition
     while (SSPCON2bits.SEN); // wait until start condition is over 
@@ -37,7 +38,7 @@ int8_t EESequentialRead(uint8_t control, uint16_t address, uint8_t *rdptr, uint8
         //IdleI2C();                    // ensure module is idle
         if (!SSPCON2bits.ACKSTAT) // test for ACK condition, if received
         {
-            if (WriteI2C_W(address)) // WRITE word address to EEPROM
+            if (WriteI2C_W(address & 0xFFFF)) // WRITE word address to EEPROM
             {
                 StopI2C();
                 return ( -32); // return with write collision error
