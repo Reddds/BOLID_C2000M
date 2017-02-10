@@ -151,6 +151,7 @@ uint8_t _u8BufferSize;
 uint8_t _u8lastRec;
 //uint16_t *_holdingRegs;
 uint8_t _inputRegsCount, _holdingRegsCount;
+uint8_t _discreteInputCount, _coilsCount;
 uint16_t _u16InCnt, _u16OutCnt, _u16errCnt;
 uint16_t _u16timeOut;
 uint32_t _u32time, _u32timeOut;
@@ -183,12 +184,12 @@ uint8_t ModbusValidateAnswer();
 uint8_t ModbusValidateRequest();
 void ModbusGet_FC1();
 void ModbusGet_FC3();
-int8_t ModbusProcess_FC1(uint16_t regs);                    // Read Coils
+int8_t ModbusProcess_FC1(uint8_t *regs);                    // Read Coils
 int8_t ModbusProcess_FC3(uint16_t *regs, uint8_t u8size);   // Read Holding Registers
-int8_t ModbusProcess_FC5(uint16_t *regs);                   // Write Single Coil &regs 
+int8_t ModbusProcess_FC5(uint8_t *regs);                    // Write Single Coil &regs 
 int8_t ModbusProcess_FC6(uint16_t *regs, uint8_t u8size);   // Write Single Register
 int8_t ModbusProcess_FC7();                                 // Read Exception Status
-int8_t ModbusProcess_FC15(uint16_t *regs);                  // Write Multiple Coils&regs 
+int8_t ModbusProcess_FC15(uint8_t *regs);                  // Write Multiple Coils&regs 
 int8_t ModbusProcess_FC16(uint16_t *regs, uint8_t u8size);  // Write Multiple registers
 int8_t ModbusProcess_FC17();    // Report Slave ID
 int8_t ModbusProcess_FC20();    // Read EEPROM
@@ -475,13 +476,17 @@ uint8_t ModbusGetLastError()
  * @ingroup loop
  */
 
-uint8_t ModbusPoll(uint16_t discreteInputs, uint16_t *coils, uint16_t *inputRegs, const uint8_t inputRegsCount,
-        uint16_t *holdingRegs, const uint8_t holdingRegsCount)
+uint8_t ModbusPoll(uint8_t *discreteInputs, const uint8_t discreteInputCount, 
+                      uint8_t *coils, const uint8_t coilsCount, 
+                      uint16_t *inputRegs, const uint8_t inputRegsCount, 
+                      uint16_t *holdingRegs, const uint8_t holdingRegsCount)
 {
     _lastFunction = MB_FC_NONE;
     //bitClear(_exceptionStatus, MB_EXCEPTION_LAST_COMMAND_STATE);
     //_inputRegs = inputRegs;
     //_holdingRegs = holdingRegs;
+    _discreteInputCount = discreteInputCount;
+    _coilsCount = coilsCount;
     _inputRegsCount = inputRegsCount;
     _holdingRegsCount = holdingRegsCount;
 
@@ -548,7 +553,7 @@ uint8_t ModbusPoll(uint16_t discreteInputs, uint16_t *coils, uint16_t *inputRegs
     switch (_au8Buffer[ FUNC ])
     {
         case MB_FC_READ_COILS:
-            return ModbusProcess_FC1(*coils);
+            return ModbusProcess_FC1(coils);
         case MB_FC_READ_DISCRETE_INPUT:
             return ModbusProcess_FC1(discreteInputs);
         case MB_FC_READ_REGISTERS:
@@ -886,15 +891,22 @@ uint8_t ModbusValidateRequest()
     uint8_t u8regs;
     switch (_au8Buffer[ FUNC ])
     {
-        case MB_FC_READ_COILS:
         case MB_FC_READ_DISCRETE_INPUT:
+            u16regs = word(_au8Buffer[ ADD_HI ], _au8Buffer[ ADD_LO ]);
+            u16count = word(_au8Buffer[ NB_HI ], _au8Buffer[ NB_LO ]);
+            if (u16count < 1 || u16count > 0x07D0)
+                return EXC_REGS_QUANT;
+            if (u16regs + u16count > _discreteInputCount)
+                return EXC_ADDR_RANGE;
+            break;
+        case MB_FC_READ_COILS:
         case MB_FC_WRITE_MULTIPLE_COILS:
             // Всего может быть до 16 адресов
             u16regs = word(_au8Buffer[ ADD_HI ], _au8Buffer[ ADD_LO ]);
             u16count = word(_au8Buffer[ NB_HI ], _au8Buffer[ NB_LO ]);
-            if (u16count > 16)
+            if (u16count < 1 || u16count > 0x07D0)
                 return EXC_REGS_QUANT;
-            if (u16regs > 15 || u16regs + u16count > 16)
+            if (u16regs + u16count > _coilsCount)
                 return EXC_ADDR_RANGE;
             break;
         case MB_FC_WRITE_COIL:
@@ -902,7 +914,7 @@ uint8_t ModbusValidateRequest()
             u8regs = _au8Buffer[ NB_HI ];
             if (u8regs != 0x00 && u8regs != 0xFF)
                 return EXC_REGS_QUANT;
-            if (u16regs > 15)
+            if (u16regs > _coilsCount)
                 return EXC_ADDR_RANGE;
             break;
         case MB_FC_WRITE_REGISTER: // ������ � 0!
@@ -1052,12 +1064,12 @@ uint8_t *ModbusGetLastCommand(uint16_t *fileNum, uint16_t *address, uint16_t *co
  * @return u8BufferSize Response to master length
  * @ingroup discrete
  */
-int8_t ModbusProcess_FC1(uint16_t regs)
+int8_t ModbusProcess_FC1(uint8_t *regs)
 {
-    //uint8_t u8currentRegister;
+    uint8_t u8currentRegister;
     uint8_t u8currentBit, u8bytesno, u8bitsno;
     uint8_t u8CopyBufferSize;
-    uint16_t u16currentCoil, u16coil;
+    uint8_t u8currentCoil, u8coil;
 
     // get the first and last coil from the message
     uint16_t u16StartCoil = word(_au8Buffer[ ADD_HI ], _au8Buffer[ ADD_LO ]);
@@ -1065,7 +1077,7 @@ int8_t ModbusProcess_FC1(uint16_t regs)
     uint16_t u16Coilno = word(_au8Buffer[ NB_HI ], _au8Buffer[ NB_LO ]);
     _lastCount = u16Coilno;
     // put the number of bytes in the outcoming message
-    u8bytesno = (uint8_t) (u16Coilno / 8);
+    u8bytesno = (uint8_t) (u16Coilno >> 3); // /8
     if (u16Coilno % 8 != 0)
         u8bytesno++;
     _au8Buffer[ ADD_HI ] = u8bytesno;
@@ -1074,16 +1086,16 @@ int8_t ModbusProcess_FC1(uint16_t regs)
     // read each coil from the register map and put its value inside the outcoming message
     u8bitsno = 0;
 
-    for (u16currentCoil = 0; u16currentCoil < u16Coilno; u16currentCoil++)
+    for (u8currentCoil = 0; u8currentCoil < u16Coilno; u8currentCoil++)
     {
-        u16coil = u16StartCoil + u16currentCoil;
-        //u8currentRegister = (uint8_t) (u16coil / 16);
-        u8currentBit = (uint8_t) u16coil;
+        u8coil = u16StartCoil + u8currentCoil;
+        u8currentRegister = (uint8_t) (u8coil >> 3); // /8
+        u8currentBit = ((uint8_t) u8coil & 0x07);
 
         bitWrite(
                 _au8Buffer[ _u8BufferSize ],
                 u8bitsno,
-                bitRead(regs, u8currentBit));
+                bitRead(regs[u8currentRegister], u8currentBit));
         u8bitsno++;
 
         if (u8bitsno > 7)
@@ -1164,21 +1176,21 @@ int8_t ModbusProcess_FC3(uint16_t *regs, uint8_t u8size)
  * @return u8BufferSize Response to master length
  * @ingroup discrete
  */
-int8_t ModbusProcess_FC5(uint16_t *regs)
+int8_t ModbusProcess_FC5(uint8_t *regs)
 {
-    //uint8_t u8currentRegister,
+    uint8_t u8currentRegister;
     uint8_t u8currentBit;
     uint8_t u8CopyBufferSize;
     uint16_t u16coil = word(_au8Buffer[ ADD_HI ], _au8Buffer[ ADD_LO ]);
     _lastAddress = u16coil;
     _lastCount = 1;
     // point to the register and its bit
-    //u8currentRegister = (uint8_t) (u16coil / 16);
-    u8currentBit = (uint8_t) (u16coil % 16);
+    u8currentRegister = (uint8_t) (u16coil >> 3); // / 8
+    u8currentBit = (uint8_t) (u16coil & 0x07);
 
     // write to coil
     bitWrite(
-            *regs,
+            regs[u8currentRegister],
             u8currentBit,
             _au8Buffer[ NB_HI ] == 0xff);
 
@@ -1257,12 +1269,12 @@ int8_t ModbusProcess_FC7()
  * @return u8BufferSize Response to master length
  * @ingroup discrete
  */
-int8_t ModbusProcess_FC15(uint16_t *regs)
+int8_t ModbusProcess_FC15(uint8_t *regs)
 {
-    //   uint8_t u8currentRegister,
+    uint8_t u8currentRegister;
     uint8_t u8currentBit, u8frameByte, u8bitsno;
     uint8_t u8CopyBufferSize;
-    uint16_t u16currentCoil, u16coil;
+    uint8_t u8currentCoil, u8coil;
     bool bTemp;
 
     // get the first and last coil from the message
@@ -1274,19 +1286,19 @@ int8_t ModbusProcess_FC15(uint16_t *regs)
     // read each coil from the register map and put its value inside the outcoming message
     u8bitsno = 0;
     u8frameByte = 7;
-    for (u16currentCoil = 0; u16currentCoil < u16Coilno; u16currentCoil++)
+    for (u8currentCoil = 0; u8currentCoil < u16Coilno; u8currentCoil++)
     {
 
-        u16coil = u16StartCoil + u16currentCoil;
-        //u8currentRegister = (uint8_t) (u16coil / 16);
-        u8currentBit = (uint8_t) u16coil;
+        u8coil = u16StartCoil + u8currentCoil;
+        u8currentRegister = (uint8_t) (u8coil >> 3); // /8
+        u8currentBit = ((uint8_t) u8coil & 0x07);
 
         bTemp = bitRead(
                 _au8Buffer[ u8frameByte ],
                 u8bitsno);
 
         bitWrite(
-                *regs,
+                regs[u8currentRegister],
                 u8currentBit,
                 bTemp);
 
@@ -1650,12 +1662,12 @@ int8_t ModbusProcess_FC100()
             
             //----------------
             struct tm newTime;
-            newTime.tm_year = _au8Buffer[COM_ADD3_LO] + 100; // since 1900
-            newTime.tm_mon = _au8Buffer[COM_ADD3_HI];
+            newTime.tm_year = _au8Buffer[COM_ADD3_HI] + 100; // since 1900
+            newTime.tm_mon  = _au8Buffer[COM_ADD3_LO];
             newTime.tm_mday = _au8Buffer[COM_ADD2_HI];
             newTime.tm_hour = _au8Buffer[COM_ADD1_HI];
-            newTime.tm_min = _au8Buffer[COM_ADD1_LO];
-            newTime.tm_sec = _au8Buffer[COM_ADD2_LO];
+            newTime.tm_min  = _au8Buffer[COM_ADD1_LO];
+            newTime.tm_sec  = _au8Buffer[COM_ADD2_LO];
             time_t newRawTime = mktime(&newTime);
             SetTime(&newRawTime);
             //----------------

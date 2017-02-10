@@ -70,7 +70,9 @@ ViewStates _currentSrState;
 void RoomDisplayRedraw();
 
 //bool inited = false;
+bool tempParamIs16bit;
 uint16_t tempParam;
+bool tempBoolParam;
 
 void RoomsStart()
 {
@@ -130,7 +132,7 @@ void RoomDisplayRedraw()
             DisplayPrintChar(CH_LEFT_RIGHT);
             
             PrintParameterByRoom(_currentRoom, _currentParam, -1, -1, PPN_FULL);
-            if(IsParamEditable(_currentRoom, _currentParam))
+            if(IsParamEditable(_currentRoom, _currentParam, &tempParamIs16bit))
             {
                 DisplayPrintChar('*');
             }
@@ -147,23 +149,17 @@ void RoomDisplayRedraw()
             // Вторая строка -название параметра и- значение
             DisplaySetCursorPos(0, 1);
             DisplayPrintSymbol(CH_LEFT_RIGHT);
-            PrintParameterByRoomAndValue(_currentRoom, _currentParam, tempParam, -1, -1, PPN_NONE);
-            switch(GetParameterTypeByRoom(_currentRoom, _currentParam))
+            
+            
+            if(tempParamIs16bit)
             {
-                case PT_LIGHT:
-                case PT_DOOR_OPEN:
-                case PT_YES_NO:
-                {
-                    //DisplayPrintChar('&');
-                }
-                break;
-                default:
-                {
-                    DisplayPrintProgress(8, 8, 1, (tempParam - GetParameterMaxByRoom(_currentRoom, _currentParam)) / (float)(GetParameterMaxByRoom(_currentRoom, _currentParam) - GetParameterMinByRoom(_currentRoom, _currentParam)) * 100);
-                }
-                break;
+                PrintParameterByRoomAndValue(_currentRoom, _currentParam, tempParam, -1, -1, PPN_NONE);
+                DisplayPrintProgress(8, 8, 1, (tempParam - GetParameterMaxByRoom(_currentRoom, _currentParam)) / (float)(GetParameterMaxByRoom(_currentRoom, _currentParam) - GetParameterMinByRoom(_currentRoom, _currentParam)) * 100);
             }
-
+            else
+            {
+                PrintDiscreteParameterByRoomAndValue(_currentRoom, _currentParam, tempBoolParam, -1, -1, PPN_NONE);
+            }
         }
         break;
     }
@@ -206,29 +202,42 @@ void RoomsOnButton(uint8_t button)
                 break;  
                 case VS_EDIT_PARAM:
                 {
-                    switch(GetParameterTypeByRoom(_currentRoom, _currentParam))
+                    if(tempParamIs16bit)
                     {
-                        case PT_LIGHT:
-                        case PT_DOOR_OPEN:
-                        case PT_YES_NO:
+                        if(tempParam >= GetParameterMinByRoom(_currentRoom, _currentParam) + GetParameterStepByRoom(_currentRoom, _currentParam))
                         {
-                            if(tempParam == MODBUS_TRUE)
-                                tempParam = MODBUS_FALSE;
-                            else
-                                tempParam = MODBUS_TRUE;
+                            tempParam -= GetParameterStepByRoom(_currentRoom, _currentParam);                        
                         }
-                        break;
-                        default:
-                        {
-                            if(tempParam >= GetParameterMinByRoom(_currentRoom, _currentParam) + GetParameterStepByRoom(_currentRoom, _currentParam))
-                            {
-                                tempParam -= GetParameterStepByRoom(_currentRoom, _currentParam);                        
-                            }
-                            else
-                                tempParam = GetParameterStepByRoom(_currentRoom, _currentParam);
-                            
-                        }
+                        else
+                            tempParam = GetParameterStepByRoom(_currentRoom, _currentParam);
                     }
+                    else
+                    {
+                        tempBoolParam = !tempBoolParam;
+                    }
+//                    switch(GetParameterTypeByRoom(_currentRoom, _currentParam))
+//                    {
+//                        case PT_LIGHT:
+//                        case PT_DOOR_OPEN:
+//                        case PT_YES_NO:
+//                        {
+//                            if(tempParam == MODBUS_TRUE)
+//                                tempParam = MODBUS_FALSE;
+//                            else
+//                                tempParam = MODBUS_TRUE;
+//                        }
+//                        break;
+//                        default:
+//                        {
+//                            if(tempParam >= GetParameterMinByRoom(_currentRoom, _currentParam) + GetParameterStepByRoom(_currentRoom, _currentParam))
+//                            {
+//                                tempParam -= GetParameterStepByRoom(_currentRoom, _currentParam);                        
+//                            }
+//                            else
+//                                tempParam = GetParameterStepByRoom(_currentRoom, _currentParam);
+//                            
+//                        }
+//                    }
                 }
                 break;
             }
@@ -258,26 +267,39 @@ void RoomsOnButton(uint8_t button)
                 break;  
                 case VS_EDIT_PARAM:
                 {
-                    switch(GetParameterTypeByRoom(_currentRoom, _currentParam))
+                    if(tempParamIs16bit)
                     {
-                        case PT_LIGHT:
-                        case PT_DOOR_OPEN:
-                        case PT_YES_NO:
-                        {
-                            if(tempParam == MODBUS_TRUE)
-                                tempParam = MODBUS_FALSE;
-                            else
-                                tempParam = MODBUS_TRUE;
-                        }
-                        break;
-                        default:
-                        {
-                            if(tempParam <= GetParameterMaxByRoom(_currentRoom, _currentParam) - GetParameterStepByRoom(_currentRoom, _currentParam))
-                                tempParam += GetParameterStepByRoom(_currentRoom, _currentParam);  
-                            else
-                                tempParam = GetParameterMaxByRoom(_currentRoom, _currentParam);
-                        }
+                        if(tempParam <= GetParameterMaxByRoom(_currentRoom, _currentParam) - GetParameterStepByRoom(_currentRoom, _currentParam))
+                            tempParam += GetParameterStepByRoom(_currentRoom, _currentParam);  
+                        else
+                            tempParam = GetParameterMaxByRoom(_currentRoom, _currentParam);                        
                     }
+                    else
+                    {
+                        tempBoolParam = !tempBoolParam;
+                    }
+                    
+                    
+//                    switch(GetParameterTypeByRoom(_currentRoom, _currentParam))
+//                    {
+//                        case PT_LIGHT:
+//                        case PT_DOOR_OPEN:
+//                        case PT_YES_NO:
+//                        {
+//                            if(tempParam == MODBUS_TRUE)
+//                                tempParam = MODBUS_FALSE;
+//                            else
+//                                tempParam = MODBUS_TRUE;
+//                        }
+//                        break;
+//                        default:
+//                        {
+//                            if(tempParam <= GetParameterMaxByRoom(_currentRoom, _currentParam) - GetParameterStepByRoom(_currentRoom, _currentParam))
+//                                tempParam += GetParameterStepByRoom(_currentRoom, _currentParam);  
+//                            else
+//                                tempParam = GetParameterMaxByRoom(_currentRoom, _currentParam);
+//                        }
+//                    }
                 }
                 break;
             }
@@ -303,16 +325,22 @@ void RoomsOnButton(uint8_t button)
                 break;
                 case VS_SHOW_PARAMS:
                 {
-                    if(!IsParamEditable(_currentRoom, _currentParam))
+                    if(!IsParamEditable(_currentRoom, _currentParam, &tempParamIs16bit))
                         break;
                     _currentSrState = VS_EDIT_PARAM;
-                    tempParam = GetParameterValueByRoom(_currentRoom, _currentParam);
+                    if(tempParamIs16bit)
+                        tempParam = GetParameterValueByRoom(_currentRoom, _currentParam);
+                    else
+                       tempBoolParam = GetDiscreteParameterValueByRoom(_currentRoom, _currentParam);
                 }
                 break;
                 case VS_EDIT_PARAM: // Сохраняем параметр
                 {
                     _currentSrState = VS_SHOW_PARAMS;
-                    SetParameterValueByRoom(_currentRoom, _currentParam, tempParam);
+                    if(tempParamIs16bit)
+                        SetParameterValueByRoom(_currentRoom, _currentParam, tempParam);
+                    else
+                        SetDiscreteParameterValueByRoom(_currentRoom, _currentParam, tempBoolParam);
                 }               
                 break;
             }

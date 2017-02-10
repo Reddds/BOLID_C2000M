@@ -163,8 +163,10 @@ enum MB_FC
 //   int8_t query( modbus_t telegram ); //!<only for master
 //   int8_t poll(); //!<cyclic poll for master
 
-  uint8_t ModbusPoll(uint16_t discreteInputs, uint16_t *coils, uint16_t *inputRegs, const uint8_t inputRegsCount, 
-    uint16_t *holdingRegs, const uint8_t holdingRegsCount); //!<cyclic poll for slave
+  uint8_t ModbusPoll(uint8_t *discreteInputs, const uint8_t discreteInputCount, 
+                      uint8_t *coils, const uint8_t coilsCount, 
+                      uint16_t *inputRegs, const uint8_t inputRegsCount, 
+                      uint16_t *holdingRegs, const uint8_t holdingRegsCount); //!<cyclic poll for slave
 
   uint16_t ModbusGetInCnt(); //!<number of incoming messages
   uint16_t ModbusGetOutCnt(); //!<number of outcoming messages

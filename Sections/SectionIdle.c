@@ -89,7 +89,13 @@ uint8_t _currentButtonInfo;
 
 bool isRoot = false;
 
-
+void PrintOnlyValue(uint8_t qpid, uint16_t value)
+{
+    if(QuickButtonParams[qpid].Is16Bit)
+        PrintParameterByValue(QuickButtonParams[qpid].ParamId, value, -1, -1, PPN_NONE);
+    else
+        PrintDiscreteParameterByValue(QuickButtonParams[qpid].ParamId, value == MODBUS_TRUE, -1, -1, PPN_NONE);
+}
 
 //#define RBUF_LEN 0x20
 //
@@ -117,22 +123,22 @@ void IdleDisplayRedraw()
                 {
                     case MIT_LITERAL:
                     {
-                        DisplayPrintStr(mainParamData.Value.str);
+                        DisplayPrintStr(mainParamData.Value.Str.str);
                     }
                         break;
                     case MIT_PARAM:               
                     {
-                        PrintParameter(mainParamData.Value.paramId, -1, -1, PPN_NONE);
+                        PrintParameter(mainParamData.Value.ParamNum.paramId, mainParamData.Value.ParamNum.is16Bit, -1, -1, PPN_NONE);
                     }
                         break;
                     case MIT_SHORT:               
                     {
-                        PrintParameter(mainParamData.Value.paramId, -1, -1, PPN_SHORT);
+                        PrintParameter(mainParamData.Value.ParamNum.paramId, mainParamData.Value.ParamNum.is16Bit, -1, -1, PPN_SHORT);
                     }
                         break;
                     case MIT_FULL:               
                     {
-                        PrintParameter(mainParamData.Value.paramId, -1, -1, MIT_FULL);
+                        PrintParameter(mainParamData.Value.ParamNum.paramId, mainParamData.Value.ParamNum.is16Bit, -1, -1, MIT_FULL);
                     }
                         break;
                 }
@@ -157,21 +163,24 @@ void IdleDisplayRedraw()
                 break;
             }
             char buf[9];
-            GetParameterName(QuickButtonParams[_currentButtonInfo].ParamId, buf);
+            //bool is16bit;
+            GetParameterName(QuickButtonParams[_currentButtonInfo].ParamId, QuickButtonParams[_currentButtonInfo].Is16Bit, buf);
             DisplayPrintStr(buf);
             
             DisplaySetCursorPos(0, 1);
             
-            PrintParameterByValue(QuickButtonParams[_currentButtonInfo].ParamId, QuickButtonParams[_currentButtonInfo].Value1, -1, -1, PPN_NONE);
+            
+            
+            PrintOnlyValue(_currentButtonInfo, QuickButtonParams[_currentButtonInfo].Value1);
             if(QuickButtonParams[_currentButtonInfo].ValuesCount > 1)
             {
                 DisplayPrintStr(" - ");
-                PrintParameterByValue(QuickButtonParams[_currentButtonInfo].ParamId, QuickButtonParams[_currentButtonInfo].Value2, -1, -1, PPN_NONE);
+                PrintOnlyValue(_currentButtonInfo, QuickButtonParams[_currentButtonInfo].Value2);
                 
                 if(QuickButtonParams[_currentButtonInfo].ValuesCount > 2)
                 {
                     DisplayPrintStr(" - ");
-                    PrintParameterByValue(QuickButtonParams[_currentButtonInfo].ParamId, QuickButtonParams[_currentButtonInfo].Value3, -1, -1, PPN_NONE);                    
+                    PrintOnlyValue(_currentButtonInfo, QuickButtonParams[_currentButtonInfo].Value3);                    
                 }
             }
         }
@@ -219,6 +228,15 @@ bool curCur = false;
 
 //unsigned char arraywr[] = {1,2,3,4,5,6,7,8,0};
 
+void QuickSetParam(uint8_t qpid, uint16_t value)
+{
+    if(QuickButtonParams[qpid].Is16Bit)
+        SetParameterValue(QuickButtonParams[qpid].ParamId, value);
+    else
+        SetDiscreteParameterValue(QuickButtonParams[qpid].ParamId, value == MODBUS_TRUE);
+    PrintParameter(QuickButtonParams[qpid].ParamId, QuickButtonParams[qpid].Is16Bit, -1, -1, PPN_NONE);     
+}
+
 void QuickButtonPress(uint8_t id)
 {
     if(QuickButtonParams[id].ValuesCount == 0)
@@ -226,44 +244,64 @@ void QuickButtonPress(uint8_t id)
     
     DisplayClear();
     char buf[9];
-    GetParameterName(QuickButtonParams[id].ParamId, buf);
+    GetParameterName(QuickButtonParams[id].ParamId, QuickButtonParams[id].Is16Bit, buf);
     DisplayPrintStr(buf);
     DisplayPrintStr(" = ");
                        
     
     if(QuickButtonParams[id].ValuesCount == 1)
     {
-        SetParameterValue(QuickButtonParams[id].ParamId, QuickButtonParams[id].Value1);
-        PrintParameter(QuickButtonParams[id].ParamId, -1, -1, PPN_NONE); 
+        QuickSetParam(id, QuickButtonParams[id].Value1);
         return;
     }
-//    if(QuickButtonParams[id].ValuesCount >= 2)
-//    {
+    
+    if(QuickButtonParams[id].Is16Bit)
+    {
         if(GetParameterValue(QuickButtonParams[id].ParamId) == QuickButtonParams[id].Value1)
         {
-            SetParameterValue(QuickButtonParams[id].ParamId, QuickButtonParams[id].Value2);
-            PrintParameter(QuickButtonParams[id].ParamId, -1, -1, PPN_NONE); 
+            QuickSetParam(id, QuickButtonParams[id].Value2);
             return;
         }
         if(GetParameterValue(QuickButtonParams[id].ParamId) == QuickButtonParams[id].Value2)
         {
             if(QuickButtonParams[id].ValuesCount == 2)
-                SetParameterValue(QuickButtonParams[id].ParamId, QuickButtonParams[id].Value1);
+                QuickSetParam(id, QuickButtonParams[id].Value1);
             else // 3
-                SetParameterValue(QuickButtonParams[id].ParamId, QuickButtonParams[id].Value3);
-            PrintParameter(QuickButtonParams[id].ParamId, -1, -1, PPN_NONE); 
+                QuickSetParam(id, QuickButtonParams[id].Value3);
             return;
         }
         if(QuickButtonParams[id].ValuesCount == 3 
                 && GetParameterValue(QuickButtonParams[id].ParamId) == QuickButtonParams[id].Value3)
         {
-            SetParameterValue(QuickButtonParams[id].ParamId, QuickButtonParams[id].Value1);
-            PrintParameter(QuickButtonParams[id].ParamId, -1, -1, PPN_NONE); 
+            QuickSetParam(id, QuickButtonParams[id].Value1); 
             return;
         }
-        SetParameterValue(QuickButtonParams[id].ParamId, QuickButtonParams[id].Value1);
-        PrintParameter(QuickButtonParams[id].ParamId, -1, -1, PPN_NONE); 
-//    }
+        QuickSetParam(id, QuickButtonParams[id].Value1);
+        
+    }
+    else
+    {
+        if(GetDiscreteParameterValue(QuickButtonParams[id].ParamId) == (QuickButtonParams[id].Value1 == MODBUS_TRUE))
+        {
+            QuickSetParam(id, QuickButtonParams[id].Value2);
+            return;
+        }
+        if(GetDiscreteParameterValue(QuickButtonParams[id].ParamId) == (QuickButtonParams[id].Value2 == MODBUS_TRUE))
+        {
+            if(QuickButtonParams[id].ValuesCount == 2)
+                QuickSetParam(id, QuickButtonParams[id].Value1);
+            else // 3
+                QuickSetParam(id, QuickButtonParams[id].Value3);
+            return;
+        }
+        if(QuickButtonParams[id].ValuesCount == 3 
+                && GetDiscreteParameterValue(QuickButtonParams[id].ParamId) == (QuickButtonParams[id].Value3 == MODBUS_TRUE))
+        {
+            QuickSetParam(id, QuickButtonParams[id].Value1); 
+            return;
+        }
+        QuickSetParam(id, QuickButtonParams[id].Value1);
+    }
 
 }
 

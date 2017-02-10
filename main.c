@@ -225,7 +225,7 @@ void main(void)
     
     //initRes = 1;////!!!!!!!!!
     
-    //while(1);
+//    while(1);
     
     unsigned long curMs = millis();
     unsigned long nextSec = curMs + 1000;
@@ -257,6 +257,10 @@ void main(void)
             while(1) // Чтобы break'ами выходить
             {
                 uint8_t butChanged = IsButtonChanged();
+                // TODO: <Сделать чтобы CLR работала без задержки на главном экране>
+                // TODO: <Вынести настройки главного экрана (Количество экранов и их содержимое)>
+                // TODO: <Добавить в типы выводимой информации время и дату (в виде отдельных элементов)>
+                // TODO: <Сделать последовательное переключение экранов и настроку задержки>
                 if(curMs >= nextKeyPressAvailable
                         && butChanged != BTN_NONE && ButtonStates[butChanged] == BUTTON_PRESSED)
                 {
@@ -453,7 +457,7 @@ void main(void)
         // 0x7f 0x06 0xff 0x00 0x00 0x10
         
         
-        modbusState = ModbusPoll(_MODBUSDiscreteInputs, &_MODBUSCoils, _MODBUSInputRegs, modbusInputBufLen, _MODBUSHoldingRegs, modbusHoldingBufLen);
+        modbusState = ModbusPoll(DiscreteParameters, DiscreteParamsCount, DiscreteParameters, DiscreteParamsCount, _MODBUSInputRegs, modbusInputBufLen, _parameters, ParamCount);
         io_poll();
 
         

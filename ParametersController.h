@@ -26,6 +26,9 @@ typedef enum
     PT_TEMP, // Температура
     PT_HYM, // Влажность
     PT_PRESS, // Давление
+            
+    // discrete        
+            
     PT_LIGHT, // Свет вкл-выкл
     PT_DOOR_OPEN, // Дверь откр-закр
     PT_YES_NO, // Да или нет
@@ -50,8 +53,17 @@ typedef struct
 //    void* Value;
     union Value
     {
-        char str[SCREEN_WIDTH + 1];
-        uint8_t paramId;
+        struct
+        {
+            uint8_t strLen;
+            char str[SCREEN_WIDTH + 1];
+        }Str;
+            
+        struct
+        {
+            bool is16Bit;
+            uint8_t paramId;
+        }ParamNum;
     }Value;
 
 }MainScreenItem;
@@ -59,6 +71,7 @@ typedef struct
 typedef struct
 {
     Buttons Button;
+    bool    Is16Bit;
     uint8_t ParamId;
     // Количество значений, которые будут переключаться по кругу 1-2-3
     // 0 - кнопка ничего не делает
@@ -99,8 +112,16 @@ uint8_t MainParamCount;
 //    {3, ParamAddresses_3}
 //};
 
-#define DUMMY_PARAMS_COUNT 9
+//#define DUMMY_PARAMS_COUNT 9
 uint16_t ParamCount;// = DUMMY_PARAMS_COUNT;
+
+uint8_t DiscreteParamsCount = 0;
+/**
+ * Список всех параметров. Ограничен 256
+ */
+uint16_t _parameters[256];
+
+uint8_t DiscreteParameters[32]; // 256 бит
 
 /*typedef struct 
 {
@@ -122,13 +143,19 @@ uint8_t GetRoomParamsCount(uint8_t room);
 
 //uint8_t GetParamCount();
 bool SetParameterValue(uint8_t id, uint16_t value);
+bool SetDiscreteParameterValue(uint8_t id, bool value);
 void SetParameterValueByRoom(uint8_t room, uint8_t param, uint16_t value);
+void SetDiscreteParameterValueByRoom(uint8_t room, uint8_t param, bool value);
 
-void GetParameterName(uint8_t id, char* buf);
+void GetParameterName(uint8_t id, bool is16bit, char* buf);
 void GetParameterNameByRoom(uint8_t room, uint8_t param, char* buf);
-uint16_t GetParameterValue(uint8_t id);
 ParamTypes GetParameterTypeByRoom(uint8_t room, uint8_t param);
+
+uint16_t GetParameterValue(uint8_t id);
+bool GetDiscreteParameterValue(uint8_t id);
 uint16_t GetParameterValueByRoom(uint8_t room, uint8_t param);
+bool GetDiscreteParameterValueByRoom(uint8_t room, uint8_t param);
+
 uint16_t GetParameterMinByRoom(uint8_t room, uint8_t param);
 uint16_t GetParameterMaxByRoom(uint8_t room, uint8_t param);
 uint16_t GetParameterStepByRoom(uint8_t room, uint8_t param);
@@ -137,7 +164,7 @@ uint16_t GetParameterStepByRoom(uint8_t room, uint8_t param);
 
 
 #define GetParamAddress(room, param) (roomParams[room].ParamAddresses[param])
-bool IsParamEditable(uint8_t room, uint8_t param); 
+bool IsParamEditable(uint8_t room, uint8_t param, bool *is16Bit); 
 
 /**
  * Вывод параметра на экран
@@ -146,9 +173,11 @@ bool IsParamEditable(uint8_t room, uint8_t param);
  * @param row               Ряд (-1 - в текущую позицию)
  * @param printParamName    Печатать ли название параметра
  */
-void PrintParameter(uint8_t paramId, int8_t col, int8_t row, PrintParamName printParamName);
+void PrintParameter(uint8_t paramId, bool is16bit, int8_t col, int8_t row, PrintParamName printParamName);
 
 void PrintParameterByRoom(uint8_t room, uint8_t param, int8_t col, int8_t row, PrintParamName printParamName);
 void PrintParameterByRoomAndValue(uint8_t room, uint8_t param, uint16_t value, int8_t col, int8_t row, PrintParamName printParamName);
+void PrintDiscreteParameterByRoomAndValue(uint8_t room, uint8_t param, bool value, int8_t col, int8_t row, PrintParamName printParamName);
 void PrintParameterByValue(uint8_t paramId, uint16_t value, int8_t col, int8_t row, PrintParamName printParamName);
+void PrintDiscreteParameterByValue(uint8_t paramId, bool value, int8_t col, int8_t row, PrintParamName printParamName);
 #endif

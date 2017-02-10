@@ -78,7 +78,7 @@ void SettingsDisplayRedraw()
         break;
         case VS_EDIT_SETTING:
         {
-            // Первая строка - название комнаты
+            // Первая строка 
             DisplayPrintStr(GetSettingFullName1Line(_currentSetting));
             // Вторая строка название параметра и значение
             DisplaySetCursorPos(0, 1);
@@ -89,12 +89,22 @@ void SettingsDisplayRedraw()
             switch(GetSettingType(_currentSetting))
             {
                 
-                case ST_0_100:
+                case ST_0_100:                              
                 {
+                    
                     DisplayPrintUInt(tmpSetting8, DEC | SHOW_USE_FIELD_SIZE | FIELD_SIZE(3));
                     
                     if(line2Size + 3 + 2 < SCREEN_WIDTH)
                         DisplayPrintProgress(line2Size + 3, SCREEN_WIDTH - (line2Size + 3), 1, (tmpSetting8 - GetSettingMin(_currentSetting)) / (float)(GetSettingMax(_currentSetting) - GetSettingMin(_currentSetting)) * 100);
+                }
+                    break;
+                case ST_0_100 | ST_MUL_0_1:                              
+                {
+                    
+                    DisplayPrintFloat(tmpSetting8 * 0.1, DEC | SHOW_USE_FIELD_SIZE | FIELD_SIZE(4));
+                    
+                    if(line2Size + 3 + 2 < SCREEN_WIDTH)
+                        DisplayPrintProgress(line2Size + 4, SCREEN_WIDTH - (line2Size + 4), 1, (tmpSetting8 - GetSettingMin(_currentSetting)) / (float)(GetSettingMax(_currentSetting) - GetSettingMin(_currentSetting)) * 100);
                 }
                     break;
                 case ST_BOOL:

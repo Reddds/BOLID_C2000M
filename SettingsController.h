@@ -15,7 +15,7 @@
 extern "C" {
 #endif
 
-#define SETTINGS_COUNT 5
+#define SETTINGS_COUNT 6
     
 #define SETTING_LCD_BK 0    // Подсветка экрана 
 #define SETTING_KB_BK 1     // Подсветка клавдии 
@@ -27,6 +27,7 @@ typedef enum
 {
     ST_0_100, // от 0 до 100
     ST_BOOL, // Да - нет
+    ST_MUL_0_1 = 0x10 // Значение отображать делёным на 10       
 }SettingTypes; 
 
 typedef struct 
