@@ -1,4 +1,3 @@
-#include <p18cxxx.h>
 #include "i2c.h"
 
 /********************************************************************
@@ -37,7 +36,8 @@ int8_t WriteI2C(uint8_t data_out)
             IdleI2C(); // ensure module is idle
             if (SSPCON2bits.ACKSTAT) // test for ACK condition received
                 return ( -22); // return NACK
-            else return ( 0); //return ACK
+            else 
+                return ( 0); //return ACK
         }
 
     }

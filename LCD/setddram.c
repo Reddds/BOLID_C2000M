@@ -10,11 +10,11 @@
 *                       user must check to see if the LCD controller*
 *                       is busy before calling this routine.        *
 ********************************************************************/
-void SetDDRamAddr(unsigned char DDaddr)
+void SetDDRamAddr(uint8_t DDaddr)
 {
 #ifdef BIT8                                     // 8-bit interface
         TRIS_DATA_PORT = 0;                     // Make port output
-        DATA_PORT = DDaddr | 0b10000000;        // Write cmd and address to port
+        DATA_PORT = DDaddr | 0b10000000u;       // Write cmd and address to port
         RW_PIN = 0;                             // Set the control bits
         RS_PIN = 0;
         DelayFor18TCY();

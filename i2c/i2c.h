@@ -28,22 +28,23 @@
  * IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL OR
  * CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
  *****************************************************************************/
+#include "p18cxxx.h"
 #include <stdint.h>         /* For uint8_t definition */
 #include <stdbool.h>        /* For true/false definition */ 
 #include "../pconfig.h"
 
 /* SSPCON1 REGISTER */
-#define   SSPENB    			0b00100000  	/* Enable serial port and configures SCK, SDO, SDI*/
-#define   SLAVE_7   			0b00000110     	/* I2C Slave mode, 7-bit address*/
-#define   SLAVE_10  			0b00000111    	/* I2C Slave mode, 10-bit address*/
-#define   MASTER    			0b00001000     	/* I2C Master mode */
-#define   MASTER_FIRMW			0b00001011		//I2C Firmware Controlled Master mode (slave Idle)
-#define   SLAVE_7_STSP_INT 		0b00001110		//I2C Slave mode, 7-bit address with Start and Stop bit interrupts enabled
-#define   SLAVE_10_STSP_INT 	0b00001111		//I2C Slave mode, 10-bit address with Start and Stop bit interrupts enabled
+#define   SSPENB    			0b00100000u  	/* Enable serial port and configures SCK, SDO, SDI*/
+#define   SLAVE_7   			0b00000110u     	/* I2C Slave mode, 7-bit address*/
+#define   SLAVE_10  			0b00000111u    	/* I2C Slave mode, 10-bit address*/
+#define   MASTER    			0b00001000u     	/* I2C Master mode */
+#define   MASTER_FIRMW			0b00001011u		//I2C Firmware Controlled Master mode (slave Idle)
+#define   SLAVE_7_STSP_INT 		0b00001110u		//I2C Slave mode, 7-bit address with Start and Stop bit interrupts enabled
+#define   SLAVE_10_STSP_INT 	0b00001111u		//I2C Slave mode, 10-bit address with Start and Stop bit interrupts enabled
 
 /* SSPSTAT REGISTER */
-#define   SLEW_OFF  			0b10000000  	/* Slew rate disabled for 100kHz mode */
-#define   SLEW_ON   			0b00000000  	/* Slew rate enabled for 400kHz mode  */
+#define   SLEW_OFF  			0b10000000u  	/* Slew rate disabled for 100kHz mode */
+#define   SLEW_ON   			0b00000000u  	/* Slew rate enabled for 400kHz mode  */
 
 
 
@@ -52,7 +53,7 @@
 #define WP_LATCH LATCbits.LC1
 
 
-#define PAGE_SIZE 128
+#define PAGE_SIZE 128u
 
 
 #if defined (I2C_V2) || defined (I2C_V3) || defined (I2C_V5) || defined (I2C_V6) || defined (I2C_V6_1) || defined (I2C_V6_2)/* These versions have MSSP1 */
@@ -921,27 +922,27 @@ signed char getsI2C(  unsigned char *rdptr,  unsigned char length );
 int8_t EEAckPolling( uint8_t control );
 
 int8_t EEByteWrite(uint8_t control,
-                    uint24_t address,
+                    uint32_t address,
                     uint8_t data );
 
 int16_t EECurrentAddRead( uint8_t control );
 
 int8_t EEPageWrite( uint8_t control,
-                    uint24_t address,
+                    uint32_t address,
                     uint8_t *wrptr,
                     uint8_t length);
 // Array Может быть больше, чем 1 страница
 int8_t EEArrayWrite( uint8_t control,
-                    uint24_t address,
+                    uint32_t address,
                     uint8_t *wrptr,
-                    uint24_t length);
+                    uint32_t length);
 
-int16_t EERandomRead( uint8_t control,  uint24_t address );
+int16_t EERandomRead( uint8_t control,  uint32_t address );
 
 int8_t EESequentialRead( uint8_t control,
-                           uint24_t address,
+                           uint32_t address,
                            uint8_t *rdptr,
-                           uint24_t length );
+                           uint32_t length );
 #endif
 
 

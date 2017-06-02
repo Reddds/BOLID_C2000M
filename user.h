@@ -9,6 +9,17 @@
 /******************************************************************************/
 
 /* TODO Application specific user parameters used in user.c may go here */
+
+#define EE_MODBUS_ID 1
+#define EE_LCD_BACKLIGHT 2
+#define EE_KEYPAD_BACKLIGHT 3
+#define EE_SCRENSAVE_DELAY 4
+#define EE_SS_LCD_BACKLIGHT 5
+#define EE_SS_KEYPAD_BACKLIGHT 6
+#define EE_MAIN_SCREEN_DELAY 7
+#define EE_PARAMS_STARTADDRESS 8 // 3 байта
+#define EE_MASTER_MODE 11 // Режим мастера сети
+
 #define EXT_MEM_CHIP_SIZE 0x10000
 #define EXT_MEM_CHIP_PAGES 512
 #define EXT_MEM_CHIP_0 0x00
@@ -106,6 +117,10 @@ void InitApp(void);         /* I/O and Peripheral Initialization */
 
 #define _EEREG_EEPROM_WRITE(addr, value)	\
 do{											\
+    while (EECON1bits.RD)                   \
+    {                                       \
+        continue;                           \
+    }                                       \
 	while (EECON1bits.WR) { 				\
 		continue; 							\
 	} 										\
@@ -150,6 +165,7 @@ time_t *GetTime();
 
 
 void SetBakLightDuty(uint16_t dc);
-void SetKbBakLightDuty(uint16_t dc) ;
+void SetKbBakLightDuty(uint16_t dc);
+void SetMODBUSMode(uint16_t isMaster);
 
 #endif

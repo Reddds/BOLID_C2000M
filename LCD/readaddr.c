@@ -15,9 +15,10 @@
 *********************************************************************/
 unsigned char ReadAddrXLCD(void)
 {
-        char data;                      // Holds the data retrieved from the LCD
+        uint8_t data;                      // Holds the data retrieved from the LCD
 
 #ifdef BIT8                             // 8-bit interface
+//        TRIS_DATA_PORT = 0xff;          // Make port input
         RW_PIN = 1;                     // Set control bits for the read
         RS_PIN = 0;
         DelayFor18TCY();
@@ -49,6 +50,6 @@ unsigned char ReadAddrXLCD(void)
         E_PIN = 0;
         RW_PIN = 0;                     // Reset the control lines
 #endif
-        return (data&0x7f);             // Return the address, Mask off the busy bit
+        return (data & 0x7fu);             // Return the address, Mask off the busy bit
 }
 

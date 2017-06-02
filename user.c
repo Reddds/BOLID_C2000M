@@ -22,7 +22,7 @@
 #include "buttons.h"
 #include "LCD/xlcd.h"
 #include "interrupts.h"
-#include "ModbusRtu.h"
+#include "MODBUS/ModbusRtu.h"
 #include "i2c/i2c.h"
 
 /******************************************************************************/
@@ -35,6 +35,7 @@
 #define	UBRG	( (((SYS_FREQ / BAUDRATE) / 8) - 1) / 2 )
 
 time_t currentTime = 0;
+bool _isMaster = false;
 
 void PortBegin()
 {
@@ -126,9 +127,12 @@ void SetKbBakLightDuty(uint16_t dc)
   
     CCP4CONbits.DC4B = dc & 0x03;
     //CCPR1L = (uint8_t)(dc >> 2);
-    
-    
-} 
+}
+
+void SetMODBUSMode(uint16_t isMaster)
+{
+    _isMaster = isMaster > 0 ? true : false;
+}
 
 void InitApp(void)
 {
@@ -194,7 +198,7 @@ void InitApp(void)
     WRITETIMER0(WATCH_TIMER_TICKS_TO_END_6S);
     //TMR1L              = TIMER_TICKS_IN_1_MS_L; // ???? ???? ?? ????? ??????????? ? ???? ??????? ?? 0xFFFF
     //TMR1H              = TIMER_TICKS_IN_1_MS_H;
-    INTCONbits.TMR0IF   = 0; // ??????? ???? ?????????? (????? ????? ?? ????????? ? ??????????)
+    //INTCONbits.TMR0IF   = 0; // Включение 6-секундного таймера
     
     //T0CONbits.TMR0ON = 1; // Switch on timer
     //--------------------------------------------------------------------------
@@ -248,6 +252,19 @@ void InitApp(void)
     
     WP_LATCH = 1;
     WP_TRIS = 1;
+    
+    // To configure PORTF as digital I/O, turn off
+    // comparators and set ADCON1 value.
+    /*
+     MOVLW 0x07 ;
+    MOVWF CMCON ; Turn off comparators
+    MOVLW 0x0F ;
+    MOVWF ADCON1 ; Set PORTF as digital I/O
+     
+     */
+    CMCONbits.CM = 0x07;//Turn off comparators
+    ADCON1bits.PCFG = 0x0F;//Set PORTF as digital I/O
+    
     
     
     /* Configure the IPEN bit (1=on) in RCON to turn on/off int priorities */

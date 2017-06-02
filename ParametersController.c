@@ -1,12 +1,12 @@
 #include "ParametersController.h"
-#include "ModbusRtu.h"
+#include "MODBUS/ModbusRtu.h"
 
 #include "user.h"
 #include "i2c/i2c.h"
 #include "interrupts.h"
 //#include "ModbusRtu.h"
 
-//#define MY_DEBUG
+#define MY_DEBUG
 
 
 #ifndef MY_DEBUG
@@ -33,6 +33,70 @@
 
 
 //  uint8_t _paramCount = 8;
+const char *daysOfWeekLong[] =
+{
+    "Воскр.",
+    "Понед.",
+    "Втор.",
+    "Среда",
+    "Четв.",
+    "Пятн.",
+    "Субб.",            
+};
+
+const char *daysOfWeekMid[] =
+{
+    "Вск",
+    "Пнд",
+    "Втр",
+    "Срд",
+    "Чтв",
+    "Птн",
+    "Суб",            
+};
+
+const char *daysOfWeekShort[] =
+{
+    "Вс",
+    "Пн",
+    "Вт",
+    "Ср",
+    "Чт",
+    "Пт",
+    "Сб",            
+};
+
+const char *monthesLong[] = 
+{
+    " Январь ",
+    "Февраль ",
+    "  Март  ",
+    " Апрель ",
+    "  Май   ",
+    "  Июнь  ",
+    "  Июль  ",            
+    " Август ",            
+    "Сентябрь",            
+    "Октябрь ",            
+    " Ноябрь ",            
+    "Декабрь ",            
+};
+
+const char *monthesMid[] = 
+{
+    "Янв",
+    "Фев",
+    "Мар",
+    "Апр",
+    "Май",
+    "Июн",
+    "Июл",            
+    "Авг",            
+    "Сен",            
+    "Окт",            
+    "Ноя",            
+    "Дек",            
+};
 
 
 typedef struct
@@ -71,13 +135,37 @@ typedef struct
 //};
 
 
-
+// Прогноз погоды:
+/*
+ * На ближайшее время
+ * Символы погоды: Ясно, Снег, дождь, град
+ * 
+ * 
+Дата
+0    5    0     |
+22 Фев Утро +18С
+48% Снег ^ 25м/с
+ 
+ */
 
 
 uint8_t dummyEe[] =
 {
     //Настройки главного экрана
-    5, // 0
+    // Количество экранов
+    3, // 0
+    // Количество элементов на экране 0
+    3, // 1
+   //col row    type     len? is16Bit, value
+    //0,  0, MIT_DATE_DAY_OF_WEEK_STR, 0,
+    
+    0,  0, MIT_DATE_DAY_OF_WEEK_LONG, 0,0,
+    8,  0, MIT_TIME,                  0,0, // 2
+    0,  1, MIT_DATE_LONG,             0,0, // 6
+    
+    
+    // Количество элементов на экране 1
+    5, // 10
   //col row    type     len? is16Bit, value
     1,  0, MIT_LITERAL, 6, 'У','л','и','ц','а',':', //1
     8,  0, MIT_PARAM,   1,2, //11
@@ -86,6 +174,15 @@ uint8_t dummyEe[] =
     6,  1, MIT_PARAM,   1,0, //24
     11, 1, MIT_PARAM,   1,1, //29
     
+    // Прогноз погоды
+    // Количество элементов на экране 2
+    6,
+    0,  0, MIT_PARAM,   1,5, // 
+    7,  0, MIT_PARAM,   1,6, // 
+    12, 0, MIT_PARAM,   1,7, // 
+    0,  1, MIT_PARAM,   1,8, // 
+    4,  1, MIT_PARAM,   1,9, // 
+    9,  1, MIT_PARAM,   1,10, // 
     // QuickButtons 34
     //Button,is16Bit,ParamId,ValuesCount, Value1, Value2, Value3 16-битные значения сохраняем HI-LO
     // BIG ENDIAN!
@@ -126,17 +223,19 @@ uint8_t dummyEe[] =
     
     
     4, // количество дискретных регистров или катушек
+    // Название                      Тип          Редактриуемо
     // Ванная
-    'С','в','е','т',' ',' ',' ',' ', PT_LIGHT,     false, //   0  241
-    'Д','в','е','р','ь',' ',' ',' ', PT_DOOR_OPEN, false, //   1  257
-    'И','г','н','.','д','в','.',' ', PT_YES_NO,    true, //   2  273
+    'С','в','е','т',' ',' ',' ',' ', PT_LIGHT,     false,   //   0  241
+    'Д','в','е','р','ь',' ',' ',' ', PT_DOOR_OPEN, false,   //   1  257
+    'И','г','н','.','д','в','.',' ', PT_YES_NO,    true,    //   2  273
     // Коридор
-    'С','в','е','т',' ',' ',' ',' ', PT_LIGHT,     false, //   3  289
+    'С','в','е','т',' ',' ',' ',' ', PT_LIGHT,     false,   //   3  289
     
-    5, //Количество 16битных регистров 208
+    11, //Количество 16битных регистров 208
     
     //Params 16-битные значения сохраняем HI-LO 209
     // 0x7f 6 0xff 0 0 20
+    // Название                      Тип    Редактриуемо  min  max  step
     // Спальня
     'Т','е','м','п','е','р','.',' ', PT_TEMP,      false, 0,0, 0,0, 0,0, //   0  209
     'В','л','а','ж','н','.',' ',' ', PT_HYM,       false, 0,0, 0,0, 0,0, //   1  225
@@ -144,7 +243,61 @@ uint8_t dummyEe[] =
     'Т','е','м','п','е','р','.',' ', PT_TEMP,      false, 0,0, 0,0, 0,0, //   2  305  313
     'В','л','а','ж','н','.',' ',' ', PT_HYM,       false, 0,0, 0,0, 0,0, //   3  321
     'Д','а','в','л','е','н','и','е', PT_PRESS,     false, 0,0, 0,0, 0,0, //   4  337    
+    // Прогноз погоды
+    'Д','а','т','а',' ','.',' ',' ', PT_CAST_DATE, false, 0,0, 0,0, 0,0, //   5  321
+    'В','р','е','м','я','.',' ',' ', PT_CAST_TIME, false, 0,0, 0,0, 0,0, //   6
+    'Т','е','м','п','е','р','.',' ', PT_TEMP,      false, 0,0, 0,0, 0,0, //   7
+    'В','л','а','ж','н','.',' ',' ', PT_HYM,       false, 0,0, 0,0, 0,0, //   8
+    'О','с','а','д','к','и',' ',' ', PT_CAST_WEATHER_TYPE, false, 0,0, 0,0, 0,0, // 9 
+    'В','е','т','е','р',' ',' ',' ', PT_CAST_WIND, false, 0,0, 0,0, 0,0, //  10 
+    
 //353
+    
+    // Зона настроек мастера сети
+    4, // Количество контроллеров
+        // Спальня
+        60, // Частота опроса в секундах
+        0,  // Количество дискретных регистров
+        0,  // Количество катушек
+        2,  // Количество регистров 
+            // Индекс / Ид 16-битного параметра
+            2, 0, // температура
+            3, 1, // влажность
+        0,  // Количество регистров хранения
+        // Балкон
+        60, // Частота опроса в секундах
+        0,  // Количество дискретных регистров
+        0,  // Количество катушек
+        3,  // Количество регистров
+            // Индекс / Ид 16-битного параметра
+            1, 2, // Вычисленная температура
+            4, 3, // Влажность
+            5, 4, // Давление
+        0,  // Количество регистров хранения
+        // Датчик движения в коридоре
+        0, // Частота опроса в секундах
+        1,  // Количество дискретных регистров
+            // Индекс / Ид 1-битного параметра
+            3, 3, // Движение в коридоре 
+        0,  // Количество катушек
+        0,  // Количество регистров
+        0,  // Количество регистров хранения
+        // Ванна
+        0, // Частота опроса в секундах
+        2,  // Количество дискретных регистров
+            // Индекс / Ид 1-битного параметра
+            0, 0, // Дверь открыта
+            1, 0, // Свет включён
+        0,  // Количество катушек
+        0,  // Количество регистров
+        0,  // Количество регистров хранения
+            
+        
+    
+    // Адреса устройст и регистры, откуда брать значения параметров и с какой частотой
+    // Адрес (1 байт) / тип (1 байт) 0 - дискретный, 1 - катушка, 2 - регистр, 3 - записываемый регистр / частота опроса (1 байт) 0 - постоянно, > 0 - в секундах
+    
+    
 };
 
 int16_t roomNamesStartAddr = 0;
@@ -199,14 +352,18 @@ int8_t InitParameters()
     if(res < 0)
         return -10 + res;
     
-    MainParamCount = res;
+    MainScreenCount = res;
+#ifdef MY_DEBUG
     DisplayPrintInt(res, DEC);
     DisplayPrintChar(' ');
-    
+#endif       
 
-
     
+    if(MainScreenCount == 0 || MainScreenCount == 0xff) // Данные незагружены или неверны
+        return -1;
     
+    if(MainScreenCount > MAIN_SCREEN_MAX_COUNT)
+        return -10 + res;
     
     
 //    uint8_t bbb[10];
@@ -253,32 +410,41 @@ int8_t InitParameters()
 //    DisplayPrintInt(res, DEC);
 //    DisplayPrintChar(' ');
     
-    if(MainParamCount == 0 || MainParamCount == 0xff) // Данные незагружены или неверны
-        return -1;
     
     //DisplaySetCursorPos(0, 1);
     uint16_t curAddress = 1;
-    // Пропускаем параметры
-    for(uint8_t i = 0; i < MainParamCount; i++) // Пропускаем предыдущие параметры
+    
+    for(uint8_t s = 0; s < MainScreenCount; s++)
     {
-//        DisplayPrintInt(curAddress, DEC);
-//        DisplayPrintChar(':');
-        res = DummyEERandomRead(EXT_MEM_COMMAND, curAddress + MIT_TYPE_OFFSET);
-//        DisplayPrintInt(res, DEC);
-//        DisplayPrintChar(' ');
+        res = DummyEERandomRead(EXT_MEM_COMMAND, curAddress);
         if(res < 0)
-            return -2;
-        switch(res)
+            return -10 + res;
+        
+        MainParamCount[s] = res;
+        curAddress++;
+        MainParamStartAddresses[s] = curAddress;
+        // Пропускаем параметры
+        for(uint8_t i = 0; i < MainParamCount[s]; i++) // Пропускаем предыдущие параметры
         {
-            case MIT_LITERAL:
-                res = DummyEERandomRead(EXT_MEM_COMMAND, curAddress + MIT_VALUE_OFFSET);
-                if(res < 0)
-                    return -2;
-                curAddress += 4 + res;
-                break;
-            default:
-                curAddress += 5;
-                break;
+    //        DisplayPrintInt(curAddress, DEC);
+    //        DisplayPrintChar(':');
+            res = DummyEERandomRead(EXT_MEM_COMMAND, curAddress + MIT_TYPE_OFFSET);
+    //        DisplayPrintInt(res, DEC);
+    //        DisplayPrintChar(' ');
+            if(res < 0)
+                return -2;
+            switch(res)
+            {
+                case MIT_LITERAL:
+                    res = DummyEERandomRead(EXT_MEM_COMMAND, curAddress + MIT_VALUE_OFFSET);
+                    if(res < 0)
+                        return -2;
+                    curAddress += 4 + res;
+                    break;
+                default:
+                    curAddress += 5;
+                    break;
+            }
         }
     }
 //    DisplayPrintInt(curAddress, DEC);
@@ -287,7 +453,7 @@ int8_t InitParameters()
     //as =  sizeof(QuickButtonParams);
 //    DisplayPrintInt(as, DEC);
 //    DisplayPrintChar('+');
-    DummyEESequentialRead(EXT_MEM_COMMAND, curAddress, QuickButtonParams, sizeof(QuickButtonParams));
+    DummyEESequentialRead(EXT_MEM_COMMAND, curAddress, (uint8_t *)QuickButtonParams, sizeof(QuickButtonParams));
     curAddress += sizeof(QuickButtonParams);
     
 #ifdef MY_DEBUG
@@ -396,13 +562,15 @@ int8_t InitParameters()
 
 
 
-void GetMainScreenParam(uint8_t paramId, MainScreenItem *paramStruct)
+void GetMainScreenParam(uint8_t mainScreenId, uint8_t paramId, MainScreenItem *paramStruct)
 {
-    if(paramId >= MainParamCount)
-        return;
     paramStruct->Type = MIT_UNKNOWN;
+    if(mainScreenId >= MainScreenCount)
+        return;
+    if(paramId >= MainParamCount[mainScreenId])
+        return;
     int16_t res;
-    uint16_t curAddress = 1;
+    uint16_t curAddress = MainParamStartAddresses[mainScreenId];
     // Пропускаем параметры
     for(uint8_t i = 0; i < paramId; i++) // Пропускаем предыдущие параметры
     {
@@ -766,6 +934,116 @@ void PrintDiscreteParameterByRoomAndValue(uint8_t room, uint8_t param, bool valu
     PrintDiscreteParameterByValue(pid, value, col, row, printParamName);
 }
 
+
+void PrintDateByValue(MainItemTypes type, uint8_t day, uint8_t dayOfWeek, uint8_t month, uint16_t year)
+{
+    if(day < 1 || day > 31)
+        day = 1;
+    if(month > 11)
+        month = 0;
+    if(dayOfWeek > 6)
+        dayOfWeek = 0;
+    switch (type)
+    {
+        
+        case MIT_DATE_DAY:
+        {
+            DisplayPrintUInt(day, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
+        }
+        break;
+        case MIT_DATE_LONG: // dd  month(8)   year 
+        {
+            DisplayPrintUInt(day, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
+            DisplayPrintChar(' ');
+            DisplayPrintStr(monthesLong[month]);
+            DisplayPrintChar(' ');
+            DisplayPrintUInt(year + 1900, DEC);
+        }
+            break;
+        case MIT_DATE_CAST: // Для прогноза погоды dd mmm        
+        {
+            DisplayPrintUInt(day, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
+            DisplayPrintChar(' ');
+            DisplayPrintStr(monthesMid[month]);
+        }
+        break;
+        case MIT_DATE_NORMAL: // dd.mm.yyyy       
+        {
+            DisplayPrintUInt(day, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
+            DisplayPrintChar('.');
+            DisplayPrintUInt(month + 1, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
+            DisplayPrintChar('.');
+            DisplayPrintUInt(year + 1900, DEC);
+        }
+            break;
+        case MIT_DATE_FULL: // dow dd mmm year     
+        {
+            DisplayPrintStr(daysOfWeekMid[dayOfWeek]);
+            DisplayPrintChar(' ');
+            DisplayPrintUInt(day, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
+            DisplayPrintChar(' ');
+            DisplayPrintStr(monthesMid[month]);
+            DisplayPrintChar(' ');
+            DisplayPrintUInt(year + 1900, DEC);
+        }
+            break;
+        case MIT_DATE_SHORT: // dd.mm.yy   
+        {
+            DisplayPrintUInt(day, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
+            DisplayPrintChar('.');
+            DisplayPrintUInt(month + 1, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
+            DisplayPrintChar('.');
+            DisplayPrintUInt(year - 100, DEC);
+        }
+            break;
+        case MIT_DATE_MONTH_STR: // Месяц словом
+        {
+            DisplayPrintStr(monthesLong[month]);
+        }
+            break;
+        case MIT_DATE_MONTH: // Месяц цифрой
+        {
+            DisplayPrintUInt(month + 1, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
+        }
+            break;
+        case MIT_DATE_YEAR: // yyyy
+        {
+            DisplayPrintUInt(year + 1900, DEC);
+        }
+            break;
+        case MIT_DATE_YEAR_SHORT: // yy
+        {
+            DisplayPrintUInt(year - 100, DEC);
+        }
+            break;
+        case MIT_DATE_DAY_OF_WEEK_LONG: // Длинная строка
+        {
+            DisplayPrintStr(daysOfWeekLong[dayOfWeek]);
+        }
+            break;
+        case MIT_DATE_DAY_OF_WEEK_MID: // 3 символа     
+        {
+            DisplayPrintStr(daysOfWeekMid[dayOfWeek]);
+        }
+            break;
+        case MIT_DATE_DAY_OF_WEEK_SHORT: // 2 символа     
+        {
+            DisplayPrintStr(daysOfWeekShort[dayOfWeek]);
+        }
+            break;    
+    }   
+}
+/**
+ * Печать даты в текущую позицию
+ * @param type
+ */
+void PrintDate(MainItemTypes type)
+{
+    struct tm *timeStruct = localtime((const time_t*)GetTime());    
+    PrintDateByValue(type, timeStruct->tm_mday, timeStruct->tm_wday, timeStruct->tm_mon, timeStruct->tm_year);
+     
+}
+
 void PrintParameterByValue(uint8_t paramId, uint16_t value, int8_t col, int8_t row, PrintParamName printParamName)
 {
     if(col >= 0 && row >= 0)
@@ -776,9 +1054,9 @@ void PrintParameterByValue(uint8_t paramId, uint16_t value, int8_t col, int8_t r
     {
         case PPN_FULL:
         {
-            char *buf[PARAM_NAME_LEN + 1];
+            char buf[PARAM_NAME_LEN + 1];   ///!!!!!!!!!!!!!!! *
             GetParameterName(paramId, true, buf);
-            DisplayPrintStr(buf);
+            DisplayPrintStr((const char *)buf);
             DisplayPrintChar(' ');
         }
             break;
@@ -819,7 +1097,107 @@ void PrintParameterByValue(uint8_t paramId, uint16_t value, int8_t col, int8_t r
             DisplayPrintUInt(value, DEC);
             DisplayPrintStr("mm");
         }
-            break;      
+            break;   
+        // Прогноз погоды
+        case PT_CAST_DATE:
+        {
+            if(printParamName == PPN_SHORT)
+                DisplayPrintStr("д ");
+            PrintDateByValue(MIT_DATE_CAST, LOW_BYTE(value), 0, HIGH_BYTE(value), 0);
+        }
+            break; 
+        case PT_CAST_TIME:
+        {
+            if(printParamName == PPN_SHORT)
+                DisplayPrintStr("в ");
+            char *t = "Утро";
+            switch(value)
+            {
+                case 1:
+                   t = "День";
+                   break;
+                case 2:
+                    t = "Веч.";
+                   break;
+                case 3:
+                    t = "Ночь";
+                   break;
+            }
+            DisplayPrintStr((const char *)t); 
+        }
+            break;   
+        case PT_CAST_WEATHER_TYPE:
+        {
+            if(printParamName == PPN_SHORT)
+                DisplayPrintStr("о ");
+            
+            char *t = "Ясно";
+            switch(value)
+            {
+
+                case 1:
+                   t = "Обл.";
+                   break;
+                case 2:
+                    t = "Пасм";
+                   break;
+                case 3:
+                    t = "Дожд";
+                   break;
+                case 4:
+                    t = "Снег";
+                   break;
+            }
+            DisplayPrintStr((const char *)t); 
+        }
+            break;    
+        case PT_CAST_WIND:
+        {
+            if(printParamName == PPN_SHORT)
+                DisplayPrintStr("в ");
+            
+            uint8_t dir = HIGH_BYTE(value);
+            /*
+            * 0 'с'
+            * 1 'св'
+            * 2 'в',
+            * 3 'юв',
+            * 4 'ю'
+            * 5 'юз'
+            * 6 'з'
+            * 7 'сз'
+            */
+            char t = CH_ARROW_DOWN;
+            switch(dir)
+            {
+                case 1:
+                   t = CH_ARROW_LEFT_BOTTOM;
+                   break;
+                case 2:
+                    t = '<';
+                   break;
+                case 3:
+                    t = CH_ARROW_LEFT_TOP;
+                   break;
+                case 4:
+                    t = CH_ARROW_UP;
+                   break;
+                case 5:
+                    t = CH_ARROW_RIGHT_TOP;
+                   break;
+                case 6:
+                    t = '>' ;
+                   break;
+                case 7:
+                    t = CH_ARROW_RIGHT_BOTTOM;
+                   break;
+            }
+            DisplayPrintSymbol(t); 
+            DisplayPrintChar(' '); 
+            DisplayPrintUInt(LOW_BYTE(value), DEC | SHOW_USE_FIELD_SIZE | FIELD_SIZE(2));
+            DisplayPrintStr("м/с");
+        }
+            break;    
     }    
 }
 
@@ -833,9 +1211,9 @@ void PrintDiscreteParameterByValue(uint8_t paramId, bool value, int8_t col, int8
     {
         case PPN_FULL:
         {
-            char *buf[PARAM_NAME_LEN + 1];
+            char buf[PARAM_NAME_LEN + 1]; //!!!!!!!!!!!!!!!!!!*
             GetParameterName(paramId, false, buf);
-            DisplayPrintStr(buf);
+            DisplayPrintStr((const char *)buf);
             DisplayPrintChar(' ');
         }
             break;

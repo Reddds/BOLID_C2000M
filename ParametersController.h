@@ -12,7 +12,31 @@ typedef enum
     MIT_LITERAL, // Строка текста
     MIT_PARAM, // Значение параметра
     MIT_SHORT, // Значение параметра с коротким названием
-    MIT_FULL, // Значение параметра с длинным названием   
+    MIT_FULL, // Значение параметра с длинным названием 
+            
+    MIT_TIME, // Текущее время HH:MM
+    MIT_TIME_HOUR,  // Текущее время (час)
+    MIT_TIME_MIN,  // Текущее время (минуты)  
+            
+    MIT_DATE_LONG, // dd  month(8)   year 
+    MIT_DATE_FULL, // dow dd mmm year     
+    MIT_DATE_CAST, // Для прогноза погоды dd mmm        
+    MIT_DATE_NORMAL, // dd.mm.yyyy       
+    MIT_DATE_SHORT, // dd.mm.yy             
+    MIT_DATE_DAY,
+    MIT_DATE_MONTH_STR, // Месяц словом
+    MIT_DATE_MONTH, // Месяц цифрой
+    MIT_DATE_YEAR, // yyyy
+    MIT_DATE_YEAR_SHORT, // yy
+    MIT_DATE_DAY_OF_WEEK_LONG, // Длинная строка
+    MIT_DATE_DAY_OF_WEEK_MID, // 3 символа       
+    MIT_DATE_DAY_OF_WEEK_SHORT, // 2 символа   
+            
+//    MIT_CAST_MORNING, // Утро   
+//    MIT_CAST_DAY,   // День   
+//    MIT_CAST_EVENING,  // Вечер    
+//    MIT_CAST_NIGHT,  // Ночь
+            
     MIT_UNKNOWN = 0xFF      
 }MainItemTypes;
 
@@ -32,6 +56,32 @@ typedef enum
     PT_LIGHT, // Свет вкл-выкл
     PT_DOOR_OPEN, // Дверь откр-закр
     PT_YES_NO, // Да или нет
+       
+    // Прогноз погоды
+    PT_CAST_DATE, // Для прогноза погоды dd mmm    HI - mon (0..11) LO - day 1..31      
+    PT_CAST_TIME, // 0 - Утро, 1 - День, 2 - вечер, 3 - ночь
+    /*
+     * Тип погоды, осадки
+     * 0 - ясно
+     * 1 - облачно
+     * 2 - пасмурно
+     * 3 - дождь
+     * 4 - снег
+     * 
+    */
+    PT_CAST_WEATHER_TYPE, // Тип погоды, осадки
+    /*
+     * '? ю'
+     * '? с'
+     * '? з',
+     * '? в',
+     * ' юз'
+     * ' юв'
+     * ' сз'
+     * ' св'
+     */
+    PT_CAST_WIND, // Ветер HI - направление, LO - скорость       
+            
      
     PT_UNKNOWN = 0xFF        
 }ParamTypes;
@@ -87,7 +137,12 @@ QuickButtonParam QuickButtonParams[QUICK_BUTTON_COUNT];
 
 #define DUMMY_ROOM_COUNT 4
 uint8_t RoomsCount;// = DUMMY_ROOM_COUNT;
-uint8_t MainParamCount;
+#define MAIN_SCREEN_MAX_COUNT 8
+uint8_t MainParamCount[MAIN_SCREEN_MAX_COUNT];
+uint8_t MainParamStartAddresses[MAIN_SCREEN_MAX_COUNT];
+// Количество главных экранов
+uint8_t MainScreenCount;
+//uint8_t MainParamCount;
 
 //const uint16_t ParamAddresses_0[] = {0, 1};
 //const uint16_t ParamAddresses_1[] = {2, 3, 4};
@@ -132,10 +187,10 @@ uint8_t DiscreteParameters[32]; // 256 бит
 int8_t InitParameters();
 
 
-void GetMainScreenParam(uint8_t paramId, MainScreenItem *paramStruct);
+void GetMainScreenParam(uint8_t mainScreenId, uint8_t paramId, MainScreenItem *paramStruct);
 
 
-
+//uint8_t GetMainParamCount(uint8_t startScrId);
 
 //Размер буфера 8 = 7 + 1
 void GetRoomName(uint8_t room, char* buf);
@@ -166,6 +221,7 @@ uint16_t GetParameterStepByRoom(uint8_t room, uint8_t param);
 #define GetParamAddress(room, param) (roomParams[room].ParamAddresses[param])
 bool IsParamEditable(uint8_t room, uint8_t param, bool *is16Bit); 
 
+void PrintDate(MainItemTypes type);
 /**
  * Вывод параметра на экран
  * @param paramId           ID параметра

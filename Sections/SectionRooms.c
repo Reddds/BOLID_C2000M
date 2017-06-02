@@ -1,5 +1,5 @@
 #include "SectionRooms.h"
-#include "../ModbusRtu.h"
+#include "../MODBUS/ModbusRtu.h"
 #include "../LCD/xlcd.h"
 #include "../buttons.h"
 #include "../ParametersController.h"
@@ -87,8 +87,8 @@ void RoomsStart()
     //DisplayPrintChar(CH_LEFT_RIGHT);
     //DisplayPrintStr("Выбор комнаты");
     
-    DisplayNoBlink();
-    DisplayNoCursor();
+//    DisplayNoBlink();
+//    DisplayNoCursor();
     
     _currentRoom = 0;
     RoomDisplayRedraw();
@@ -98,7 +98,6 @@ void RoomsStart()
 
 void RoomDisplayRedraw()
 {
-    
     DisplayClear();
     char buf[9];
     GetRoomName(_currentRoom, buf);
@@ -107,10 +106,10 @@ void RoomDisplayRedraw()
         case VS_ROOT:
         case VS_SELECT_ROOM:
         {
-            if(_currentSrState == VS_ROOT)
-            DisplayPrintChar(CH_LEFT_RIGHT);
-            else
-                DisplayPrintChar(' ');
+//            if(_currentSrState == VS_ROOT)
+//            DisplayPrintChar(CH_LEFT_RIGHT);
+//            else
+//                DisplayPrintChar(' ');
             DisplayPrintStr("Выбор комнаты");
             DisplaySetCursorPos(0, 1);
             if(_currentSrState == VS_SELECT_ROOM)
@@ -120,52 +119,61 @@ void RoomDisplayRedraw()
                 DisplayPrintStr("Ошибка");
                 return;
             }
-            DisplayPrintStr(buf);
+            DisplayPrintStr((const char *)buf);
+            
+            if(_currentSrState == VS_ROOT)
+                DisplaySetCursorPos(0, 0);
+            else
+                DisplaySetCursorPos(0, 1);
+
         }
         break;
         case VS_SHOW_PARAMS:
         {
             // Первая строка - название комнаты
-            DisplayPrintStr(buf);
+            DisplayPrintStr((const char *)buf);
             // Вторая строка название параметра и значение
             DisplaySetCursorPos(0, 1);
-            DisplayPrintChar(CH_LEFT_RIGHT);
+//            DisplayPrintChar(CH_LEFT_RIGHT);
             
             PrintParameterByRoom(_currentRoom, _currentParam, -1, -1, PPN_FULL);
             if(IsParamEditable(_currentRoom, _currentParam, &tempParamIs16bit))
             {
                 DisplayPrintChar('*');
             }
+            DisplaySetCursorPos(0, 1);
         }
         break;
         case VS_EDIT_PARAM:
         {
             // Первая строка - название комнаты  и параметра
-            DisplayPrintStr(buf);
+            DisplayPrintStr((const char *)buf);
             DisplayPrintChar(' ');
             //char buf[9];
             GetParameterNameByRoom(_currentRoom, _currentParam, buf);
-            DisplayPrintStr(buf);
+            DisplayPrintStr((const char *)buf);
             // Вторая строка -название параметра и- значение
             DisplaySetCursorPos(0, 1);
-            DisplayPrintSymbol(CH_LEFT_RIGHT);
+            //DisplayPrintSymbol(CH_LEFT_RIGHT);
             
             
             if(tempParamIs16bit)
             {
                 PrintParameterByRoomAndValue(_currentRoom, _currentParam, tempParam, -1, -1, PPN_NONE);
-                DisplayPrintProgress(8, 8, 1, (tempParam - GetParameterMaxByRoom(_currentRoom, _currentParam)) / (float)(GetParameterMaxByRoom(_currentRoom, _currentParam) - GetParameterMinByRoom(_currentRoom, _currentParam)) * 100);
+                DisplayPrintProgress(8, 8, 1, (uint8_t)((tempParam - GetParameterMaxByRoom(_currentRoom, _currentParam)) / (float)(GetParameterMaxByRoom(_currentRoom, _currentParam) - GetParameterMinByRoom(_currentRoom, _currentParam)) * 100));
             }
             else
             {
                 PrintDiscreteParameterByRoomAndValue(_currentRoom, _currentParam, tempBoolParam, -1, -1, PPN_NONE);
             }
+            DisplaySetCursorPos(0, 1);
         }
         break;
     }
     
     
-    
+    DisplayCursor();
+    DisplayBlink();
 }
 
 void RoomsUpdateView()
@@ -186,7 +194,7 @@ void RoomsOnButton(uint8_t button)
                 case VS_SELECT_ROOM:// выход в корень
                 {
                     if(_currentRoom == 0)
-                        _currentRoom = RoomsCount - 1;
+                        _currentRoom = RoomsCount - 1u;
                     else
                         _currentRoom--;
                     _currentParam = 0;
@@ -195,7 +203,7 @@ void RoomsOnButton(uint8_t button)
                 case VS_SHOW_PARAMS:
                 {
                     if(_currentParam == 0)
-                        _currentParam = _currentRoomParamCount - 1;
+                        _currentParam = _currentRoomParamCount - 1u;
                     else
                         _currentParam--;
                 }

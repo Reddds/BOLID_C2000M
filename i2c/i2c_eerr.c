@@ -1,4 +1,3 @@
-#include <p18cxxx.h>
 #include "i2c.h"
 
 
@@ -14,7 +13,7 @@
  ********************************************************************/
 #if defined (I2C_V1) 
 
-int16_t EERandomRead(uint8_t control, uint24_t address)
+int16_t EERandomRead(uint8_t control, uint32_t address)
 {
     control |= (address >> 16) << 1; // Если адрес больше размера первого чипа, то переходим ко второму
     IdleI2C(); // ensure module is idle
@@ -51,7 +50,7 @@ int16_t EERandomRead(uint8_t control, uint24_t address)
                     return ( -1); // return with Bus Collision error 
                 }
 
-                if (WriteI2C(control + 1))// write 1 byte - R/W bit should be 1
+                if (WriteI2C(control + 1u))// write 1 byte - R/W bit should be 1
                 {
                     StopI2C();
                     return ( -3); // return with write collision error

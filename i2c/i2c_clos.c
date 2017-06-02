@@ -1,4 +1,3 @@
-#include <p18cxxx.h>
 #include "i2c.h"
 
 #if defined (I2C_V1)

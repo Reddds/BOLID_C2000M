@@ -11,11 +11,11 @@
 *                       the LCD controller is busy before calling   *
 *                       this routine.                               *
 ********************************************************************/
-void SetCGRamAddr(unsigned char CGaddr)
+void SetCGRamAddr(uint8_t CGaddr)
 {
 #ifdef BIT8                                     // 8-bit interface
         TRIS_DATA_PORT = 0;                     // Make data port ouput
-        DATA_PORT = CGaddr | 0b01000000;        // Write cmd and address to port
+        DATA_PORT = CGaddr | 0b01000000u;        // Write cmd and address to port
         RW_PIN = 0;                             // Set control signals
         RS_PIN = 0;
         DelayFor18TCY();

@@ -16,6 +16,10 @@ void IdleStart();
 void IdleUpdateView();
 
 /**
+ * Переключение на следующий экран после задержки
+ */
+void IdleNextScreen();
+/**
  * Обработка нажатия кнопок
  * 
  * @param button ID кнопки

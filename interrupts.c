@@ -151,6 +151,8 @@ void high_isr(void)
       if(INTCONbits.TMR0IF) // Watch timer (6 sec)
       {
           INTCONbits.TMR0IF = 0;
+//          if(globalHours == TIME_NOT_SET)
+//              return;
           _6sCounter++;
           if(_6sCounter == 10)
           {
@@ -280,12 +282,13 @@ void SetHourMin(uint8_t *newHour, uint8_t *newMin, uint8_t *sec)
     
     globalHours = *newHour;
     globalMinutes = *newMin;
-    _totalMinutesFromDayStart = globalHours * 60 + globalMinutes;
+    _totalMinutesFromDayStart = globalHours * 60u + globalMinutes;
     
     uint8_t tmpSec = *sec;
-    _6sCounter = tmpSec / 6;
-    uint8_t secToNext6Sec = 6 - (tmpSec % 6);
-    WRITETIMER0(0x10000 - WATCH_TIMER_TICKS_IN_1_SEC * secToNext6Sec);
+    _6sCounter = tmpSec / 6u;
+    uint8_t secToNext6Sec = 6u - (tmpSec % 6u);
+    WRITETIMER0(0x10000u - WATCH_TIMER_TICKS_IN_1_SEC * secToNext6Sec);
     
     T0CONbits.TMR0ON = 1; // Switch on timer
+    INTCONbits.TMR0IF = 0;//
 }

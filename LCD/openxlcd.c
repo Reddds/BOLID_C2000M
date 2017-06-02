@@ -211,14 +211,57 @@ uint8_t Progress[][8] =
 };
 
 
-
+uint8_t Direction[][8] =
+{
+    
+    { // 0 left top
+        0b00000000,
+        0b00011100,
+        0b00011000,
+        0b00010100,
+        0b00000010,
+        0b00000001,
+        0b00000000,
+        0b00000000,
+    },   
+    { // 1 right top
+        0b00000000,
+        0b00000111,
+        0b00000011,
+        0b00000101,
+        0b00001000,
+        0b00010000,
+        0b00000000,
+        0b00000000,
+    },   
+    { // 2 left bottom
+        0b00000000,
+        0b00000001,
+        0b00000010,
+        0b00010100,
+        0b00011000,
+        0b00011100,
+        0b00000000,
+        0b00000000,
+    },   
+    { // 3 right bottom
+        0b00000000,
+        0b00010000,
+        0b00001000,
+        0b00000101,
+        0b00000011,
+        0b00000111,
+        0b00000000,
+        0b00000000,
+    },   
+};
 
 uint8_t _initialized;
 
 uint8_t _numlines;
 uint8_t _row_offsets[4];
 
-void SetRowOffsets(int row0, int row1, int row2, int row3)
+void SetRowOffsets(uint8_t row0, uint8_t row1, uint8_t row2, uint8_t row3)
 {
   _row_offsets[0] = row0;
   _row_offsets[1] = row1;
@@ -252,7 +295,7 @@ void OpenXLCD(unsigned char lcdtype, uint8_t cols, uint8_t lines, uint8_t dotsiz
     }    
     _numlines = lines;
 
-    SetRowOffsets(0x00, 0x40, 0x00 + cols, 0x40 + cols);      
+    SetRowOffsets(0x00u, 0x40u, 0x00u + cols, 0x40u + cols);      
     
       // for some 1 line displays you can select a 10 pixel high font
     if ((dotsize != LCD_5x8DOTS) && (lines == 1)) 
@@ -332,7 +375,7 @@ void OpenXLCD(unsigned char lcdtype, uint8_t cols, uint8_t lines, uint8_t dotsiz
         
         
         while(BusyXLCD()); 
-        SetDDRamAddr(LCD_SETDDRAMADDR);                // Set Display data ram address to 0
+        SetDDRamAddr(0);                // Set Display data ram address to 0
 
         return;
 }
@@ -342,11 +385,11 @@ void DisplaySetCursorPos(uint8_t col, uint8_t row)
     const uint8_t max_lines = sizeof(_row_offsets) / sizeof(*_row_offsets);
     if ( row >= max_lines ) 
     {
-      row = max_lines - 1;    // we count rows starting w/0
+      row = max_lines - 1u;    // we count rows starting w/0
     }
     if ( row >= _numlines ) 
     {
-      row = _numlines - 1;    // we count rows starting w/0
+      row = _numlines - 1u;    // we count rows starting w/0
     }
 
     SetDDRamAddr(col + _row_offsets[row]);
@@ -370,11 +413,36 @@ void DisplayCreateChar(uint8_t location, uint8_t charmap[])
 {
     while(BusyXLCD()); 
     location &= 0x7; // we only have 8 locations 0-7
-    SetCGRamAddr(location << 3);
+    SetCGRamAddr(location << 3u);
     for (int i=0; i<8; i++) 
     {
         WriteDataXLCD(charmap[i]);
     }
+}
+
+void InitSymbol(uint8_t id)
+{
+    while(BusyXLCD()); 
+    // Сохраняем текущую позицию курсора
+    uint8_t curDisplayPos = ReadAddrXLCD();
+    switch(id)
+    {
+        case CH_ARROW_LEFT_TOP:
+            DisplayCreateChar(CH_CUSTOM_SYMBOL, Direction[0]);
+            break;
+        case CH_ARROW_RIGHT_TOP:
+            DisplayCreateChar(CH_CUSTOM_SYMBOL, Direction[1]);
+            break;
+        case CH_ARROW_LEFT_BOTTOM:
+            DisplayCreateChar(CH_CUSTOM_SYMBOL, Direction[2]);
+            break;
+        case CH_ARROW_RIGHT_BOTTOM:
+            DisplayCreateChar(CH_CUSTOM_SYMBOL, Direction[3]);
+            break;
+    }
+    while(BusyXLCD());
+    // Возвращаем текущую позицию курсора
+    SetDDRamAddr(curDisplayPos);
 }
 
 char RecodeSymbol(char c)
@@ -692,5 +760,5 @@ void DisplayPrintProgress(uint8_t colStart, uint8_t len, uint8_t row, uint8_t pe
     } 
     *str = 0;
     DisplaySetCursorPos(colStart, row);
-    DisplayPrintStr(buf);
+    DisplayPrintStr((const char *)buf);
 }

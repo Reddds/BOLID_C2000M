@@ -21,7 +21,7 @@
 #define Print_h
 
 #include <stdint.h>        /* For uint8_t definition */
-//#include <stdio.h> // for size_t
+#include <stdbool.h>       /* For true/false definition */
 
 //#include "Printable.h"
 
@@ -53,7 +53,7 @@ uint8_t DisplayPrintSymbol(uint8_t c);
 //uint8_t DisplayPrint(unsigned int, int = DEC);
 uint8_t DisplayPrintInt(long, uint16_t);
 uint8_t DisplayPrintUInt(unsigned long, uint16_t);
-uint8_t DisplayPrintFloat(double, uint8_t);
+uint8_t DisplayPrintFloat(double, uint16_t);
 //size_t DisplayPrint(const Printable&);
 
 //size_t println(const __FlashStringHelper *);

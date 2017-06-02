@@ -35,6 +35,7 @@
 
 __EEPROM_DATA(0x11, MODBUD_INITIAL_ID, 100, 100, 30, 50, 0, 0x00);
 
+__EEPROM_DATA(0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
 
 /* Refer to the device datasheet for information about available
 oscillator configurations. */

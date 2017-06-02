@@ -80,6 +80,12 @@ uint8_t DisplayPrintChar(char c)
 
 uint8_t DisplayPrintSymbol(uint8_t c)
 {
+    
+    if(c >= 0x80 && c <= 0x90)
+    {
+        InitSymbol(c);
+        c = CH_CUSTOM_SYMBOL;
+    }
     while(BusyXLCD());
     putcXLCD(c);
     return 0;
@@ -105,20 +111,20 @@ uint8_t DisplayPrintInt(long n, uint16_t base)
 {
     if (base == 0) 
     {
-        putcXLCD(n);
+        putcXLCD((uint32_t)n);
         return 0;
     } 
     else if (base == 10) 
     {
       if (n < 0) 
       {
-        int t = DisplayPrintChar('-');
+        uint8_t t = DisplayPrintChar('-');
         n = -n;
-        return DisplayPrintNumber(n, 10) + t;
+        return DisplayPrintNumber((uint32_t)n, 10u) + t;
       }
-      return DisplayPrintNumber(n, 10);
+      return DisplayPrintNumber((uint32_t)n, 10u);
     } else {
-      return DisplayPrintNumber(n, base);
+      return DisplayPrintNumber((uint32_t)n, base);
     }
 }
 
@@ -227,7 +233,8 @@ uint8_t DisplayPrintUInt(unsigned long n, uint16_t options)
 
 // Private Methods /////////////////////////////////////////////////////////////
 
-uint8_t DisplayPrintNumber(unsigned long n, uint16_t options)
+
+uint8_t DisplaySprint(unsigned long n, uint16_t options, char *buf, uint8_t bufsize)
 {
     uint8_t base = options & MASK_BASE;
     
@@ -237,8 +244,8 @@ uint8_t DisplayPrintNumber(unsigned long n, uint16_t options)
 //    else
     
     
-    char buf[SCREEN_WIDTH + 1]; //8 * sizeof(long) + 1 Assumes 8-bit chars plus zero byte.
-    char *str = &buf[sizeof(buf) - 1];
+//    char buf[SCREEN_WIDTH + 1]; //8 * sizeof(long) + 1 Assumes 8-bit chars plus zero byte.
+    char *str = &buf[bufsize - 1];
 
     *str = '\0';
 
@@ -263,16 +270,65 @@ uint8_t DisplayPrintNumber(unsigned long n, uint16_t options)
         char symToFill = (options & SHOW_STARTING_ZEROES) ? '0' : ' ';
         for(uint8_t i = alreadyPrinted; i < fieldSize && (str - buf > 0); i++)
             *--str = symToFill;
+        if(alreadyPrinted < fieldSize)
+            alreadyPrinted = fieldSize;
     }
-    
-    putsXLCD(str);
-    return 0;
+    return alreadyPrinted;
 }
 
-uint8_t DisplayPrintFloat(double number, uint8_t digits) 
+uint8_t DisplayPrintNumber(unsigned long n, uint16_t options)
+{
+//    uint8_t base = options & MASK_BASE;
+//    
+////    uint8_t bufSize;
+////    if(options & SHOW_USE_FIELD_SIZE)
+////        bufSize = (options & MASK_FIELD_SIZE) + 1 + 1;
+////    else
+//    
+//    
+//    char buf[SCREEN_WIDTH + 1]; //8 * sizeof(long) + 1 Assumes 8-bit chars plus zero byte.
+//    char *str = &buf[sizeof(buf) - 1];
+//
+//    *str = '\0';
+//
+//    // prevent crash if called with base == 1
+//    if (base < 2) base = 10;
+//
+//    uint8_t alreadyPrinted = 0;
+//    do 
+//    {
+//        char c = n % base;
+//        n /= base;
+//
+//        *--str = c < 10 ? c + '0' : c + 'A' - 10;
+//        alreadyPrinted++;
+//    } while(n && (str - buf > 0));
+//
+//    
+//    
+//    if(options & SHOW_USE_FIELD_SIZE)
+//    {
+//        uint8_t fieldSize = ((options & MASK_FIELD_SIZE) >> 8) + 1;
+//        char symToFill = (options & SHOW_STARTING_ZEROES) ? '0' : ' ';
+//        for(uint8_t i = alreadyPrinted; i < fieldSize && (str - buf > 0); i++)
+//            *--str = symToFill;
+//        if(alreadyPrinted < fieldSize)
+//            alreadyPrinted = fieldSize;
+//    }
+    
+    char buf[SCREEN_WIDTH + 1]; //8 * sizeof(long) + 1 Assumes 8-bit chars plus zero byte.
+    uint8_t printedCharCount = DisplaySprint(n, options, buf, sizeof(buf));
+    
+    putsXLCD((const char *)(&(buf[sizeof(buf) - printedCharCount - 1]))); //str
+    return printedCharCount;
+}
+
+
+uint8_t DisplayPrintFloat(double number, uint16_t options) 
 { 
     uint8_t n = 0;
-
+    uint8_t digits = options & MASK_BASE;
+    
   //  if (isnan(number)) return print("nan");
   //  if (isinf(number)) return print("inf");
     if (number > 4294967040.0) 
@@ -281,15 +337,21 @@ uint8_t DisplayPrintFloat(double number, uint8_t digits)
         return DisplayPrintStr ("ovf");  // constant determined empirically
 
     // Handle negative numbers
+    bool negate = false;
     if (number < 0.0)
     {
-       n += DisplayPrintChar('-');
+       //n += DisplayPrintChar('-');
        number = -number;
+       negate = true;
     }
 
+    char buf[SCREEN_WIDTH + 1]; // plus zero byte.
+
+    
+    
     // Round correctly so that print(1.999, 2) prints as "2.00"
     double rounding = 0.5;
-    for (uint8_t i=0; i<digits; ++i)
+    for (uint8_t i = 0; i < digits; ++i)
       rounding /= 10.0;
 
     number += rounding;
@@ -297,21 +359,54 @@ uint8_t DisplayPrintFloat(double number, uint8_t digits)
     // Extract the integer part of the number and print it
     unsigned long int_part = (unsigned long)number;
     double remainder = number - (double)int_part;
-    n += DisplayPrintUInt(int_part, DEC);
+    
+    // Печатаем начальные пробелы или нули
+//    for(uint8_t i = 0; i <)
+//    {
+//        DisplayPrintChar((options & SHOW_STARTING_ZEROES) ? '0' : ' ');
+//    }
+        
+    n = DisplaySprint(int_part, DEC, buf, sizeof(buf));
+    if(negate)
+    {
+        buf[sizeof(buf) - n - 2] = '-';
+        n++;
+    }
+    //n += DisplayPrintUInt(int_part, DEC);
 
+    uint8_t bufPos = sizeof(buf) - 1;
     // Print the decimal point, but only if there are digits beyond
-    if (digits > 0) {
-      n += DisplayPrintChar('.'); 
+    if (digits > 0) 
+    {
+        // Освобождаем место в конце буфера для десятичной части
+        uint8_t offset = digits + 1u;
+        if(n + offset > (uint8_t)sizeof(buf) - 1u)
+            offset = sizeof(buf) - n;
+        // n не может быть больше 10 символов, так что проверять не нужно что будет -
+        for(uint8_t i = sizeof(buf) - n - 1; i < sizeof(buf) - 1; i++)
+        {
+            buf[i - offset] = buf[i];
+        }
+        bufPos -= offset;
+        buf[bufPos] = '.';
+        bufPos++;
+        n++;
+        
+        //n += DisplayPrintChar('.'); 
     }
 
     // Extract digits from the remainder one at a time
-    while (digits-- > 0)
+    while (digits > 0)
     {
-      remainder *= 10.0;
-      int toPrint = (int)(remainder);
-      n += DisplayPrintInt(toPrint, DEC);
-      remainder -= toPrint; 
+        remainder *= 10.0;
+        int toPrint = (int)(remainder);
+        buf[bufPos] = '0' + (int)(remainder);
+        n++;
+        bufPos++;
+        //n += DisplayPrintInt(toPrint, DEC);
+        remainder -= toPrint; 
+        digits--;
     } 
-
+    putsXLCD(&(buf[sizeof(buf) - n - 1])); //str
     return n;
 }

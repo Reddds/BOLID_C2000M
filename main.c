@@ -27,7 +27,7 @@
 #include "user.h"          /* User funct/params, such as InitApp */
 #include "interrupts.h"
 #include "buttons.h"
-#include "ModbusRtu.h"
+#include "MODBUS/ModbusRtu.h"
 #include "ParametersController.h"
 
 #include "Sections/SectionIdle.h"
@@ -42,7 +42,7 @@
 #include "SettingsController.h"
 
 
-
+#define RESET_TIMEOUT_MS 5000
 
 //**** Delay functions for xlcd.h **************************************************************************
 
@@ -172,7 +172,19 @@ void LoadParamsFromEeprom()
 
 
 uint16_t modbusState;
-bool timeScreenShown = false;
+bool screenSaverShown = false;
+
+
+unsigned long idleScreenRotateTimeout;
+bool needIdleScreenRotate;
+unsigned long nextIdleScreen;
+
+void ResetIdleScreenTimeout(unsigned long *curMs)
+{
+    idleScreenRotateTimeout = GetSettingValue(SETTING_IDLE_SCREEN_ROTATE_TIMEOUT) * 100;
+    needIdleScreenRotate = idleScreenRotateTimeout > 0;
+    nextIdleScreen = *curMs + idleScreenRotateTimeout;    
+}
 
 void main(void)
 {
@@ -220,20 +232,41 @@ void main(void)
     
     
     LoadParamsFromEeprom();
+    
+    //DisplayPrintUInt(3, DEC | SHOW_USE_FIELD_SIZE | FIELD_SIZE(4));
+    //DisplayPrintFloat(-35 * 0.1, 1 | SHOW_USE_FIELD_SIZE | FIELD_SIZE(4));
+    
+//    DisplaySetCursorPos(0x3e, 1);
+//    while(BusyXLCD());
+//    uint8_t aa = ReadAddrXLCD();
+//    DisplaySetCursorPos(0, 1);
+//    DisplayPrintUInt(aa, DEC);
+    
+    
+    
+    
+//    while(BusyXLCD());
+//    DisplayPrintUInt(ReadAddrXLCD(), DEC);
+//    while(BusyXLCD());
+//    DisplayPrintUInt(ReadAddrXLCD(), DEC);
+//    PrintParameterByValue(10, 1030, 4, 0, PPN_NONE);
     //uint16_t val = GetSettingsValue(0);
     
     
     //initRes = 1;////!!!!!!!!!
     
-//    while(1);
+ //   while(1);
     
     unsigned long curMs = millis();
     unsigned long nextSec = curMs + 1000;
     unsigned long screenSaveStart = curMs + GetSettingValue(SETTING_SAVESCREEN_TIMEOUT) * 1000;
+    
+    ResetIdleScreenTimeout(&curMs);
     unsigned long nextKeyPressAvailable = 0;
     
     
-    
+    // Если долго (5с) держать CLR, то перезагружаемся
+    unsigned long timeToReset;
     
     
     while(1)
@@ -258,154 +291,192 @@ void main(void)
             {
                 uint8_t butChanged = IsButtonChanged();
                 // TODO: <Сделать чтобы CLR работала без задержки на главном экране>
-                // TODO: <Вынести настройки главного экрана (Количество экранов и их содержимое)>
-                // TODO: <Добавить в типы выводимой информации время и дату (в виде отдельных элементов)>
                 // TODO: <Сделать последовательное переключение экранов и настроку задержки>
-                if(curMs >= nextKeyPressAvailable
-                        && butChanged != BTN_NONE && ButtonStates[butChanged] == BUTTON_PRESSED)
+                //curMs >= nextKeyPressAvailable
+                if(butChanged != BTN_NONE)
                 {
 
-
-                    if(timeScreenShown)
+                    if(ButtonStates[butChanged] == BUTTON_PRESSED)
                     {
-                        if(butChanged == BTN_CLR)
-                            break;
+                        if(screenSaverShown)
+                        {
+                            //if(butChanged == BTN_CLR)
+                            //    break;
+
+                            screenSaveStart = curMs + GetSettingValue(SETTING_SAVESCREEN_TIMEOUT) * 1000;
+                            SetBakLightDuty(GetSettingValue(SETTING_LCD_BK) / 50);
+                            SetKbBakLightDuty(GetSettingValue(SETTING_KB_BK) / 50);
+                            screenSaverShown = false;
+                            //IdleStart();
+                            //nextKeyPressAvailable = curMs + INTERVAL_BETWEEN_KEYPRESS_AFTER_SCREENSAVER_MS;
+                            //break;
+                        }
+    //                    else
+    //                        nextKeyPressAvailable = curMs + INTERVAL_BETWEEN_KEYPRESS_MS;
+                        ResetIdleScreenTimeout(&curMs);
                         screenSaveStart = curMs + GetSettingValue(SETTING_SAVESCREEN_TIMEOUT) * 1000;
-                        SetBakLightDuty(GetSettingValue(SETTING_LCD_BK) / 50);
-                        SetKbBakLightDuty(GetSettingValue(SETTING_KB_BK) / 50);
-                        timeScreenShown = false;
-                        IdleStart();
-                        nextKeyPressAvailable = curMs + INTERVAL_BETWEEN_KEYPRESS_AFTER_SCREENSAVER_MS;
-                        break;
+                        switch(butChanged)
+                        {
+                            case BTN_PRG:
+                            {
+                                switch(_currentSection)
+                                {
+                                    case SECTION_IDLE:
+                                    {
+                                        if(IdleIsRoot()) // Переходим в режим переключения разделов
+                                        {
+                                            _currentSection = SECTION_ROOMS;
+                                            RoomsStart();
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                            break;
+
+
+
+                            case BTN_LEFT:
+                                switch(_currentSection)
+                                {
+                                    case SECTION_IDLE:
+                                        IdleOnButton(butChanged);
+    //                                    if(IdleIsRoot())
+    //                                    {
+    //                                        _currentSection = SECTION_SETTINGS;
+    //                                        SettingsStart();
+    //                                    }
+    //                                    else
+    //                                        IdleOnButton(butChanged);
+                                        break;
+                                    case SECTION_SETTINGS:
+                                        if(SettingsIsRoot())
+                                        {
+                                            _currentSection = SECTION_ROOMS;
+                                            RoomsStart();
+                                        }
+                                        else
+                                            SettingsOnButton(butChanged);        
+                                        break;
+                                    case SECTION_ROOMS:
+                                        if(RoomsIsRoot())
+                                        {
+                                            _currentSection = SECTION_SETTINGS;
+                                            SettingsStart();
+                                        }
+                                        else
+                                            RoomsOnButton(butChanged);       
+                                        break;
+                                }                    
+                                break;
+                            case BTN_RIGHT:
+                                switch(_currentSection)
+                                {
+                                    case SECTION_IDLE:
+    //                                    if(IdleIsRoot())
+    //                                    {
+    //                                        _currentSection = SECTION_ROOMS;
+    //                                        RoomsStart();
+    //                                    }
+    //                                    else
+                                            IdleOnButton(butChanged);
+                                        break;
+                                    case SECTION_ROOMS:
+                                        if(RoomsIsRoot())
+                                        {
+                                            _currentSection = SECTION_SETTINGS;
+                                            SettingsStart();
+                                        }
+                                        else
+                                            RoomsOnButton(butChanged);    
+                                        break;
+                                    case SECTION_SETTINGS:
+                                        if(SettingsIsRoot())
+                                        {
+                                            _currentSection = SECTION_ROOMS;
+                                            RoomsStart();
+                                        }
+                                        else
+                                            SettingsOnButton(butChanged);       
+                                        break;
+                                }
+                                break;
+                            case BTN_CLR: // Переходим в начальный экран
+                                timeToReset = curMs + RESET_TIMEOUT_MS;
+                                switch(_currentSection)
+                                {
+                                    case SECTION_IDLE:
+    //                                    if(IdleIsRoot())
+    //                                    {
+    //                                        screenSaveStart = curMs;
+    //                                        SetBakLightDuty(GetSettingValue(SETTING_SAVESCREEN_BK) / 50);
+    //                                        SetKbBakLightDuty(GetSettingValue(SETTING_SAVESCREEN_KB_BK) / 50);
+    //                                        ShowTimeScreen();
+    //                                    }
+    //                                    else
+                                            IdleOnButton(butChanged);
+                                        break;
+                                    case SECTION_ROOMS:
+                                        if(RoomsIsRoot())
+                                        {
+                                            _currentSection = SECTION_IDLE;
+                                            IdleStart();
+                                        }
+                                        else
+                                            RoomsOnButton(butChanged);    
+                                        break;
+                                    case SECTION_SETTINGS:
+                                        if(SettingsIsRoot())
+                                        {
+                                            _currentSection = SECTION_IDLE;
+                                            IdleStart();
+                                        }
+                                        else
+                                            SettingsOnButton(butChanged);       
+                                        break;
+
+
+                                }
+                            break;
+                            default:
+                                switch(_currentSection)
+                                {
+                                    case SECTION_IDLE:
+                                        IdleOnButton(butChanged);
+                                        break;
+                                    case SECTION_ROOMS:
+                                        RoomsOnButton(butChanged);
+                                        break;
+                                    case SECTION_SETTINGS:
+                                        SettingsOnButton(butChanged);    
+                                        break;
+                                }
+                                break;
+                        }
+
+
                     }
                     else
-                        nextKeyPressAvailable = curMs + INTERVAL_BETWEEN_KEYPRESS_MS;
-                    screenSaveStart = curMs + GetSettingValue(SETTING_SAVESCREEN_TIMEOUT) * 1000;
-                    switch(butChanged)
                     {
-                        case BTN_LEFT:
-                            switch(_currentSection)
-                            {
-                                case SECTION_IDLE:
-                                    if(IdleIsRoot())
-                                    {
-                                        _currentSection = SECTION_SETTINGS;
-                                        SettingsStart();
-                                    }
-                                    else
-                                        IdleOnButton(butChanged);
-                                    break;
-                                case SECTION_SETTINGS:
-                                    if(SettingsIsRoot())
-                                    {
-                                        _currentSection = SECTION_ROOMS;
-                                        RoomsStart();
-                                    }
-                                    else
-                                        SettingsOnButton(butChanged);        
-                                    break;
-                                case SECTION_ROOMS:
-                                    if(RoomsIsRoot())
-                                    {
-                                        _currentSection = SECTION_IDLE;
-                                        IdleStart();
-                                    }
-                                    else
-                                        RoomsOnButton(butChanged);       
-                                    break;
-                            }                    
-                            break;
-                        case BTN_RIGHT:
-                            switch(_currentSection)
-                            {
-                                case SECTION_IDLE:
-                                    if(IdleIsRoot())
-                                    {
-                                        _currentSection = SECTION_ROOMS;
-                                        RoomsStart();
-                                    }
-                                    else
-                                        IdleOnButton(butChanged);
-                                    break;
-                                case SECTION_ROOMS:
-                                    if(RoomsIsRoot())
-                                    {
-                                        _currentSection = SECTION_SETTINGS;
-                                        SettingsStart();
-                                    }
-                                    else
-                                        RoomsOnButton(butChanged);    
-                                    break;
-                                case SECTION_SETTINGS:
-                                    if(SettingsIsRoot())
-                                    {
-                                        _currentSection = SECTION_IDLE;
-                                        IdleStart();
-                                    }
-                                    else
-                                        SettingsOnButton(butChanged);       
-                                    break;
-                            }
-                            break;
-                        case BTN_CLR: // Переходим в начальный экран
-                            switch(_currentSection)
-                            {
-                                case SECTION_IDLE:
-                                    if(IdleIsRoot())
-                                    {
-                                        screenSaveStart = curMs;
-                                        SetBakLightDuty(GetSettingValue(SETTING_SAVESCREEN_BK) / 50);
-                                        SetKbBakLightDuty(GetSettingValue(SETTING_SAVESCREEN_KB_BK) / 50);
-                                        ShowTimeScreen();
-                                    }
-                                    else
-                                        IdleOnButton(butChanged);
-                                    break;
-                                case SECTION_ROOMS:
-                                    if(RoomsIsRoot())
-                                    {
-                                        _currentSection = SECTION_IDLE;
-                                        IdleStart();
-                                    }
-                                    else
-                                        RoomsOnButton(butChanged);    
-                                    break;
-                                case SECTION_SETTINGS:
-                                    if(SettingsIsRoot())
-                                    {
-                                        _currentSection = SECTION_IDLE;
-                                        IdleStart();
-                                    }
-                                    else
-                                        SettingsOnButton(butChanged);       
-                                    break;
-
-
-                            }
-                        break;
-                        default:
-                            switch(_currentSection)
-                            {
-                                case SECTION_IDLE:
-                                    IdleOnButton(butChanged);
-                                    break;
-                                case SECTION_ROOMS:
-                                    RoomsOnButton(butChanged);
-                                    break;
-                                case SECTION_SETTINGS:
-                                    SettingsOnButton(butChanged);    
-                                    break;
-                            }
-                            break;
+                        timeToReset = UINT32_MAX;
                     }
-
-
-
-
                 }
                 break;
             }
 
+                
+            if(curMs > timeToReset && ButtonStates[BTN_CLR] == BUTTON_PRESSED)  
+            {
+                Reset();
+            }
+                
+            if(_currentSection == SECTION_IDLE && needIdleScreenRotate && curMs >= nextIdleScreen)
+            {                
+                ResetIdleScreenTimeout(&curMs);
+                IdleNextScreen();
+                
+            }
+            
 
             if(curMs >= nextSec)
             {            
@@ -417,15 +488,21 @@ void main(void)
                 // Показ заставки со временем
                 if(curMs >= screenSaveStart)
                 {
-                    if(!timeScreenShown)
+                    if(!screenSaverShown)
                     {
-                        _currentSection = SECTION_IDLE;
+                        
+                        screenSaverShown = true;
                         SetBakLightDuty(GetSettingValue(SETTING_SAVESCREEN_BK) / 50);
                         SetKbBakLightDuty(GetSettingValue(SETTING_SAVESCREEN_KB_BK) / 50);
 
-                        IdleStart(); // Перекидываем на начальный экран                    
+                        if(_currentSection != SECTION_IDLE)
+                        {
+                            _currentSection = SECTION_IDLE;
+                            ResetIdleScreenTimeout(&curMs);
+                            IdleStart(); // Перекидываем на начальный экран                    
+                        }
                     }
-                    ShowTimeScreen();
+                    //ShowTimeScreen();
                 }
 
 
@@ -466,75 +543,50 @@ void main(void)
 
 }
 
-const char *daysOfWeek[] =
-{
-    "Воскр.",
-    "Порнед.",
-    "Втор.",
-    "Среда",
-    "Четв.",
-    "Пятн.",
-    "Субб.",            
-};
 
-const char *monthes[] = 
-{
-    " Январь ",
-    "Февраль ",
-    "  Март  ",
-    " Апрель ",
-    "  Май   ",
-    "  Июнь  ",
-    "  Июль  ",            
-    " Август ",            
-    "Сентябрь",            
-    "Октябрь ",            
-    " Ноябрь ",            
-    "Декабрь ",            
-};
 
-uint8_t oldMin = 0xff;
-
-void ShowTimeScreen()
-{
-    uint8_t hour, min;
-    bool getTimeRes = getHourMin(&hour, &min);
-    
-    if(timeScreenShown && (min == oldMin))
-        return;
-    timeScreenShown = true;
-    
-    oldMin = min;
-    
-    struct tm *timeStruct = localtime(GetTime());    
-    DisplayClear();
-    //DisplayPrintStr("Время: ");
-    DisplayPrintStr(daysOfWeek[timeStruct->tm_wday]);
-    
-    
-    DisplaySetCursorPos(8, 0);
-    if(getTimeRes)
-    {
-        DisplayPrintUInt(hour, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
-        DisplayPrintChar(':');
-        DisplayPrintUInt(min, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
-    }
-    else
-    {
-        DisplayPrintStr("!!");
-        DisplayPrintUInt(hour, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
-        DisplayPrintChar(':');
-        DisplayPrintUInt(min, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
-    }
-    DisplaySetCursorPos(0, 1);
-    DisplayPrintUInt(timeStruct->tm_mday, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
-    DisplaySetCursorPos(3, 1);
-//    DisplayPrintStr("Дата: ");
-    DisplayPrintStr(monthes[timeStruct->tm_mon]);
-    DisplaySetCursorPos(12, 1);
-    DisplayPrintUInt(timeStruct->tm_year + 1900, DEC);
-    
-}
+//uint8_t oldMin = 0xff;
+//
+//void ShowTimeScreen()
+//{
+//    uint8_t hour, min;
+//    bool getTimeRes = getHourMin(&hour, &min);
+//    
+//    if(screenSaverShown && (min == oldMin))
+//        return;
+//    screenSaverShown = true;
+//    
+//    oldMin = min;
+//    
+//    struct tm *timeStruct = localtime(GetTime());    
+//    DisplayClear();
+//    //DisplayPrintStr("Время: ");
+//    DisplayPrintStr(daysOfWeek[timeStruct->tm_wday]);
+//    
+//    
+//    DisplaySetCursorPos(8, 0);
+//    if(getTimeRes)
+//    {
+//        DisplayPrintUInt(hour, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
+//        DisplayPrintChar(':');
+//        DisplayPrintUInt(min, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
+//    }
+//    else
+//    {
+//        DisplayPrintStr("!!");
+//        DisplayPrintUInt(hour, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
+//        DisplayPrintChar(':');
+//        DisplayPrintUInt(min, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
+//    }
+//    DisplaySetCursorPos(0, 1);
+//    DisplayPrintUInt(timeStruct->tm_mday, DEC | SHOW_USE_FIELD_SIZE | SHOW_STARTING_ZEROES | FIELD_SIZE(2));
+//    DisplaySetCursorPos(3, 1);
+////    DisplayPrintStr("Дата: ");
+//    DisplayPrintStr(monthes[timeStruct->tm_mon]);
+//    DisplaySetCursorPos(12, 1);
+//    DisplayPrintUInt(timeStruct->tm_year + 1900, DEC);
+//    
+//}
 
 
 void io_poll() 
@@ -600,6 +652,9 @@ void io_poll()
                     break;
             }                 
         }
+        // TODO: <Останавливать работу контроллеора, пока не запишется вся информация>
+        // Наверное с первой частью данных передавать в начале 0xFF чтобы не прогружалось ничего
+        // а в конце дописывать первые 2 байта как надо
         else if(lastFileNum > 1) // External EEPROM param settings 
         {
             LoadParamsFromEeprom();

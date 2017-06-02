@@ -1,4 +1,3 @@
-#include <p18cxxx.h>
 #include "i2c.h"
 
 #include "../system.h" // для delay
@@ -16,9 +15,9 @@
 
 #define PAGE_MASK 0x7F
 
-int8_t EEArrayWrite(uint8_t control, uint24_t address, uint8_t *wrptr, uint24_t length)
+int8_t EEArrayWrite(uint8_t control, uint32_t address, uint8_t *wrptr, uint32_t length)
 {
-    uint24_t bytesWrote = 0;
+    uint32_t bytesWrote = 0;
     uint8_t pageCnt = 0;
     while(bytesWrote < length)
     {
@@ -47,7 +46,7 @@ int8_t EEArrayWrite(uint8_t control, uint24_t address, uint8_t *wrptr, uint24_t 
 
 
 
-int8_t EEPageWrite(uint8_t control, uint24_t address, uint8_t *wrptr, uint8_t length)
+int8_t EEPageWrite(uint8_t control, uint32_t address, uint8_t *wrptr, uint8_t length)
 {
     control |= (address >> 16) << 1; // Если адрес больше размера первого чипа, то переходим ко второму
     IdleI2C(); // ensure module is idle

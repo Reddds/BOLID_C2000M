@@ -15,18 +15,22 @@
 extern "C" {
 #endif
 
-#define SETTINGS_COUNT 6
+#define SETTINGS_COUNT 8
     
 #define SETTING_LCD_BK 0    // Подсветка экрана 
 #define SETTING_KB_BK 1     // Подсветка клавдии 
 #define SETTING_SAVESCREEN_TIMEOUT 2 // Задержка перед хранителем экрана в секундах 
 #define SETTING_SAVESCREEN_BK 3 // Подсветка в режиме заставки
-#define SETTING_SAVESCREEN_KB_BK 4 // Подсветка кнопки в режиме заставки    
+#define SETTING_SAVESCREEN_KB_BK 4 // Подсветка кнопки в режиме заставки   
+#define SETTING_IDLE_SCREEN_ROTATE_TIMEOUT 5 // Задержка между переключениями главных экранов
+
+#define SETTING_MODBUS_MUSTER 7 // Режим мастера сети   
     
 typedef enum 
 {
     ST_0_100, // от 0 до 100
     ST_BOOL, // Да - нет
+    ST_INT_4B, // Целое число, 4 байта вводится с клавиатуры       
     ST_MUL_0_1 = 0x10 // Значение отображать делёным на 10       
 }SettingTypes; 
 
@@ -38,9 +42,9 @@ typedef struct
     uint8_t Line2Size;
     SettingTypes Type;
     uint8_t AddressInEeprom;
-    uint8_t minValue;
-    uint8_t maxValue;
-    uint8_t step;
+    uint32_t minValue;
+    uint32_t maxValue;
+    uint32_t step;
     
 }SettingTag;    
    
@@ -54,6 +58,7 @@ typedef struct
 //    {"Подсв.кн.зас.", "Подсв.кнопки при", "заставке", 8,  ST_0_100, 6, 0, 100, 50},
 //};
 
+
 void InitSettings(); // !!! временно
     
 //uint8_t GetSettingsCount();
@@ -62,17 +67,17 @@ char* GetSettingFullName1Line(uint8_t settingId);
 char* GetSettingFullName2Line(uint8_t settingId);
 uint8_t GetSettingLine2Size(uint8_t settingId);
 SettingTypes GetSettingType(uint8_t settingId);
-uint8_t GetSettingMin(uint8_t settingId);
-uint8_t GetSettingMax(uint8_t settingId);
-uint8_t GetSettingStep(uint8_t settingId);
+uint32_t GetSettingMin(uint8_t settingId);
+uint32_t GetSettingMax(uint8_t settingId);
+uint32_t GetSettingStep(uint8_t settingId);
 
 uint16_t GetSettingValue(uint8_t settingId);
-
+uint32_t GetSettingValue32(uint8_t settingId);
 
 void SetTempSettingValue(uint8_t settingId, uint16_t value);
 
 void SaveSetting(uint8_t settingId, uint16_t value);
-
+void SaveSetting32(uint8_t settingId, uint32_t value);
     
 
 

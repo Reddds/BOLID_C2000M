@@ -43,7 +43,7 @@
  */
 
 
-#include "system.h"
+#include "../system.h"
 
 /**
  * @struct modbus_t
@@ -120,6 +120,15 @@ const char MainScreenDesc[] =
 
 #define MB_EXCEPTION_LAST_COMMAND_STATE 0
 
+typedef struct
+{
+    uint8_t u8id; /*!< Slave address between 1 and 247. 0 means broadcast */
+    uint8_t u8fct; /*!< Function code: 1, 2, 3, 4, 5, 6, 15 or 16 */
+    uint16_t u16RegAdd; /*!< Address of the first register to access at slave/s */
+    uint16_t u16CoilsNo; /*!< Number of coils or registers to access */
+    uint16_t *au16reg; /*!< Pointer to memory image in master */
+}modbus_t;
+
 /**
  * @enum MB_FC
  * @brief
@@ -160,10 +169,13 @@ enum MB_FC
   void ModbusSetTimeOut( uint16_t u16timeout); //!<write communication watch-dog timer
   bool ModbusGetTimeOutState(); //!<get communication watch-dog timer state
   uint16_t ModbusGetTimeOut(); //!<get communication watch-dog timer value
-//   int8_t query( modbus_t telegram ); //!<only for master
-//   int8_t poll(); //!<cyclic poll for master
+  
+  void ModbusChangeMode(bool isMaster); //!<change mode master-slave
+  
+  int8_t ModbusPollMaster(); //!<cyclic poll for master
+  int8_t ModbusQuery(modbus_t *telegram); //!<only for master
 
-  uint8_t ModbusPoll(uint8_t *discreteInputs, const uint8_t discreteInputCount, 
+  int8_t ModbusPoll(uint8_t *discreteInputs, const uint8_t discreteInputCount, 
                       uint8_t *coils, const uint8_t coilsCount, 
                       uint16_t *inputRegs, const uint8_t inputRegsCount, 
                       uint16_t *holdingRegs, const uint8_t holdingRegsCount); //!<cyclic poll for slave

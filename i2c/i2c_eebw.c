@@ -1,4 +1,3 @@
-#include <p18cxxx.h>
 #include "i2c.h"
 
 
@@ -15,7 +14,7 @@
  ********************************************************************/
 #if defined (I2C_V1) 
 
-int8_t EEByteWrite(uint8_t control, uint24_t address, uint8_t data)
+int8_t EEByteWrite(uint8_t control, uint32_t address, uint8_t data)
 {
     control |= (address >> 16) << 1; // Если адрес больше размера первого чипа, то переходим ко второму
     IdleI2C(); // ensure module is idle

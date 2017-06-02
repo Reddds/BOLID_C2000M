@@ -21,7 +21,7 @@
  *              - DelayXLCD() provides at least 5ms delay
  */
 
-#define SCREEN_WIDTH 16
+#define SCREEN_WIDTH 16u
 /* Interface type 8-bit or 4-bit
  * For 8-bit operation uncomment the #define BIT8
  */
@@ -73,14 +73,14 @@
 #define LCD_5x8DOTS 0x00
 
 // commands
-#define LCD_CLEARDISPLAY 0x01
-#define LCD_RETURNHOME 0x02
-#define LCD_ENTRYMODESET 0x04
-#define LCD_DISPLAYCONTROL 0x08
-#define LCD_CURSORSHIFT 0x10
-#define LCD_FUNCTIONSET 0x20
-#define LCD_SETCGRAMADDR 0x40
-#define LCD_SETDDRAMADDR 0x80
+#define LCD_CLEARDISPLAY    0x01u
+#define LCD_RETURNHOME      0x02u
+#define LCD_ENTRYMODESET    0x04u
+#define LCD_DISPLAYCONTROL  0x08u
+#define LCD_CURSORSHIFT     0x10u
+#define LCD_FUNCTIONSET     0x20u
+#define LCD_SETCGRAMADDR    0x40u
+#define LCD_SETDDRAMADDR    0x80u
 
 
 
@@ -92,6 +92,13 @@
 #define CH_PROGRESS_MIDDLE 0x04
 #define CH_PROGRESS_EMPTY 0x05
 #define CH_PROGRESS_RIGHT 0x06
+
+#define CH_CUSTOM_SYMBOL 0x07
+
+#define CH_ARROW_LEFT_TOP 0x80
+#define CH_ARROW_RIGHT_TOP 0x81
+#define CH_ARROW_LEFT_BOTTOM 0x82
+#define CH_ARROW_RIGHT_BOTTOM 0x83
 
 #define CH_10 0x7B
 #define CH_12 0x7C
@@ -177,6 +184,7 @@ uint8_t putsXLCD(PARAM_SCLASS const char *);
  */
 void putrsXLCD(const char *);
 
+void InitSymbol(uint8_t id);
 
 
 void DisplayCreateChar(uint8_t location, uint8_t charmap[]);

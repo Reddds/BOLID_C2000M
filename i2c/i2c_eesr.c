@@ -1,5 +1,3 @@
-#include <p18cxxx.h>
-
 #include "i2c.h"
 
 
@@ -16,7 +14,7 @@
  ********************************************************************/
 #if defined (I2C_V1) 
 
-int8_t EESequentialRead(uint8_t control, uint24_t address, uint8_t *rdptr, uint24_t length)
+int8_t EESequentialRead(uint8_t control, uint32_t address, uint8_t *rdptr, uint32_t length)
 {
     control |= (address >> 16) << 1; // Если адрес больше размера первого чипа, то переходим ко второму
     IdleI2C(); // ensure module is idle
@@ -49,7 +47,7 @@ int8_t EESequentialRead(uint8_t control, uint24_t address, uint8_t *rdptr, uint2
             {
                 RestartI2C(); // generate I2C bus restart condition
                 while (SSPCON2bits.RSEN); // wait until re-start condition is over 
-                if (WriteI2C(control + 1))// WRITE 1 byte - R/W bit should be 1 for read
+                if (WriteI2C(control + 1u))// WRITE 1 byte - R/W bit should be 1 for read
                 {
                     StopI2C();
                     return ( -33); // set error for write collision

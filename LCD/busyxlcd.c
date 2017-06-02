@@ -16,7 +16,7 @@ unsigned char BusyXLCD(void)
         E_PIN = 1;                      // Clock in the command
         DelayFor18TCY();
 #ifdef BIT8                             // 8-bit interface
-        if(DATA_PORT&0x80)                      // Read bit 7 (busy bit)
+        if(DATA_PORT & 0x80)            // Read bit 7 (busy bit)
         {                               // If high
                 E_PIN = 0;              // Reset clock line
                 RW_PIN = 0;             // Reset control line
