@@ -54,6 +54,7 @@ uint8_t DisplayPrintSymbol(uint8_t c);
 uint8_t DisplayPrintInt(long, uint16_t);
 uint8_t DisplayPrintUInt(unsigned long, uint16_t);
 uint8_t DisplayPrintFloat(double, uint16_t);
+uint8_t DisplaySprint(unsigned long n, uint16_t options, char *buf, uint8_t bufsize);
 //size_t DisplayPrint(const Printable&);
 
 //size_t println(const __FlashStringHelper *);

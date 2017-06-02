@@ -267,7 +267,11 @@ void main(void)
     
     // ≈сли долго (5с) держать CLR, то перезагружаемс€
     unsigned long timeToReset;
+  
+#ifdef SERIAL_DEBUG
+    DebugPrintStr("Start loop!\n");
     
+#endif    
     
     while(1)
     {

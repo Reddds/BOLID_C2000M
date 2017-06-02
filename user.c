@@ -24,6 +24,9 @@
 #include "interrupts.h"
 #include "MODBUS/ModbusRtu.h"
 #include "i2c/i2c.h"
+#ifdef SERIAL_DEBUG
+#include "LCD/Print.h"
+#endif
 
 /******************************************************************************/
 /* User Functions                                                             */
@@ -50,7 +53,17 @@ void PortBegin()
     
     TRISCbits.RC5 = 0;
     LATCbits.LATC5 = 0;
-    
+
+#ifdef SERIAL_DEBUG
+    SPBRG2 = UBRG;
+    //RCSTA2bits.SYNC = 0;
+    RCSTA2 = 0;
+    RCSTA2bits.SPEN = 1;
+    RCSTA2bits.CREN = 1;
+    TXSTA2 = 0;
+    TXSTA2bits.TXEN = 1;   
+    TXSTA2bits.BRGH = 1;
+#endif    
     
 }
 
@@ -103,7 +116,26 @@ void InitBacklight()
     CCP4 = 0;
 }
 
+#ifdef SERIAL_DEBUG
+#define	TXE_DELAY 	10
+void DebugWrite(uint8_t *buf, uint8_t buflen)
+{
+    __delay_us(TXE_DELAY);
+    for(uint8_t i = 0; i < buflen; i++)
+    {
+        while(!TXSTA2bits.TRMT);//TRMT
+        TXREG2 = buf[i];
+    }
+    while(!TXSTA2bits.TRMT);//TRMT
+}
 
+uint8_t DebugPrintNumber(unsigned long n, uint16_t options)
+{
+    char buf[10]; //8 * sizeof(long) + 1 Assumes 8-bit chars plus zero byte.
+    uint8_t printedCharCount = DisplaySprint(n, options, buf, sizeof(buf));
+    DebugWrite((const char *)(&(buf[sizeof(buf) - printedCharCount - 1])), printedCharCount);
+}
+#endif
 
 //-- 0 .. 3FF
 //++ 0..3

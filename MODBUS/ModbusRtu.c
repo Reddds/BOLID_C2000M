@@ -76,6 +76,14 @@ void Modbus(uint8_t u8serno, uint8_t u8txenpin)
     uint8_t tmpModbusId = eeprom_read(EE_MODBUS_ID);
     if(tmpModbusId == 0xff || tmpModbusId == 0) 
         tmpModbusId = DEFAULT_MODBUS_ID;
+    
+    
+#ifdef SERIAL_DEBUG
+    DebugPrintStr("Start MODBUS (");
+    DebugPrintNumber(tmpModbusId, DEC);
+    DebugPrintStr(")\n");
+#endif  
+    
     ModbusInit(tmpModbusId, u8serno, u8txenpin);
 }
 
@@ -346,6 +354,13 @@ int8_t ModbusPoll(uint8_t *discreteInputs, const uint8_t discreteInputCount,
 
     _u8lastRec = 0;
     int8_t i8state = ModbusGetRxBufferHeader();
+    
+//#ifdef SERIAL_DEBUG
+//    DebugPrintStr("Readed ");
+//    DebugPrintNumber(i8state, DEC);
+//    DebugPrintStr(" bytes\n");
+//#endif     
+    
     _u8lastError = i8state;
     if (i8state < 4) // Minimum request len
     {
@@ -384,7 +399,11 @@ int8_t ModbusPoll(uint8_t *discreteInputs, const uint8_t discreteInputCount,
     if(_au8Buffer[ FUNC ] != MB_FC_READ_EXCEPTION_STATUS)
         ModbusSetExceptionStatusBit(MB_EXCEPTION_LAST_COMMAND_STATE, false);
 
-    
+//#ifdef SERIAL_DEBUG
+//    DebugPrintStr("Function ");
+//    DebugPrintNumber(_au8Buffer[ FUNC ], DEC);
+//    DebugPrintStr("\n");
+//#endif      
     // process message
     switch (_au8Buffer[ FUNC ])
     {
@@ -489,6 +508,12 @@ uint8_t *ModbusGetLastCommand(uint16_t *fileNum, uint16_t *address, uint16_t *co
  */
 int8_t ModbusProcess_FC17()
 {
+#ifdef SERIAL_DEBUG
+    DebugPrintStr("Function ModbusProcess_FC17:\n");
+    //DebugPrintNumber(_au8Buffer[ FUNC ], DEC);
+    //DebugPrintStr("\n");
+#endif      
+    
     _au8Buffer[ 2 ] =  4; // 22 Run Indicator Status 1 Byte + Additional Data 1 Byte
 
     _u8BufferSize = 3;

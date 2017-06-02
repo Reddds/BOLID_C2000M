@@ -168,4 +168,10 @@ void SetBakLightDuty(uint16_t dc);
 void SetKbBakLightDuty(uint16_t dc);
 void SetMODBUSMode(uint16_t isMaster);
 
+#ifdef SERIAL_DEBUG
+void DebugWrite(uint8_t *buf, uint8_t buflen);
+uint8_t DebugPrintNumber(unsigned long n, uint16_t options);
+#define DebugPrintStr(x) DebugWrite(x, sizeof(x))
+
+#endif
 #endif
