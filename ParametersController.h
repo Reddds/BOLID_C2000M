@@ -94,6 +94,13 @@ typedef enum
     PPN_SHORT // Короткое имя  
 }PrintParamName;
 
+typedef enum
+{
+    MRT_COIL,
+    MRT_DISCRETE,
+    MRT_HOLDING,
+    MRT_INPUT        
+}RegType;
 
 typedef struct 
 {
@@ -131,6 +138,29 @@ typedef struct
     uint16_t Value3;
 }QuickButtonParam;
 
+
+typedef struct
+{
+    uint8_t rgId;
+    uint8_t paramId;
+}RegInfoTag;
+
+typedef enum
+{
+    CB_NONE,        // нормальная работа
+    CB_FIRST_BAN,   // первое предупреждение, интервал опроса увеличен
+    CB_SECOND_BAN,  // второе предупреждение, большой интервал опроса
+    CB_COMPLETE_BAN // сообще не опрашивается TODO надо сделать механизм вытаскивания из бана безе перезагрузки       
+}ControllerBan;
+
+typedef struct
+{
+    uint32_t nextRequest;
+    ControllerBan banned;    // Забанен ли контроллер
+    uint8_t continousErrors; // Сколько последовательных ошибок запросов было
+}ControllerrInterval;
+
+
 #define QUICK_BUTTON_COUNT 15
 QuickButtonParam QuickButtonParams[QUICK_BUTTON_COUNT];
 
@@ -143,6 +173,8 @@ uint8_t MainParamStartAddresses[MAIN_SCREEN_MAX_COUNT];
 // Количество главных экранов
 uint8_t MainScreenCount;
 //uint8_t MainParamCount;
+
+
 
 //const uint16_t ParamAddresses_0[] = {0, 1};
 //const uint16_t ParamAddresses_1[] = {2, 3, 4};
@@ -177,6 +209,12 @@ uint8_t DiscreteParamsCount = 0;
 uint16_t _parameters[256];
 
 uint8_t DiscreteParameters[32]; // 256 бит
+
+uint8_t ControllersCount = 0;
+#define CONTROLLERS_MAX_COUNT 16
+ControllerrInterval ControllersNextRequest[CONTROLLERS_MAX_COUNT];
+#define CTRL_REG_BUF_COUNT 16
+
 
 /*typedef struct 
 {
@@ -215,8 +253,13 @@ uint16_t GetParameterMinByRoom(uint8_t room, uint8_t param);
 uint16_t GetParameterMaxByRoom(uint8_t room, uint8_t param);
 uint16_t GetParameterStepByRoom(uint8_t room, uint8_t param);
 
-
-
+// Controllers for Master
+// Получить частоту опроса контроллера в секундах
+uint8_t GetControllerRate(uint8_t id);
+uint8_t GetControllerAddress(uint8_t id);
+uint8_t GetCtrlRegCount(uint8_t id, RegType regType);
+// Возвращает количество регистров в структуре
+uint8_t FillCtrlRegInfo(uint8_t id, RegType regType, RegInfoTag *regInfo);
 
 #define GetParamAddress(room, param) (roomParams[room].ParamAddresses[param])
 bool IsParamEditable(uint8_t room, uint8_t param, bool *is16Bit); 

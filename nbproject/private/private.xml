@@ -3,13 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/MODBUS/ModbusRtu.h</file>
+            <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/MODBUS/master.c</file>
             <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/user.h</file>
-            <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/ParametersController.c</file>
-            <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/SettingsController.c</file>
             <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/user.c</file>
-            <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/Sections/SectionSettings.c</file>
-            <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/SettingsController.h</file>
+            <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/MODBUS/ModbusRtu.c</file>
+            <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/MODBUS/validation.c</file>
+            <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/interrupts.c</file>
+            <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/ParametersController.c</file>
+            <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/MODBUS/internal.h</file>
+            <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/MODBUS/Ports.c</file>
             <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/main.c</file>
+            <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/MODBUS/func1_5_15_coils.c</file>
             <file>file:/D:/Work/Home/SmartHome/BOLID/BOLID_C2000M/ParametersController.h</file>
         </group>
     </open-files>

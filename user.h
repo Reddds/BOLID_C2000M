@@ -19,6 +19,7 @@
 #define EE_MAIN_SCREEN_DELAY 7
 #define EE_PARAMS_STARTADDRESS 8 // 3 байта
 #define EE_MASTER_MODE 11 // Режим мастера сети
+#define EE_MASTER_HEART_BEAT 12 // Интервал опроса * 10 мс
 
 #define EXT_MEM_CHIP_SIZE 0x10000
 #define EXT_MEM_CHIP_PAGES 512
@@ -167,11 +168,18 @@ time_t *GetTime();
 void SetBakLightDuty(uint16_t dc);
 void SetKbBakLightDuty(uint16_t dc);
 void SetMODBUSMode(uint16_t isMaster);
+void SetHeartBeat(uint8_t value);
 
 #ifdef SERIAL_DEBUG
 void DebugWrite(uint8_t *buf, uint8_t buflen);
 uint8_t DebugPrintNumber(unsigned long n, uint16_t options);
 #define DebugPrintStr(x) DebugWrite(x, sizeof(x))
+#define DebugPrintStrLn(x) DebugPrintStr(x); DebugPrintStr("\r\n")
+#define DebugPrintValue(s, v) \
+    DebugPrintStr(s);\
+    DebugPrintStr(" = ");\
+    DebugPrintNumber(v, DEC);\
+    DebugPrintStr("\r\n");
 
 #endif
 #endif

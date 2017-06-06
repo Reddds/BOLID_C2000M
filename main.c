@@ -114,7 +114,11 @@ void LoadParamsFromEeprom()
     }
 }
 
-
+uint16_t _heartBeat = 500;
+void SetHeartBeat(uint8_t value)
+{
+    _heartBeat = value * 10;
+}
 
 /*
  * Основные настройки - действия по быстрым кнопкам 
@@ -178,6 +182,7 @@ bool screenSaverShown = false;
 unsigned long idleScreenRotateTimeout;
 bool needIdleScreenRotate;
 unsigned long nextIdleScreen;
+
 
 void ResetIdleScreenTimeout(unsigned long *curMs)
 {
@@ -257,27 +262,64 @@ void main(void)
     
  //   while(1);
     
-    unsigned long curMs = millis();
-    unsigned long nextSec = curMs + 1000;
-    unsigned long screenSaveStart = curMs + GetSettingValue(SETTING_SAVESCREEN_TIMEOUT) * 1000;
+    uint32_t curMs = millis();
+    uint32_t nextSec = curMs + 1000;
+    uint32_t nextModbusQuery = curMs;
+    uint32_t screenSaveStart = curMs + GetSettingValue(SETTING_SAVESCREEN_TIMEOUT) * 1000;
     
     ResetIdleScreenTimeout(&curMs);
-    unsigned long nextKeyPressAvailable = 0;
+    uint32_t nextKeyPressAvailable = 0;
     
     
     // Если долго (5с) держать CLR, то перезагружаемся
     unsigned long timeToReset;
   
 #ifdef SERIAL_DEBUG
-    DebugPrintStr("Start loop!\n");
+    //DebugPrintValue("Second controller rate", GetControllerRate(1));
+    
+    
+    DebugPrintStrLn("Start loop!");
+    ModbusChangeMode(true);
+    /*modbus_t tt;
+    tt.u8id = 10;
+    tt.u8fct = 1;
+    tt.u16CoilsNo = 1;
+    tt.u16RegAdd = 0;
+    tt.au16reg = NULL;
+    ModbusQuery(&tt);*/
+    
     
 #endif    
+    
+    //bool isTimerOverflow = false; // Когда curMs переваливает за максимальное значение
     
     while(1)
     {
         __delay_ms(5);
-        
-        curMs = millis();
+        uint32_t tmpMs = millis();
+        if(tmpMs < curMs) // Переполнение
+        {// Здесь обновляются все переменные, зависящие от времени
+            // Если переменная ещё внутри старого цикла, уменьшаем её
+            if(nextIdleScreen > tmpMs)
+                nextIdleScreen = 0;
+            if(screenSaveStart > tmpMs)
+                screenSaveStart = 0;
+            if(nextSec > tmpMs)
+            {    nextSec = 1000 - (UINT32_MAX - nextSec);
+                if(nextSec > 1000)
+                    nextSec = 1000;
+            }
+            if(nextModbusQuery > tmpMs)
+                nextModbusQuery = _heartBeat;
+            
+            for(uint8_t i = 0; i < ControllersCount; i++)
+            {
+                if(ControllersNextRequest[i].nextRequest > tmpMs)
+                    ControllersNextRequest[i].nextRequest = GetControllerRate(i) * 1000UL;
+            }
+        }
+                
+        curMs = tmpMs;
         
         
         if(CASE_OPEN)
@@ -537,10 +579,61 @@ void main(void)
         // Запись в нулевой (до прошивки 1)
         // 0x7f 0x06 0xff 0x00 0x00 0x10
         
-        
-        modbusState = ModbusPoll(DiscreteParameters, DiscreteParamsCount, DiscreteParameters, DiscreteParamsCount, _MODBUSInputRegs, modbusInputBufLen, _parameters, ParamCount);
-        io_poll();
-
+        if(MoodbusIsMasterMode())
+        {
+            
+            if(ModbusGetState() == COM_WAITING)
+            {
+                modbusState = ModbusPollMaster();
+                
+            }
+            if(ModbusGetState() == COM_IDLE && nextModbusQuery < curMs)
+            {
+                for(uint8_t i = 0; i < ControllersCount; i++)
+                {
+                    if(ControllersNextRequest[i].banned == CB_COMPLETE_BAN)
+                        continue;
+                    if(ControllersNextRequest[i].nextRequest < curMs)
+                    {
+                        modbus_t tt;
+                        tt.u8id = GetControllerAddress(i);
+#ifdef SERIAL_DEBUG
+                        DebugPrintValue("Send query", tt.u8id);
+#endif
+                        tt.u8fct = MB_FC_READ_INPUT_REGISTER;
+                        tt.u16CoilsNo = 2 + HOLDING_REGS_SIMPLE_COUNT + INPUT_REGS_SIMPLE_COUNT;
+                        tt.u16RegAdd = 0;
+                        tt.au16reg = NULL;
+                        tt.curControllerIdInEe = i;
+                        ModbusQuery(&tt);
+                        
+                        switch(ControllersNextRequest[i].banned)
+                        {
+                            case CB_NONE:
+                                ControllersNextRequest[i].nextRequest = curMs + GetControllerRate(i) * 1000UL;
+                                break;
+                            case CB_FIRST_BAN:
+                                ControllersNextRequest[i].nextRequest = curMs + 10 * 1000UL; // 5 минут 5 * 60
+                                break;
+                            case CB_SECOND_BAN:
+                                ControllersNextRequest[i].nextRequest = curMs + 20 * 1000UL; // 30 минут 30 * 60
+                                break;
+                        }
+                        // Выходим после первого запроса, ибо надо дождаться ответа
+                        break;
+                    }
+                }
+                
+                
+                
+                nextModbusQuery = curMs + _heartBeat;
+            }
+        }
+        else
+        {
+            modbusState = ModbusPoll(DiscreteParameters, DiscreteParamsCount, DiscreteParameters, DiscreteParamsCount, _MODBUSInputRegs, modbusInputBufLen, _parameters, ParamCount);
+            io_poll();
+        }
         
         
     }

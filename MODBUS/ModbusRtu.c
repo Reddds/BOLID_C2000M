@@ -12,16 +12,11 @@
 #include "internal.h"
 
 
-enum COM_STATES
-{
-    COM_IDLE = 0,
-    COM_WAITING = 1
-
-};
 
 
 
-#define T35  5
+
+
 
 uint8_t _u8id; //!< 0=master, 1..247=slave number
 uint8_t _u8serno; //!< serial port: 0-Serial, 1..3-Serial1..Serial3
@@ -48,9 +43,9 @@ uint8_t _lastCommand = 0;
 
 void ModbusInit(uint8_t u8id, uint8_t u8serno, uint8_t u8txenpin);
 int8_t ModbusGetRxBufferHeader();
-int8_t ModbusGetRxBuffer();
+
 uint16_t ModbusCalcCRC(uint8_t u8length);
-uint8_t ModbusValidateAnswer();
+
 uint8_t ModbusValidateRequest();
 void ModbusGet_FC1();
 void ModbusGet_FC3();
@@ -79,9 +74,7 @@ void Modbus(uint8_t u8serno, uint8_t u8txenpin)
     
     
 #ifdef SERIAL_DEBUG
-    DebugPrintStr("Start MODBUS (");
-    DebugPrintNumber(tmpModbusId, DEC);
-    DebugPrintStr(")\n");
+    DebugPrintValue("Start MODBUS", tmpModbusId);
 #endif  
     
     ModbusInit(tmpModbusId, u8serno, u8txenpin);
@@ -210,12 +203,12 @@ uint8_t ModbusGetID()
  * @param time-out value (ms)
  * @ingroup setup
  */
-/*
+
 void ModbusSetTimeOut(uint16_t u16timeOut)
 {
     _u16timeOut = u16timeOut;
 }
-*/
+
 /**
  * @brief
  * Return communication Watchdog state.
@@ -293,13 +286,13 @@ uint8_t ModbusGetState()
  * @return   EXC_REGS_QUANT = 3  Coils or registers number beyond the available space
  * @ingroup buffer
  */
-/*
+
 uint8_t ModbusGetLastError()
 {
     return _u8lastError;
 }
  
-*/
+
 
 
 
@@ -509,7 +502,7 @@ uint8_t *ModbusGetLastCommand(uint16_t *fileNum, uint16_t *address, uint16_t *co
 int8_t ModbusProcess_FC17()
 {
 #ifdef SERIAL_DEBUG
-    DebugPrintStr("Function ModbusProcess_FC17:\n");
+    DebugPrintStrLn("Function ModbusProcess_FC17:");
     //DebugPrintNumber(_au8Buffer[ FUNC ], DEC);
     //DebugPrintStr("\n");
 #endif      
@@ -534,248 +527,3 @@ int8_t ModbusProcess_FC17()
 
 
 
-
-
-
-
-
-// =========== MASTER ==========================================================
-uint16_t *au16regs;
-
-/**
- * Изменяет режим работы
- * @param isMaster
- */
-void ModbusChangeMode(bool isMaster)
-{
-    if(isMaster)
-    {
-        PortClearReadBuffer();
-        _u8state = COM_IDLE;
-    }
-    else
-    {
-        
-    }
-}
-/**
- * @brief
- * *** Only Modbus Master ***
- * Generate a query to an slave with a modbus_t telegram structure
- * The Master must be in COM_IDLE mode. After it, its state would be COM_WAITING.
- * This method has to be called only in loop() section.
- *
- * @see modbus_t
- * @param modbus_t  modbus telegram structure (id, fct, ...)
- * @ingroup loop
- * @todo finish function 15
- */
-int8_t ModbusQuery(modbus_t *telegram )
-{
-    uint8_t u8regsno, u8bytesno;
-    if (_u8id != 0) return -2;
-    if (_u8state != COM_IDLE) return -1;
-
-    if ((telegram->u8id == 0) || (telegram->u8id > 247)) 
-        return -3;
-
-    au16regs = telegram->au16reg;
-
-    // telegram header
-    _au8Buffer[ ID ]         = telegram->u8id;
-    _au8Buffer[ FUNC ]       = telegram->u8fct;
-    _au8Buffer[ ADD_HI ]     = HIGH_BYTE(telegram->u16RegAdd );
-    _au8Buffer[ ADD_LO ]     = LOW_BYTE( telegram->u16RegAdd );
-
-    switch( telegram->u8fct )
-    {
-    case MB_FC_READ_COILS:
-    case MB_FC_READ_DISCRETE_INPUT:
-    case MB_FC_READ_REGISTERS:
-    case MB_FC_READ_INPUT_REGISTER:
-        _au8Buffer[ NB_HI ]      = HIGH_BYTE(telegram->u16CoilsNo );
-        _au8Buffer[ NB_LO ]      = LOW_BYTE( telegram->u16CoilsNo );
-        _u8BufferSize = 6;
-        break;
-    case MB_FC_WRITE_COIL:
-        _au8Buffer[ NB_HI ]      = ((au16regs[0] > 0) ? 0xff : 0);
-        _au8Buffer[ NB_LO ]      = 0;
-        _u8BufferSize = 6;
-        break;
-    case MB_FC_WRITE_REGISTER:
-        _au8Buffer[ NB_HI ]      = HIGH_BYTE(au16regs[0]);
-        _au8Buffer[ NB_LO ]      = LOW_BYTE(au16regs[0]);
-        _u8BufferSize = 6;
-        break;
-    case MB_FC_WRITE_MULTIPLE_COILS: // TODO: implement "sending coils"
-        u8regsno = telegram->u16CoilsNo / 16;
-        u8bytesno = u8regsno * 2;
-        if ((telegram->u16CoilsNo % 16) != 0)
-        {
-            u8bytesno++;
-            u8regsno++;
-        }
-
-        _au8Buffer[ NB_HI ]      = HIGH_BYTE(telegram->u16CoilsNo );
-        _au8Buffer[ NB_LO ]      = LOW_BYTE( telegram->u16CoilsNo );
-        _au8Buffer[ NB_LO + 1 ]    = u8bytesno;
-        _u8BufferSize = 7;
-
-        u8regsno = u8bytesno = 0; // now auxiliary registers
-        for (uint16_t i = 0; i < telegram->u16CoilsNo; i++)
-        {
-
-
-        }
-        break;
-
-    case MB_FC_WRITE_MULTIPLE_REGISTERS:
-        _au8Buffer[ NB_HI ]      = HIGH_BYTE(telegram->u16CoilsNo );
-        _au8Buffer[ NB_LO ]      = LOW_BYTE( telegram->u16CoilsNo );
-        _au8Buffer[ NB_LO + 1 ]    = (uint8_t) ( telegram->u16CoilsNo * 2 );
-        _u8BufferSize = 7;
-
-        for (uint16_t i=0; i< telegram->u16CoilsNo; i++)
-        {
-            _au8Buffer[ _u8BufferSize ] = HIGH_BYTE( au16regs[ i ] );
-            _u8BufferSize++;
-            _au8Buffer[ _u8BufferSize ] = LOW_BYTE( au16regs[ i ] );
-            _u8BufferSize++;
-        }
-        break;
-    }
-
-    ModbusSendTxBuffer();
-    _u8state = COM_WAITING;
-    return 0;
-}
-
-
-
-
-
-/**
- * This method processes functions 1 & 2 (for master)
- * This method puts the slave answer into master data buffer
- *
- * @ingroup register
- * TODO: finish its implementation
- */
-void ModbusGet_FC1()
-{
-    uint8_t u8byte, i;
-    u8byte = 0;
-
-    //  for (i=0; i< au8Buffer[ 2 ] /2; i++) {
-    //    au16regs[ i ] = word(
-    //    au8Buffer[ u8byte ],
-    //    au8Buffer[ u8byte +1 ]);
-    //    u8byte += 2;
-    //  }
-}
-
-/**
- * This method processes functions 3 & 4 (for master)
- * This method puts the slave answer into master data buffer
- *
- * @ingroup register
- */
-void ModbusGet_FC3()
-{
-    uint8_t u8byte, i;
-    u8byte = 3;
-
-    for (i = 0; i < _au8Buffer[ 2 ] / 2; i++)
-    {
-        au16regs[ i ] = word(
-                            _au8Buffer[ u8byte ],
-                            _au8Buffer[ u8byte +1 ]);
-        u8byte += 2;
-    }
-}
-
-
-/**
- * @brief *** Only for Modbus Master ***
- * This method checks if there is any incoming answer if pending.
- * If there is no answer, it would change Master state to COM_IDLE.
- * This method must be called only at loop section.
- * Avoid any delay() function.
- *
- * Any incoming data would be redirected to au16regs pointer,
- * as defined in its modbus_t query telegram.
- *
- * @params	nothing
- * @return errors counter
- * @ingroup loop
- */
-int8_t ModbusPollMaster()
-{
-    _lastFunction = MB_FC_NONE;
-    // check if there is any incoming frame
-    uint8_t u8current = PortAvailable();
-        
-        
-
-    if (millis() > _u32time)
-    {
-        _u8state = COM_IDLE;
-        _u8lastError = NO_REPLY;
-        _u16errCnt++;
-        return 0;
-    }
-
-    if (u8current == 0) return 0;
-
-    // check T35 after frame end or still no frame end
-    if (u8current != _u8lastRec)
-    {
-        _u8lastRec = u8current;
-        _u32time = millis() + T35;
-        return 0;
-    }
-    if (millis() < _u32time) return 0;
-
-    // transfer Serial buffer frame to auBuffer
-    _u8lastRec = 0;
-    int8_t i8state = ModbusGetRxBuffer();
-    if (i8state < 7)
-    {
-        _u8state = COM_IDLE;
-        _u16errCnt++;
-        return i8state;
-    }
-
-    // validate message: id, CRC, FCT, exception
-    uint8_t u8exception = ModbusValidateAnswer();
-    if (u8exception != 0)
-    {
-        _u8state = COM_IDLE;
-        return u8exception;
-    }
-
-    // process answer
-    switch( _au8Buffer[ FUNC ] )
-    {
-    case MB_FC_READ_COILS:
-    case MB_FC_READ_DISCRETE_INPUT:
-        // call get_FC1 to transfer the incoming message to au16regs buffer
-        ModbusGet_FC1( );
-        break;
-    case MB_FC_READ_INPUT_REGISTER:
-    case MB_FC_READ_REGISTERS :
-        // call get_FC3 to transfer the incoming message to au16regs buffer
-        ModbusGet_FC3( );
-        break;
-    case MB_FC_WRITE_COIL:
-    case MB_FC_WRITE_REGISTER :
-    case MB_FC_WRITE_MULTIPLE_COILS:
-    case MB_FC_WRITE_MULTIPLE_REGISTERS :
-        // nothing to do
-        break;
-    default:
-        break;
-    }
-    _u8state = COM_IDLE;
-    return _u8BufferSize;
-}

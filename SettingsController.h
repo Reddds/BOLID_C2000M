@@ -15,7 +15,7 @@
 extern "C" {
 #endif
 
-#define SETTINGS_COUNT 8
+#define SETTINGS_COUNT 9
     
 #define SETTING_LCD_BK 0    // Подсветка экрана 
 #define SETTING_KB_BK 1     // Подсветка клавдии 
@@ -24,7 +24,8 @@ extern "C" {
 #define SETTING_SAVESCREEN_KB_BK 4 // Подсветка кнопки в режиме заставки   
 #define SETTING_IDLE_SCREEN_ROTATE_TIMEOUT 5 // Задержка между переключениями главных экранов
 
-#define SETTING_MODBUS_MUSTER 7 // Режим мастера сети   
+#define SETTING_MODBUS_MASTER 7 // Режим мастера сети   
+#define SETTING_MASTER_HEART_BEAT 8    
     
 typedef enum 
 {

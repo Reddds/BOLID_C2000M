@@ -73,6 +73,7 @@
         <itemPath>MODBUS/func4_input_registers.c</itemPath>
         <itemPath>MODBUS/func101_user_command.c</itemPath>
         <itemPath>MODBUS/func102_device_status.c</itemPath>
+        <itemPath>MODBUS/master.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="Sections" projectFiles="true">
         <itemPath>Sections/SectionIdle.c</itemPath>

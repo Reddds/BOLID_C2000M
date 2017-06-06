@@ -231,7 +231,7 @@ uint8_t dummyEe[] =
     // Коридор
     'С','в','е','т',' ',' ',' ',' ', PT_LIGHT,     false,   //   3  289
     
-    11, //Количество 16битных регистров 208
+    11, //Количество 16битных регистров 324
     
     //Params 16-битные значения сохраняем HI-LO 209
     // 0x7f 6 0xff 0 0 20
@@ -254,44 +254,48 @@ uint8_t dummyEe[] =
 //353
     
     // Зона настроек мастера сети
-    4, // Количество контроллеров
+    2, //!!! Количество контроллеров
         // Спальня
-        60, // Частота опроса в секундах
-        0,  // Количество дискретных регистров
+        2, // Адрес
+        5, // Частота опроса в секундах
         0,  // Количество катушек
+        0,  // Количество дискретных регистров
+        0,  // Количество регистров хранения
         2,  // Количество регистров 
             // Индекс / Ид 16-битного параметра
             2, 0, // температура
             3, 1, // влажность
-        0,  // Количество регистров хранения
         // Балкон
-        60, // Частота опроса в секундах
+        15, // Адрес
+        5, // Частота опроса в секундах
         0,  // Количество дискретных регистров
-        0,  // Количество катушек
+        0,  // Количество дискретных регистров
+        0,  // Количество регистров хранения
         3,  // Количество регистров
             // Индекс / Ид 16-битного параметра
             1, 2, // Вычисленная температура
             4, 3, // Влажность
             5, 4, // Давление
-        0,  // Количество регистров хранения
-        // Датчик движения в коридоре
+/*        // Датчик движения в коридоре
+        1, // Адрес
         0, // Частота опроса в секундах
         1,  // Количество дискретных регистров
             // Индекс / Ид 1-битного параметра
             3, 3, // Движение в коридоре 
         0,  // Количество катушек
-        0,  // Количество регистров
         0,  // Количество регистров хранения
+        0,  // Количество регистров
         // Ванна
+        3, // Адрес
         0, // Частота опроса в секундах
+        0,  // Количество катушек
         2,  // Количество дискретных регистров
             // Индекс / Ид 1-битного параметра
             0, 0, // Дверь открыта
             1, 0, // Свет включён
-        0,  // Количество катушек
-        0,  // Количество регистров
         0,  // Количество регистров хранения
-            
+        0,  // Количество регистров
+*/            
         
     
     // Адреса устройст и регистры, откуда брать значения параметров и с какой частотой
@@ -304,6 +308,7 @@ int16_t roomNamesStartAddr = 0;
 int16_t roomParamsStartAddr = 0;
 int16_t discreteParamsInfoStartAddr = 0;
 int16_t paramsInfoStartAddr = 0;
+int16_t _controllersStartAddr = 0;
 
 bool initialized = false;
 
@@ -352,11 +357,7 @@ int8_t InitParameters()
     if(res < 0)
         return -10 + res;
     
-    MainScreenCount = res;
-#ifdef MY_DEBUG
-    DisplayPrintInt(res, DEC);
-    DisplayPrintChar(' ');
-#endif       
+    MainScreenCount = res;     
 
     
     if(MainScreenCount == 0 || MainScreenCount == 0xff) // Данные незагружены или неверны
@@ -426,11 +427,7 @@ int8_t InitParameters()
         // Пропускаем параметры
         for(uint8_t i = 0; i < MainParamCount[s]; i++) // Пропускаем предыдущие параметры
         {
-    //        DisplayPrintInt(curAddress, DEC);
-    //        DisplayPrintChar(':');
             res = DummyEERandomRead(EXT_MEM_COMMAND, curAddress + MIT_TYPE_OFFSET);
-    //        DisplayPrintInt(res, DEC);
-    //        DisplayPrintChar(' ');
             if(res < 0)
                 return -2;
             switch(res)
@@ -530,12 +527,38 @@ int8_t InitParameters()
 //    DisplayPrintChar(' ');
 
     paramsInfoStartAddr = curAddress + 1;
+#ifdef SERIAL_DEBUG
+    DebugPrintValue("paramsInfoStartAddr", paramsInfoStartAddr);
+#endif     
     
     
     for(uint8_t i = 0; i < ParamCount; i++)
     {
        _parameters[i] = 0; 
     }
+    
+    curAddress += 1 + ParamCount * PI_SIZE;
+    res = DummyEERandomRead(EXT_MEM_COMMAND, curAddress);
+    if(res < 0 || res > CONTROLLERS_MAX_COUNT)
+        return -3;
+    ControllersCount = res;
+#ifdef SERIAL_DEBUG
+    DebugPrintValue("ControllersCount", ControllersCount);
+#endif        
+    _controllersStartAddr = curAddress + 1;
+#ifdef SERIAL_DEBUG
+    DebugPrintValue("_controllersStartAddr", _controllersStartAddr);
+#endif 
+    // Очищаем массив
+    for(uint8_t i = 0; i < ControllersCount; i++)
+    {
+       ControllerrInterval tmpStruct; 
+       tmpStruct.nextRequest = 0;
+       tmpStruct.banned = CB_NONE;
+       tmpStruct.continousErrors = 0;
+       ControllersNextRequest[i] = tmpStruct; 
+    }
+    
     
     
     initialized = true;
@@ -1257,4 +1280,144 @@ void PrintDiscreteParameterByValue(uint8_t paramId, bool value, int8_t col, int8
         }
             break;      
     }    
+}
+
+// Controllers for Master ======================================================
+
+uint16_t GetControllerStartAddress(uint8_t id)
+{
+    if(!initialized || id > ControllersCount - 1)
+        return 0;
+    
+    uint16_t curAddress = _controllersStartAddr;
+    int16_t tmp;
+    for(uint8_t i = 0; i < id; i++) // Пропускаем предыдущие параметры
+    {
+        curAddress += 2;
+        // Количество катушек 
+        tmp = DummyEERandomRead(EXT_MEM_COMMAND, curAddress);
+        if(tmp < 0)
+            return 0;
+        curAddress++;
+        if(tmp > 0)
+            curAddress += (tmp << 1);        
+        // Количество дискретных регистров
+        tmp = DummyEERandomRead(EXT_MEM_COMMAND, curAddress);
+        if(tmp < 0)
+            return 0;
+        curAddress++;
+        if(tmp > 0)
+            curAddress += (tmp << 1);
+        // Количество регистров хранения 
+        tmp = DummyEERandomRead(EXT_MEM_COMMAND, curAddress);
+        if(tmp < 0)
+            return 0;
+        curAddress++;
+        if(tmp > 0)
+            curAddress += (tmp << 1);
+        // Количество регистров
+        tmp = DummyEERandomRead(EXT_MEM_COMMAND, curAddress);
+        if(tmp < 0)
+            return 0;
+        curAddress++;
+        if(tmp > 0)
+            curAddress += (tmp << 1);
+    }
+    return curAddress;
+}
+
+uint8_t GetControllerRate(uint8_t id)
+{
+    uint16_t curAddress = GetControllerStartAddress(id);    
+    if(curAddress == 0)
+        return 0;
+    
+    int16_t tmp = DummyEERandomRead(EXT_MEM_COMMAND, curAddress + 1);
+        if(tmp < 0)
+            return 0;
+    return tmp;
+}
+
+uint8_t GetControllerAddress(uint8_t id)
+{
+    uint16_t curAddress = GetControllerStartAddress(id);    
+    if(curAddress == 0)
+        return 0;
+    
+    int16_t tmp = DummyEERandomRead(EXT_MEM_COMMAND, curAddress);
+        if(tmp < 0)
+            return 0;
+    return tmp;
+}
+
+uint8_t GetCtrlRegCount(uint8_t id, RegType regType)
+{
+    uint16_t curAddress = GetControllerStartAddress(id);  
+    if(curAddress == 0)
+        return 0;
+    
+    curAddress += 2;
+    int16_t tmp;
+    for(uint8_t i = 0; i < regType; i++)
+    {
+        tmp = DummyEERandomRead(EXT_MEM_COMMAND, curAddress);
+        if(tmp < 0)
+            return 0;
+        curAddress++;
+        if(tmp > 0)
+            curAddress += (tmp << 1);
+    }
+    
+    tmp = DummyEERandomRead(EXT_MEM_COMMAND, curAddress);
+    if(tmp < 0)
+        return 0;
+    return tmp;
+}
+
+uint8_t FillCtrlRegInfo(uint8_t id, RegType regType, RegInfoTag *regInfo)
+{
+    //CTRL_REG_BUF_COUNT
+    uint16_t curAddress = GetControllerStartAddress(id);  
+    if(curAddress == 0)
+        return 0;
+    
+    curAddress += 2;
+    int16_t tmp;
+    for(uint8_t i = 0; i < regType; i++)
+    {
+        tmp = DummyEERandomRead(EXT_MEM_COMMAND, curAddress);
+        if(tmp < 0)
+            return 0;
+        curAddress++;
+        if(tmp > 0)
+            curAddress += (tmp << 1);
+    }
+    
+    uint8_t cnt = DummyEERandomRead(EXT_MEM_COMMAND, curAddress);
+    if(cnt < 0)
+        return 0;
+    
+    if(cnt > CTRL_REG_BUF_COUNT)
+        return 0;
+        
+    for(uint8_t i = 0; i < cnt; i++)
+    {
+        curAddress++;
+        
+        tmp = DummyEERandomRead(EXT_MEM_COMMAND, curAddress);
+        if(tmp < 0)
+            return 0;
+        
+        regInfo[i].rgId = tmp;
+        
+        curAddress++;
+        
+        tmp = DummyEERandomRead(EXT_MEM_COMMAND, curAddress);
+        if(tmp < 0)
+            return 0;
+        
+        regInfo[i].paramId = tmp;
+    }
+    
+    return cnt;
 }

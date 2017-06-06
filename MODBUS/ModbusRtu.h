@@ -77,6 +77,10 @@
 
 #define DEVICE_NEED_TIME_SET 1
 
+#define HOLDING_REGS_SIMPLE_COUNT 6
+#define INPUT_REGS_SIMPLE_COUNT 10
+
+
 #define VENDOR_NAME "BOLID"
 #define PRODUCT_CODE "C2000M"
 #define MAJOR_MINOR_REVISION "1.01"
@@ -127,7 +131,14 @@ typedef struct
     uint16_t u16RegAdd; /*!< Address of the first register to access at slave/s */
     uint16_t u16CoilsNo; /*!< Number of coils or registers to access */
     uint16_t *au16reg; /*!< Pointer to memory image in master */
+    uint8_t curControllerIdInEe; //Номер контроллера в памяти 
 }modbus_t;
+
+enum COM_STATES
+{
+    COM_IDLE = 0,
+    COM_WAITING = 1
+};
 
 /**
  * @enum MB_FC
@@ -165,6 +176,7 @@ enum MB_FC
 //  Modbus(uint8_t u8id, uint8_t u8serno);
   void Modbus(uint8_t u8serno, uint8_t u8txenpin);
   void ModbusBegin(long u32speed);
+  bool MoodbusIsMasterMode();
   //void ModbusBegin();
   void ModbusSetTimeOut( uint16_t u16timeout); //!<write communication watch-dog timer
   bool ModbusGetTimeOutState(); //!<get communication watch-dog timer state

@@ -145,3 +145,56 @@ void ModbusSetExceptionStatusBit(uint8_t bitNum, bool value)
 {
     bitWrite(_exceptionStatus, bitNum, value);
 }
+
+/**
+ * @brief
+ * This method validates master incoming messages
+ *
+ * @return 0 if OK, EXCEPTION if anything fails
+ * @ingroup buffer
+ */
+uint8_t ModbusValidateAnswer()
+{
+    // check message crc vs calculated crc
+    uint16_t u16MsgCRC = ((_au8Buffer[_u8BufferSize - 2] << 8)
+         | _au8Buffer[_u8BufferSize - 1]); // combine the crc Low & High bytes
+
+    if ( ModbusCalcCRC( _u8BufferSize-2 ) != u16MsgCRC )
+    {
+        _u16errCnt ++;
+#ifdef SERIAL_DEBUG
+    //DebugPrintValue("Master validation error!", u8exception);
+    DebugPrintStr("CRC not equal! ");
+    DebugPrintNumber(ModbusCalcCRC( _u8BufferSize-2 ), HEX);
+    DebugPrintStr(" != ");
+    DebugPrintNumber(u16MsgCRC, HEX);
+    DebugPrintStrLn("");
+#endif 
+        return NO_REPLY;
+    }
+
+    // check exception
+    if ((_au8Buffer[ FUNC ] & 0x80) != 0)
+    {
+        _u16errCnt ++;
+        return ERR_EXCEPTION;
+    }
+
+    // check fct code
+    bool isSupported = false;
+    for (uint8_t i = 0; i< sizeof( fctsupported ); i++)
+    {
+        if (fctsupported[i] == _au8Buffer[FUNC])
+        {
+            isSupported = 1;
+            break;
+        }
+    }
+    if (!isSupported)
+    {
+        _u16errCnt ++;
+        return EXC_FUNC_CODE;
+    }
+
+    return 0; // OK, no exception code thrown
+}

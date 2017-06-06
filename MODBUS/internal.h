@@ -8,6 +8,7 @@
 #ifndef INTERNAL_H
 #define	INTERNAL_H
 
+#define T35  5
 #define INPUT_TIME_SET 0
 #define INPUT_NEED_TIME_SET 1
 
@@ -44,7 +45,9 @@ enum
     EXC_FUNC_CODE = 1,
     EXC_ADDR_RANGE = 2,
     EXC_REGS_QUANT = 3,
-    EXC_EXECUTE = 4
+    EXC_EXECUTE = 4,
+    EXC_NOT_EXP_ID = 10, // В ответ пришёл неожиданный адрес устройства
+    EXC_SLAVE_EXC = 11, // Исключение в опрашиваемом устройстве сети
 };
 
 /**
@@ -100,12 +103,13 @@ enum COMMAND_MESSAGE
 };
 
 extern uint8_t _u8id;
-
+extern int8_t _u8lastError;
+extern uint8_t _u8lastRec;
 extern uint8_t _au8Buffer[MAX_BUFFER];
 extern uint8_t _u8BufferSize;
 extern uint16_t _u16InCnt, _u16OutCnt, _u16errCnt;
 
-extern uint32_t _u32timeOut;
+extern uint32_t _u32time, _u32timeOut;
 extern uint16_t _u16timeOut;
 
 extern uint8_t _inputRegsCount, _holdingRegsCount;
@@ -122,6 +126,10 @@ extern uint16_t _lastFileNum;
 uint16_t ModbusCalcCRC(uint8_t u8length);
 
 void ModbusSendTxBuffer();
+int8_t ModbusGetRxBufferHeader();
+int8_t ModbusGetRxBuffer();
+
+uint8_t ModbusValidateAnswer();
 
 
 uint8_t CheckFunc1();

@@ -11,7 +11,7 @@ uint32_t cachedSettings32[SETTINGS_COUNT32];
 
 SettingTag settingsNames[] = 
 {
-    //Name             FullName1Line FullName2Line Line2Size  Type   AddressInEeprom                minValue maxValue step
+    //Name             FullName1Line FullName2Line Line2Size  Type               AddressInEeprom    minValue maxValue step
     {   "Подсв.экр.", "Подсветка экра-", "на",        2,  ST_0_100,              EE_LCD_BACKLIGHT,       0,  100,  50},
     {    "Подсв.кн.", "Подсветка кно-", "пок",        3,  ST_0_100,              EE_KEYPAD_BACKLIGHT,    0,  100,  50},
     {"Заде. застав.", "Задержка перед", "заставкой",  9,  ST_0_100,              EE_SCRENSAVE_DELAY,     5,   60,   5},
@@ -22,8 +22,12 @@ SettingTag settingsNames[] =
     // Адрес во внешней памяти, с которого грузить описание параметров и другие настройки
     {"Адр.загр.",     "Адрес во внешней", "памяти",   6,  ST_INT_4B,             EE_PARAMS_STARTADDRESS, 0,  EXT_MEM_CHIP_SIZE * 2 - 1,  0},    
     {  "Мастер сети", "Режим MODBUS", "мастера",      7,  ST_0_100,              EE_MASTER_MODE,         0,  255, 255},
+    {"Интервал опр.", "Интервал опроса", "мастера",   7,  ST_0_100,              EE_MASTER_HEART_BEAT,   5,  255,   5},
  };
 
+//#if sizeof(settingsNames) != SETTINGS_COUNT
+//#error "Setting count not equal to SETTINGS_COUNT!"
+//#endif
 
 void InitSettings()
 {
@@ -117,8 +121,11 @@ void SetTempSettingValue(uint8_t settingId, uint16_t value)
         case SETTING_KB_BK: // Подсветка клавдии
             SetKbBakLightDuty(value / 50);
             break;
-        case SETTING_MODBUS_MUSTER: // Мастер сети
+        case SETTING_MODBUS_MASTER: // Мастер сети
             SetMODBUSMode(value);
+            break;
+        case SETTING_MASTER_HEART_BEAT:
+            SetHeartBeat(value);
             break;
     }
 }
