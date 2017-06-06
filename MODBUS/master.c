@@ -20,7 +20,7 @@ uint8_t ModbusGetState()
     return _masterState;
 }
 
-bool MoodbusIsMasterMode()
+bool ModbusIsMasterMode()
 {
     return _isMaster;
 }

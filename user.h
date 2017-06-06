@@ -164,6 +164,7 @@ void SetTime(time_t *newTime);
 void AddSecond();
 time_t *GetTime();
 
+void SetCrashLed(bool on);
 
 void SetBakLightDuty(uint16_t dc);
 void SetKbBakLightDuty(uint16_t dc);

@@ -37,8 +37,11 @@
 #define BAUDRATE    9600
 #define	UBRG	( (((SYS_FREQ / BAUDRATE) / 8) - 1) / 2 )
 
+bool _crashLedState = false;
+
 time_t currentTime = 0;
 bool _isMaster = false;
+
 
 void PortBegin()
 {
@@ -136,6 +139,29 @@ uint8_t DebugPrintNumber(unsigned long n, uint16_t options)
     DebugWrite((const char *)(&(buf[sizeof(buf) - printedCharCount - 1])), printedCharCount);
 }
 #endif
+
+
+void SetCrashLed(bool on)
+{
+    if(on == _crashLedState)
+        return;
+    _crashLedState = on;
+    if(_crashLedState)
+    {
+        LED_CRASH_ON;
+#ifdef SERIAL_DEBUG
+        DebugPrintStrLn("LED failure on");
+#endif
+
+    }
+    else
+    {
+        LED_CRASH_OFF;
+#ifdef SERIAL_DEBUG
+        DebugPrintStrLn("LED failure off");
+#endif
+    }
+}
 
 //-- 0 .. 3FF
 //++ 0..3

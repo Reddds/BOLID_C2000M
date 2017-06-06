@@ -176,7 +176,7 @@ enum MB_FC
 //  Modbus(uint8_t u8id, uint8_t u8serno);
   void Modbus(uint8_t u8serno, uint8_t u8txenpin);
   void ModbusBegin(long u32speed);
-  bool MoodbusIsMasterMode();
+  bool ModbusIsMasterMode();
   //void ModbusBegin();
   void ModbusSetTimeOut( uint16_t u16timeout); //!<write communication watch-dog timer
   bool ModbusGetTimeOutState(); //!<get communication watch-dog timer state

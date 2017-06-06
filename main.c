@@ -579,12 +579,22 @@ void main(void)
         // Запись в нулевой (до прошивки 1)
         // 0x7f 0x06 0xff 0x00 0x00 0x10
         
-        if(MoodbusIsMasterMode())
-        {
+        if(ModbusIsMasterMode())
+        {          
             
             if(ModbusGetState() == COM_WAITING)
             {
-                modbusState = ModbusPollMaster();
+                modbusState = ModbusPollMaster(); 
+                bool anyBanned = false;
+                for(uint8_t i = 0; i < ControllersCount; i++)
+                {
+                    if(ControllersNextRequest[i].banned != CB_NONE)
+                    {
+                        anyBanned = true;
+                        break;
+                    }
+                }
+                SetCrashLed(anyBanned);
                 
             }
             if(ModbusGetState() == COM_IDLE && nextModbusQuery < curMs)
@@ -613,10 +623,10 @@ void main(void)
                                 ControllersNextRequest[i].nextRequest = curMs + GetControllerRate(i) * 1000UL;
                                 break;
                             case CB_FIRST_BAN:
-                                ControllersNextRequest[i].nextRequest = curMs + 10 * 1000UL; // 5 минут 5 * 60
+                                ControllersNextRequest[i].nextRequest = curMs + 5 * 60 * 1000UL; // 5 минут 5 * 60
                                 break;
                             case CB_SECOND_BAN:
-                                ControllersNextRequest[i].nextRequest = curMs + 20 * 1000UL; // 30 минут 30 * 60
+                                ControllersNextRequest[i].nextRequest = curMs + 30 * 60 * 1000UL; // 30 минут 30 * 60
                                 break;
                         }
                         // Выходим после первого запроса, ибо надо дождаться ответа
