@@ -279,7 +279,7 @@ void main(void)
     
     
     DebugPrintStrLn("Start loop!");
-    ModbusChangeMode(true);
+    //ModbusChangeMode(true);
     /*modbus_t tt;
     tt.u8id = 10;
     tt.u8fct = 1;
@@ -620,8 +620,14 @@ void main(void)
                         switch(ControllersNextRequest[i].banned)
                         {
                             case CB_NONE:
-                                ControllersNextRequest[i].nextRequest = curMs + GetControllerRate(i) * 1000UL;
-                                break;
+                            {
+                                uint8_t rate = GetControllerRate(i);
+                                if(rate> 0)
+                                    ControllersNextRequest[i].nextRequest = curMs + rate * 1000UL;
+                                else
+                                    ControllersNextRequest[i].nextRequest = curMs + _heartBeat;
+                            }
+                            break;
                             case CB_FIRST_BAN:
                                 ControllersNextRequest[i].nextRequest = curMs + 5 * 60 * 1000UL; // 5 минут 5 * 60
                                 break;

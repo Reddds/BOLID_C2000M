@@ -189,7 +189,7 @@ void SetKbBakLightDuty(uint16_t dc)
 
 void SetMODBUSMode(uint16_t isMaster)
 {
-    _isMaster = isMaster > 0 ? true : false;
+    ModbusChangeMode(isMaster > 0);
 }
 
 void InitApp(void)

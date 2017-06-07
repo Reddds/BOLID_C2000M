@@ -30,13 +30,11 @@ bool ModbusIsMasterMode()
  */
 void ModbusChangeMode(bool isMaster)
 {
-    
+    PortClearReadBuffer();
     if(isMaster)
     {
-        PortClearReadBuffer();
-        _u8id = 0;
-        _masterState = COM_IDLE;
-        
+        //_u8id = 0;
+        _masterState = COM_IDLE;        
     }
     else
     {
@@ -59,8 +57,8 @@ void ModbusChangeMode(bool isMaster)
 int8_t ModbusQuery(modbus_t *telegram )
 {
     uint8_t u8regsno, u8bytesno;
-    if (_u8id != 0) 
-        return -2;
+    //if (_u8id != 0) 
+    //    return -2;
     if (_masterState != COM_IDLE) 
         return -1;
 
