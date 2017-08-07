@@ -121,7 +121,21 @@ void InitBacklight()
 
 #ifdef SERIAL_DEBUG
 #define	TXE_DELAY 	10
-void DebugWrite(uint8_t *buf, uint8_t buflen)
+uint8_t DebugWrite(uint8_t *buf, uint8_t buflen)
+{
+    return DebugWriteField(buf, buflen, 0);
+    /*__delay_us(TXE_DELAY);
+    for(uint8_t i = 0; i < buflen; i++)
+    {
+        while(!TXSTA2bits.TRMT);//TRMT
+        TXREG2 = buf[i];
+    }
+    while(!TXSTA2bits.TRMT);//TRMT
+    return buflen;
+    */
+}
+
+uint8_t DebugWriteField(uint8_t *buf, uint8_t buflen, uint8_t fieldWidth)
 {
     __delay_us(TXE_DELAY);
     for(uint8_t i = 0; i < buflen; i++)
@@ -129,12 +143,23 @@ void DebugWrite(uint8_t *buf, uint8_t buflen)
         while(!TXSTA2bits.TRMT);//TRMT
         TXREG2 = buf[i];
     }
+    if(fieldWidth > buflen)
+    {
+        for(uint8_t i = buflen; i < fieldWidth; i++)
+        {
+            while(!TXSTA2bits.TRMT);//TRMT
+            TXREG2 = ' ';
+        }
+        buflen = fieldWidth;
+    }
     while(!TXSTA2bits.TRMT);//TRMT
+    return buflen;
+    
 }
 
 uint8_t DebugPrintNumber(unsigned long n, uint16_t options)
 {
-    char buf[10]; //8 * sizeof(long) + 1 Assumes 8-bit chars plus zero byte.
+    char buf[16]; //8 * sizeof(long) + 1 Assumes 8-bit chars plus zero byte.
     uint8_t printedCharCount = DisplaySprint(n, options, buf, sizeof(buf));
     DebugWrite((const char *)(&(buf[sizeof(buf) - printedCharCount - 1])), printedCharCount);
 }

@@ -187,6 +187,7 @@ unsigned long nextIdleScreen;
 void ResetIdleScreenTimeout(unsigned long *curMs)
 {
     idleScreenRotateTimeout = GetSettingValue(SETTING_IDLE_SCREEN_ROTATE_TIMEOUT) * 100;
+    if(idleScreenRotateTimeout == 0) idleScreenRotateTimeout = 5000;//!!!!
     needIdleScreenRotate = idleScreenRotateTimeout > 0;
     nextIdleScreen = *curMs + idleScreenRotateTimeout;    
 }
@@ -279,7 +280,7 @@ void main(void)
     
     
     DebugPrintStrLn("Start loop!");
-    //ModbusChangeMode(true);
+    ModbusChangeMode(true);
     /*modbus_t tt;
     tt.u8id = 10;
     tt.u8fct = 1;
@@ -608,7 +609,7 @@ void main(void)
                         modbus_t tt;
                         tt.u8id = GetControllerAddress(i);
 #ifdef SERIAL_DEBUG
-                        DebugPrintValue("Send query", tt.u8id);
+                        DebugPrintValue("Send query, controllerId", tt.u8id);
 #endif
                         tt.u8fct = MB_FC_READ_INPUT_REGISTER;
                         tt.u16CoilsNo = 2 + HOLDING_REGS_SIMPLE_COUNT + INPUT_REGS_SIMPLE_COUNT;

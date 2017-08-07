@@ -172,7 +172,8 @@ void SetMODBUSMode(uint16_t isMaster);
 void SetHeartBeat(uint8_t value);
 
 #ifdef SERIAL_DEBUG
-void DebugWrite(uint8_t *buf, uint8_t buflen);
+uint8_t DebugWrite(uint8_t *buf, uint8_t buflen);
+uint8_t DebugWriteField(uint8_t *buf, uint8_t buflen, uint8_t fieldWidth);
 uint8_t DebugPrintNumber(unsigned long n, uint16_t options);
 #define DebugPrintStr(x) DebugWrite(x, sizeof(x))
 #define DebugPrintStrLn(x) DebugPrintStr(x); DebugPrintStr("\r\n")
@@ -181,6 +182,13 @@ uint8_t DebugPrintNumber(unsigned long n, uint16_t options);
     DebugPrintStr(" = ");\
     DebugPrintNumber(v, DEC);\
     DebugPrintStr("\r\n");
+
+#define DebugPrintValueTbl(s, v) \
+    DebugPrintStr("| ");\
+    DebugWriteField(s, sizeof(s), 29);\
+    DebugPrintStr(" | ");\
+    DebugPrintNumber(v, DEC | SHOW_USE_FIELD_SIZE | FIELD_SIZE(12));\
+    DebugPrintStr("|\r\n");
 
 #endif
 #endif

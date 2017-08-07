@@ -33,7 +33,7 @@
 #define MASK_BASE 0x001F
 #define MASK_FIELD_SIZE 0x0F00 // Ширина поля + 1.  
 
-#define FIELD_SIZE(x) (((uint16_t)(x - 1)) << 8) // Задаём ширину поля
+#define FIELD_SIZE(x) (SHOW_USE_FIELD_SIZE | (((uint16_t)(x - 1)) << 8)) // Задаём ширину поля 1-16
 
 #define SHOW_SIGN 0x0020
 #define SHOW_STARTING_ZEROES 0x0040 

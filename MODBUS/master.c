@@ -202,7 +202,9 @@ void ModbusGet_FC4()
 {
 #ifdef SERIAL_DEBUG
     //DebugPrintValue("Second controller rate", GetControllerRate(1));
-    DebugPrintStrLn("ModbusGet_FC4 start!");
+    DebugPrintStrLn("+============================================+");
+    DebugPrintStrLn("|           ModbusGet_FC4 start!             |");
+    DebugPrintStrLn("+--------------------------------------------+");
 #endif
 
     uint8_t u8byte, i;
@@ -216,7 +218,7 @@ void ModbusGet_FC4()
     if(cnt > 0)
     {
 #ifdef SERIAL_DEBUG
-        DebugPrintValue("Coils count", cnt);
+        DebugPrintValueTbl("Coils count", cnt);
     //DebugPrintStr("ModbusGet_FC4 start!\n");
 #endif        
         tmpReg = word(_au8Buffer[COIL_BUF_POS], _au8Buffer[COIL_BUF_POS + 1]);
@@ -235,7 +237,7 @@ void ModbusGet_FC4()
     if(cnt > 0)
     {
 #ifdef SERIAL_DEBUG
-        DebugPrintValue("Discrete count", cnt);
+        DebugPrintValueTbl("Discrete count", cnt);
     //DebugPrintStr("ModbusGet_FC4 start!\n");
 #endif        
         tmpReg = word(_au8Buffer[DISCRETE_BUF_POS], _au8Buffer[DISCRETE_BUF_POS + 1]);
@@ -254,7 +256,7 @@ void ModbusGet_FC4()
     if(cnt > 0)
     {
 #ifdef SERIAL_DEBUG
-        DebugPrintValue("Holding count", cnt);
+        DebugPrintValueTbl("Holding count", cnt);
     //DebugPrintStr("ModbusGet_FC4 start!\n");
 #endif        
         cnt = FillCtrlRegInfo(_curControllerIdInEe, MRT_HOLDING, regInfo);
@@ -273,11 +275,11 @@ void ModbusGet_FC4()
     if(cnt > 0)
     {
 #ifdef SERIAL_DEBUG
-        DebugPrintValue("Input regs count", cnt);
+        DebugPrintValueTbl("Input regs count", cnt);
 #endif        
         cnt = FillCtrlRegInfo(_curControllerIdInEe, MRT_INPUT, regInfo);
 #ifdef SERIAL_DEBUG
-        DebugPrintValue("Reginfo filled count", cnt);
+        DebugPrintValueTbl("Reginfo filled count", cnt);
 #endif        
         // Проверяем, изменились ли значения параметров
         for(i = 0; i < cnt; i++)
@@ -286,10 +288,10 @@ void ModbusGet_FC4()
             uint16_t newVal = word(_au8Buffer[pos], 
                                    _au8Buffer[pos + 1]);
 #ifdef SERIAL_DEBUG
-            DebugPrintValue("rgId", regInfo[i].rgId);
-            DebugPrintValue("Calculated rgId", pos);
-            DebugPrintValue("paramId", regInfo[i].paramId);
-            DebugPrintValue("newVal", newVal);    
+            DebugPrintValueTbl("rgId", regInfo[i].rgId);
+            DebugPrintValueTbl("Calculated rgId", pos);
+            DebugPrintValueTbl("paramId", regInfo[i].paramId);
+            DebugPrintValueTbl("newVal", newVal);    
 #endif        
             
             if(GetParameterValue(regInfo[i].paramId) != newVal)
@@ -299,7 +301,7 @@ void ModbusGet_FC4()
 
 #ifdef SERIAL_DEBUG
     //DebugPrintValue("Second controller rate", GetControllerRate(1));
-    DebugPrintStrLn("ModbusGet_FC4 end!===============");
+    DebugPrintStrLn("+============================================+");
 #endif
     
     
@@ -333,7 +335,8 @@ int8_t ModbusPollMaster()
         _u8lastError = NO_REPLY;
         _u16errCnt++;
 #ifdef SERIAL_DEBUG
-        DebugPrintValue("TimeOut! for controllerInnerId", _curControllerIdInEe);
+        uint8_t caddr = GetControllerAddress(_curControllerIdInEe);
+        DebugPrintValue("TimeOut! for controllerId", caddr);
 #endif          
         // Будем банить
         ControllersNextRequest[_curControllerIdInEe].continousErrors++;

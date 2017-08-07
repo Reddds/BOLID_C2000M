@@ -302,6 +302,11 @@ uint8_t dummyEe[] =
     // Адрес (1 байт) / тип (1 байт) 0 - дискретный, 1 - катушка, 2 - регистр, 3 - записываемый регистр / частота опроса (1 байт) 0 - постоянно, > 0 - в секундах
     
     
+    // Подписчики на изменения
+    // Для упрощения только катушки и регистры хранения. Никаких команд
+    1, // Количество подписчиков
+    // Ид параметра / Тип параметра(is16Bit) / MODBUS адрес / номер регистра или катушки
+    2, 0, 3, 0//... 
 };
 
 int16_t roomNamesStartAddr = 0;
@@ -746,7 +751,14 @@ bool SetParameterValue(uint8_t id, uint16_t value)
 {
     if(id >= ParamCount)
         return false;
+    if(_parameters[id] == value)
+        return true;
+    
     _parameters[id] = value;
+    
+    
+    
+    
     return true;
 }
 
@@ -755,10 +767,19 @@ bool SetDiscreteParameterValue(uint8_t id, bool value)
     if(id >= DiscreteParamsCount)
         return false;
     
+    
     uint8_t u8currentByte = (uint8_t) (id >> 3); // / 8
     uint8_t u8currentBit = (uint8_t) (id & 0x07);
 
+    if(bitRead(DiscreteParameters[u8currentByte], u8currentBit) == value)
+        return true;
+    
     bitWrite(DiscreteParameters[u8currentByte], u8currentBit, value);
+    
+    // Если есть подписчики, то добавляем в очередь рассылки
+    
+    
+    
     return true;
 }
 

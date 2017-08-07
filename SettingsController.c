@@ -121,9 +121,9 @@ void SetTempSettingValue(uint8_t settingId, uint16_t value)
         case SETTING_KB_BK: // Подсветка клавдии
             SetKbBakLightDuty(value / 50);
             break;
-        case SETTING_MODBUS_MASTER: // Мастер сети
-            SetMODBUSMode(value);
-            break;
+        //case SETTING_MODBUS_MASTER: // Мастер сети
+        //    SetMODBUSMode(value);
+        //    break;
         case SETTING_MASTER_HEART_BEAT:
             SetHeartBeat(value);
             break;
@@ -144,6 +144,12 @@ void SaveSetting(uint8_t settingId, uint16_t value)
     { 				
         continue; 							
     } 
+    switch(settingId)
+    {
+        case SETTING_MODBUS_MASTER: // Мастер сети
+            SetMODBUSMode(value);
+            break;
+    }
 }
 
 void SaveSetting32(uint8_t settingId, uint32_t value)
