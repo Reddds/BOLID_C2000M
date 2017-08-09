@@ -74,10 +74,11 @@ void SettingsDisplayRedraw()
                 break;
                 case ST_BOOL:
                 {
-                    if(GetSettingValue(_currentSetting) == 1)
-                        DisplayPrintChar('+');
+                    DisplaySetCursorPos(13, 1);      
+                    if(GetSettingValue(_currentSetting) != 0)
+                        DisplayPrintStr("Да");
                     else
-                        DisplayPrintStr('-');
+                        DisplayPrintStr("Нет");
                 }
                 break;
                 case ST_INT_4B:
@@ -127,11 +128,12 @@ void SettingsDisplayRedraw()
                     break;
                 case ST_BOOL:
                 {
-                    if(tmpSetting8 == 1)
+                    DisplaySetCursorPos(13, 1); 
+                    if(tmpSetting8 != 0)
                         DisplayPrintStr("Да");
                     else
                         DisplayPrintStr("Нет");
-                    DisplaySetCursorPos(line2Size, 1);
+                    DisplaySetCursorPos(13, 1);
                 }
                 break;
                 case ST_INT_4B:
@@ -304,20 +306,32 @@ void SettingsOnButton(uint8_t button)
                 break;
                 case VS_EDIT_SETTING:
                 {
-                    if(GetSettingType(_currentSetting) == ST_INT_4B)
+                    switch(GetSettingType(_currentSetting))
                     {
-                        DelDigit();
-                    }
-                    else
-                    {
-                        if(tmpSetting8 >= GetSettingMin(_currentSetting) + GetSettingStep(_currentSetting))
+                        case ST_INT_4B:
+                            DelDigit();
+                            break;
+                        case ST_BOOL:
                         {
-                            tmpSetting8 -= GetSettingStep(_currentSetting);
-
+                            if(tmpSetting8 == GetSettingMin(_currentSetting))
+                                tmpSetting8 = GetSettingMax(_currentSetting);
+                            else
+                                tmpSetting8 = GetSettingMin(_currentSetting);
                         }
-                        else
-                            tmpSetting8 = GetSettingMin(_currentSetting);
+                        break;
+                        case ST_0_100:        
+                        case ST_0_100 | ST_MUL_0_1:       
+                        {
+                            if(tmpSetting8 >= GetSettingMin(_currentSetting) + GetSettingStep(_currentSetting))
+                            {
+                                tmpSetting8 -= GetSettingStep(_currentSetting);
+
+                            }
+                            else
+                                tmpSetting8 = GetSettingMin(_currentSetting);
+                        }  
                     }
+                    
                     SettingChanged();
                     SettingsDisplayRedraw();
                 }
@@ -339,18 +353,29 @@ void SettingsOnButton(uint8_t button)
                 }
                 break;
                 case VS_EDIT_SETTING:
-                {                    
-                    if(GetSettingType(_currentSetting) == ST_INT_4B)
+                {       
+                    switch(GetSettingType(_currentSetting))
                     {
-                        
-                    }
-                    else
-                    {
-                        if(tmpSetting8 <= GetSettingMax(_currentSetting) - GetSettingStep(_currentSetting))
-                            tmpSetting8 += GetSettingStep(_currentSetting);   
-                        else
-                            tmpSetting8 = GetSettingMax(_currentSetting);
-                    }
+                        case ST_INT_4B:
+                            break;
+                            
+                        case ST_BOOL:
+                        {
+                            if(tmpSetting8 == GetSettingMin(_currentSetting))
+                                tmpSetting8 = GetSettingMax(_currentSetting);
+                            else
+                                tmpSetting8 = GetSettingMin(_currentSetting);
+                        }
+                        break;
+                        case ST_0_100:        
+                        case ST_0_100 | ST_MUL_0_1:       
+                        {
+                            if(tmpSetting8 <= GetSettingMax(_currentSetting) - GetSettingStep(_currentSetting))
+                                tmpSetting8 += GetSettingStep(_currentSetting);   
+                            else
+                                tmpSetting8 = GetSettingMax(_currentSetting);
+                        }                              
+                    }                    
                     SettingChanged();
                     SettingsDisplayRedraw();
                 }
