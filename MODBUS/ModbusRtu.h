@@ -132,6 +132,7 @@ typedef struct
     uint16_t u16CoilsNo; /*!< Number of coils or registers to access */
     uint16_t *au16reg; /*!< Pointer to memory image in master */
     uint8_t curControllerIdInEe; //Номер контроллера в памяти 
+    uint8_t isTimeSync; // Это запрос синхронизацией времени?
 }modbus_t;
 
 enum COM_STATES

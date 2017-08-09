@@ -108,6 +108,10 @@ typedef struct
     uint16_t max;  // Максимальное знавчение при возможности изменения
     uint16_t step; // Шаг изменения
 }Param;
+
+
+uint16_t GetControllerStartAddress(uint8_t id, bool lastEeAddress);
+
 //char *roomNames[] = 
 //{
 //    "Спальня",
@@ -237,25 +241,25 @@ uint8_t dummyEe[] =
     // 0x7f 6 0xff 0 0 20
     // Название                      Тип    Редактриуемо  min  max  step
     // Спальня
-    'Т','е','м','п','е','р','.',' ', PT_TEMP,      false, 0,0, 0,0, 0,0, //   0  209
-    'В','л','а','ж','н','.',' ',' ', PT_HYM,       false, 0,0, 0,0, 0,0, //   1  225
+    'Т','е','м','п','е','р','.',' ', PT_TEMP,      false, 0,0, 0,0, 0,0,        //   0  209
+    'В','л','а','ж','н','.',' ',' ', PT_HYM,       false, 0,0, 0,0, 0,0,        //   1  225
     // Улица
-    'Т','е','м','п','е','р','.',' ', PT_TEMP,      false, 0,0, 0,0, 0,0, //   2  305  313
-    'В','л','а','ж','н','.',' ',' ', PT_HYM,       false, 0,0, 0,0, 0,0, //   3  321
-    'Д','а','в','л','е','н','и','е', PT_PRESS,     false, 0,0, 0,0, 0,0, //   4  337    
+    'Т','е','м','п','е','р','.',' ', PT_TEMP,      false, 0,0, 0,0, 0,0,        //   2  305  313
+    'В','л','а','ж','н','.',' ',' ', PT_HYM,       false, 0,0, 0,0, 0,0,        //   3  321
+    'Д','а','в','л','е','н','и','е', PT_PRESS,     false, 0,0, 0,0, 0,0,        //   4  337    
     // Прогноз погоды
-    'Д','а','т','а',' ','.',' ',' ', PT_CAST_DATE, false, 0,0, 0,0, 0,0, //   5  321
-    'В','р','е','м','я','.',' ',' ', PT_CAST_TIME, false, 0,0, 0,0, 0,0, //   6
-    'Т','е','м','п','е','р','.',' ', PT_TEMP,      false, 0,0, 0,0, 0,0, //   7
-    'В','л','а','ж','н','.',' ',' ', PT_HYM,       false, 0,0, 0,0, 0,0, //   8
+    'Д','а','т','а',' ','.',' ',' ', PT_CAST_DATE, false, 0,0, 0,0, 0,0,        //   5  321
+    'В','р','е','м','я','.',' ',' ', PT_CAST_TIME, false, 0,0, 0,0, 0,0,        //   6
+    'Т','е','м','п','е','р','.',' ', PT_TEMP,      false, 0,0, 0,0, 0,0,        //   7
+    'В','л','а','ж','н','.',' ',' ', PT_HYM,       false, 0,0, 0,0, 0,0,        //   8
     'О','с','а','д','к','и',' ',' ', PT_CAST_WEATHER_TYPE, false, 0,0, 0,0, 0,0, // 9 
-    'В','е','т','е','р',' ',' ',' ', PT_CAST_WIND, false, 0,0, 0,0, 0,0, //  10 
+    'В','е','т','е','р',' ',' ',' ', PT_CAST_WIND, false, 0,0, 0,0, 0,0,        //  10 
     
 //353
     
     // Зона настроек мастера сети
-    4, //!!! Количество контроллеров
-        // Спальня
+    5, //!!! Количество контроллеров
+        // === 0 Спальня ===
         2, // Адрес
         5, // Частота опроса в секундах
         0,  // Количество катушек
@@ -265,7 +269,7 @@ uint8_t dummyEe[] =
             // Индекс / Ид 16-битного параметра
             2, 0, // температура
             3, 1, // влажность
-        // Балкон
+        // === 1 Балкон ===
         15, // Адрес
         5, // Частота опроса в секундах
         0,  // Количество дискретных регистров
@@ -276,7 +280,7 @@ uint8_t dummyEe[] =
             1, 2, // Вычисленная температура
             4, 3, // Влажность
             5, 4, // Давление
-        // Датчик движения в коридоре
+        // === 2 Датчик движения в коридоре ===
         1, // Адрес
         0, // Частота опроса в секундах
         1,  // Количество дискретных регистров
@@ -285,7 +289,7 @@ uint8_t dummyEe[] =
         0,  // Количество катушек
         0,  // Количество регистров хранения
         0,  // Количество регистров
-        // Ванна
+        // === 3 Ванна ===
         3, // Адрес
         0, // Частота опроса в секундах
         0,  // Количество катушек
@@ -295,8 +299,25 @@ uint8_t dummyEe[] =
             1, 0, // Свет включён
         0,  // Количество регистров хранения
         0,  // Количество регистров
-            
-        
+        // === 4 Комп ===
+        111, // Адрес
+        255, // Частота опроса в секундах
+        0,  // Количество дискретных регистров
+        0,  // Количество дискретных регистров
+        0,  // Количество регистров хранения
+        6,  // Количество регистров
+            // Индекс / Ид 16-битного параметра
+            4, 5, // Дата
+            5, 6, // Время
+            6, 7, // Температура
+            7, 8, // Влажность
+            8, 9, // Осадки
+            9, 10, // Ветер
+    // Где брать информацию о времени
+    4, // Id контроллера в настройках (не адрес)
+        // Номера 16-битных регистров
+        // час/мин, день/сек,  год(с 1900)/мес
+        1, 2, 3,
     
     // Адреса устройст и регистры, откуда брать значения параметров и с какой частотой
     // Адрес (1 байт) / тип (1 байт) 0 - дискретный, 1 - катушка, 2 - регистр, 3 - записываемый регистр / частота опроса (1 байт) 0 - постоянно, > 0 - в секундах
@@ -542,6 +563,10 @@ int8_t InitParameters()
        _parameters[i] = 0; 
     }
     
+    
+    
+    
+    // Данные о контроллерах
     curAddress += 1 + ParamCount * PI_SIZE;
     res = DummyEERandomRead(EXT_MEM_COMMAND, curAddress);
     if(res < 0 || res > CONTROLLERS_MAX_COUNT)
@@ -555,15 +580,45 @@ int8_t InitParameters()
     DebugPrintValue("_controllersStartAddr", _controllersStartAddr);
 #endif 
     // Очищаем массив
+    ControllerrInterval tmpStruct; 
+    tmpStruct.nextRequest = 0;
+    tmpStruct.banned = CB_NONE;
+    tmpStruct.continousErrors = 0;
     for(uint8_t i = 0; i < ControllersCount; i++)
     {
-       ControllerrInterval tmpStruct; 
-       tmpStruct.nextRequest = 0;
-       tmpStruct.banned = CB_NONE;
-       tmpStruct.continousErrors = 0;
        ControllersNextRequest[i] = tmpStruct; 
     }
     
+    // Данные о получении времени
+    curAddress = GetControllerStartAddress(0, true);
+#ifdef SERIAL_DEBUG
+    DebugPrintValue("time Start Address", curAddress);
+#endif 
+    res = DummyEERandomRead(EXT_MEM_COMMAND, curAddress);
+    if(res < 0 || res > 255)
+        return -3;
+    GetTimeInfo.ControllerNumber = res;
+    curAddress++;
+    res = DummyEERandomRead(EXT_MEM_COMMAND, curAddress);        
+    if(res < 0)
+        return -3;
+    GetTimeInfo.RegHourMin = res;
+    curAddress++;
+    res = DummyEERandomRead(EXT_MEM_COMMAND, curAddress);        
+    if(res < 0)
+        return -3;
+    GetTimeInfo.RegDaySec = res;
+    curAddress++;
+    res = DummyEERandomRead(EXT_MEM_COMMAND, curAddress);        
+    if(res < 0)
+        return -3;
+    GetTimeInfo.RegYearMon = res;
+#ifdef SERIAL_DEBUG
+    DebugPrintValue("GetTimeInfo.ControllerNumber", GetTimeInfo.ControllerNumber);
+    DebugPrintValue("GetTimeInfo.RegHourMin", GetTimeInfo.RegHourMin);
+    DebugPrintValue("GetTimeInfo.RegDaySec", GetTimeInfo.RegDaySec);
+    DebugPrintValue("GetTimeInfo.RegYearMon", GetTimeInfo.RegYearMon);
+#endif     
     
     
     initialized = true;
@@ -581,6 +636,7 @@ int8_t InitParameters()
 //    _parameters[7] = 96;
 //    _parameters[8] = 446;
     
+
     
     return 0;
 }
@@ -1304,11 +1360,20 @@ void PrintDiscreteParameterByValue(uint8_t paramId, bool value, int8_t col, int8
 }
 
 // Controllers for Master ======================================================
+/**
+ * 
+ * @param id
+ * @param lastEeAddress Найти адрес записи после всего блока, чтобы найти следующий блок
+ * @return 
+ */
 
-uint16_t GetControllerStartAddress(uint8_t id)
+uint16_t GetControllerStartAddress(uint8_t id, bool lastEeAddress)
 {
-    if(!initialized || id > ControllersCount - 1)
+    if(id > ControllersCount - 1) //!initialized || 
         return 0;
+    
+    if(lastEeAddress)
+        id = ControllersCount;
     
     uint16_t curAddress = _controllersStartAddr;
     int16_t tmp;
@@ -1349,7 +1414,7 @@ uint16_t GetControllerStartAddress(uint8_t id)
 
 uint8_t GetControllerRate(uint8_t id)
 {
-    uint16_t curAddress = GetControllerStartAddress(id);    
+    uint16_t curAddress = GetControllerStartAddress(id, false);    
     if(curAddress == 0)
         return 0;
     
@@ -1361,7 +1426,7 @@ uint8_t GetControllerRate(uint8_t id)
 
 uint8_t GetControllerAddress(uint8_t id)
 {
-    uint16_t curAddress = GetControllerStartAddress(id);    
+    uint16_t curAddress = GetControllerStartAddress(id, false);    
     if(curAddress == 0)
         return 0;
     
@@ -1373,7 +1438,7 @@ uint8_t GetControllerAddress(uint8_t id)
 
 uint8_t GetCtrlRegCount(uint8_t id, RegType regType)
 {
-    uint16_t curAddress = GetControllerStartAddress(id);  
+    uint16_t curAddress = GetControllerStartAddress(id, false);  
     if(curAddress == 0)
         return 0;
     
@@ -1395,10 +1460,13 @@ uint8_t GetCtrlRegCount(uint8_t id, RegType regType)
     return tmp;
 }
 
+/**
+ Заполняем информацию о регистрах ввода
+ */
 uint8_t FillCtrlRegInfo(uint8_t id, RegType regType, RegInfoTag *regInfo)
 {
     //CTRL_REG_BUF_COUNT
-    uint16_t curAddress = GetControllerStartAddress(id);  
+    uint16_t curAddress = GetControllerStartAddress(id, false);  
     if(curAddress == 0)
         return 0;
     

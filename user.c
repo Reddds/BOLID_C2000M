@@ -37,10 +37,20 @@
 #define BAUDRATE    9600
 #define	UBRG	( (((SYS_FREQ / BAUDRATE) / 8) - 1) / 2 )
 
-bool _crashLedState = false;
-
 time_t currentTime = 0;
 bool _isMaster = false;
+
+uint8_t ledAlarmState;
+uint8_t ledFireState;
+uint8_t ledFailureState;
+uint8_t ledCrashState;
+uint8_t ledWorkState;
+
+uint8_t ledAlarmBlink;
+uint8_t ledFireBlink;
+uint8_t ledFailureBlink;
+uint8_t ledCrashBlink;
+uint8_t ledWorkBlink;
 
 
 void PortBegin()
@@ -165,28 +175,6 @@ uint8_t DebugPrintNumber(unsigned long n, uint16_t options)
 }
 #endif
 
-
-void SetCrashLed(bool on)
-{
-    if(on == _crashLedState)
-        return;
-    _crashLedState = on;
-    if(_crashLedState)
-    {
-        LED_CRASH_ON;
-#ifdef SERIAL_DEBUG
-        DebugPrintStrLn("LED failure on");
-#endif
-
-    }
-    else
-    {
-        LED_CRASH_OFF;
-#ifdef SERIAL_DEBUG
-        DebugPrintStrLn("LED failure off");
-#endif
-    }
-}
 
 //-- 0 .. 3FF
 //++ 0..3
@@ -396,4 +384,61 @@ void AddSecond()
 time_t *GetTime()
 {
     return &currentTime;
+}
+
+// ======================= Светодиоды =============================
+
+void SetAlarmState(uint8_t state, uint8_t blink)
+{
+    if(ledAlarmState == state && ledAlarmBlink == blink)
+        return;
+    ledAlarmState = state;
+    ledAlarmBlink = blink;
+    LATDbits.LATD0 = !ledAlarmState;
+}
+void SetFireState(uint8_t state, uint8_t blink)
+{
+    if(ledFireState == state && ledFireBlink == blink)
+        return;
+    ledFireState = state;
+    ledFireBlink = blink;
+    LATDbits.LATD1 = !ledFireState;
+}
+void SetFailureState(uint8_t state, uint8_t blink)
+{
+    if(ledFailureState == state && ledFailureBlink == blink)
+        return;
+    ledFailureState = state;
+    ledFailureBlink = blink;
+    LATDbits.LATD2 = !ledFailureState;
+}
+void SetCrashState(uint8_t state, uint8_t blink)
+{
+    if(ledCrashState == state && ledCrashBlink == blink)
+        return;
+    ledCrashState = state;
+    ledCrashBlink = blink;
+    LATDbits.LATD3 = !ledCrashState;
+}
+void SetWorkState(uint8_t state, uint8_t blink)
+{
+    if(ledWorkState == state && ledWorkBlink == blink)
+        return;
+    ledWorkState = state;
+    ledWorkBlink = blink;
+    LATDbits.LATD4 = !ledWorkState;
+}
+
+void UpdateBlink(uint8_t globalBlink)
+{
+    if(ledAlarmState && ledAlarmBlink)
+        LATDbits.LATD0 = !globalBlink;
+    if(ledFireState && ledFireBlink)
+        LATDbits.LATD1 = !globalBlink;
+    if(ledFailureState && ledFailureBlink)
+        LATDbits.LATD2 = !globalBlink;
+    if(ledCrashState && ledCrashBlink)
+        LATDbits.LATD3 = !globalBlink;
+    if(ledWorkState && ledWorkBlink)
+        LATDbits.LATD4 = !globalBlink;
 }

@@ -4,11 +4,13 @@
 
 uint16_t *au16regs;
 uint8_t _masterState;
+uint8_t _isTimeSyncRequest;
 
 bool _isMaster;
 
 uint8_t _curControllerIdInEe;
 
+void SetTimeFromResponse(uint8_t *hour, uint8_t *min, uint8_t *day, uint8_t *sec, uint8_t *year, uint8_t *mon);
 /**
  * Get modbus master state
  *
@@ -34,11 +36,12 @@ void ModbusChangeMode(bool isMaster)
     if(isMaster)
     {
         //_u8id = 0;
-        _masterState = COM_IDLE;        
+        _masterState = COM_IDLE;  
+        SetWorkState(true, true);
     }
     else
     {
-        
+        SetWorkState(true, false);
     }
     _isMaster = isMaster;
 }
@@ -68,6 +71,8 @@ int8_t ModbusQuery(modbus_t *telegram )
     _curControllerIdInEe = telegram->curControllerIdInEe;
     au16regs = telegram->au16reg;
 
+    _isTimeSyncRequest = telegram->isTimeSync;
+    
     // telegram header
     _au8Buffer[ ID ]         = telegram->u8id;
     _au8Buffer[ FUNC ]       = telegram->u8fct;
@@ -219,7 +224,6 @@ void ModbusGet_FC4()
     {
 #ifdef SERIAL_DEBUG
         DebugPrintValueTbl("Coils count", cnt);
-    //DebugPrintStr("ModbusGet_FC4 start!\n");
 #endif        
         tmpReg = word(_au8Buffer[COIL_BUF_POS], _au8Buffer[COIL_BUF_POS + 1]);
         cnt = FillCtrlRegInfo(_curControllerIdInEe, MRT_COIL, regInfo);
@@ -238,7 +242,6 @@ void ModbusGet_FC4()
     {
 #ifdef SERIAL_DEBUG
         DebugPrintValueTbl("Discrete count", cnt);
-    //DebugPrintStr("ModbusGet_FC4 start!\n");
 #endif        
         tmpReg = word(_au8Buffer[DISCRETE_BUF_POS], _au8Buffer[DISCRETE_BUF_POS + 1]);
         cnt = FillCtrlRegInfo(_curControllerIdInEe, MRT_DISCRETE, regInfo);
@@ -257,7 +260,6 @@ void ModbusGet_FC4()
     {
 #ifdef SERIAL_DEBUG
         DebugPrintValueTbl("Holding count", cnt);
-    //DebugPrintStr("ModbusGet_FC4 start!\n");
 #endif        
         cnt = FillCtrlRegInfo(_curControllerIdInEe, MRT_HOLDING, regInfo);
         // ѕровер€ем, изменились ли значени€ параметров
@@ -280,7 +282,19 @@ void ModbusGet_FC4()
         cnt = FillCtrlRegInfo(_curControllerIdInEe, MRT_INPUT, regInfo);
 #ifdef SERIAL_DEBUG
         DebugPrintValueTbl("Reginfo filled count", cnt);
-#endif        
+#endif      
+        // ”становка времени, если надо
+        if(_isTimeSyncRequest)
+        {
+            SetTimeFromResponse(_au8Buffer + (REG_BUF_POS + HOLDING_REGS_SIMPLE_COUNT * 2 + GetTimeInfo.RegHourMin * 2),
+                                _au8Buffer + (REG_BUF_POS + HOLDING_REGS_SIMPLE_COUNT * 2 + (GetTimeInfo.RegHourMin) * 2 + 1),
+                                _au8Buffer + (REG_BUF_POS + HOLDING_REGS_SIMPLE_COUNT * 2 + GetTimeInfo.RegDaySec * 2),
+                                _au8Buffer + (REG_BUF_POS + HOLDING_REGS_SIMPLE_COUNT * 2 + (GetTimeInfo.RegDaySec) * 2 + 1),
+                                _au8Buffer + (REG_BUF_POS + HOLDING_REGS_SIMPLE_COUNT * 2 + GetTimeInfo.RegYearMon * 2),
+                                _au8Buffer + (REG_BUF_POS + HOLDING_REGS_SIMPLE_COUNT * 2 + (GetTimeInfo.RegYearMon) * 2 + 1));
+        }
+        
+        
         // ѕровер€ем, изменились ли значени€ параметров
         for(i = 0; i < cnt; i++)
         {
@@ -306,6 +320,35 @@ void ModbusGet_FC4()
     
     
 }
+
+
+void SetTimeFromResponse(uint8_t *hour, uint8_t *min, uint8_t *day, uint8_t *sec, uint8_t *year, uint8_t *mon)
+{
+#ifdef SERIAL_DEBUG
+    DebugPrintStrLn("+==========  Setting time.  =================+");
+    DebugPrintValueTbl("Hour", *hour);
+    DebugPrintValueTbl("Minute", *min);
+    DebugPrintValueTbl("Day", *day);
+    DebugPrintValueTbl("Second", *sec);
+    DebugPrintValueTbl("Year", *year);
+    DebugPrintValueTbl("Month", *mon);
+
+    DebugPrintStrLn("+============================================+");
+#endif            
+    SetHourMin(hour, min, sec);
+            //----------------
+    struct tm newTime;
+    newTime.tm_year = *year + 100; // since 1900
+    newTime.tm_mon  = *mon;
+    newTime.tm_mday = *day;
+    newTime.tm_hour = *hour;
+    newTime.tm_min  = *min;
+    newTime.tm_sec  = *sec;
+    time_t newRawTime = mktime(&newTime);
+    SetTime(&newRawTime);
+}
+
+
 /**
  * @brief *** Only for Modbus Master ***
  * This method checks if there is any incoming answer if pending.
@@ -393,7 +436,6 @@ int8_t ModbusPollMaster()
         _u16errCnt++;
 #ifdef SERIAL_DEBUG
     DebugPrintValue("Exception! Eror id!", _au8Buffer[ID]);
-    //DebugPrintStr("ModbusGet_FC4 start!\n");
 #endif        
         return EXC_NOT_EXP_ID;
     }
@@ -405,7 +447,6 @@ int8_t ModbusPollMaster()
         _u16errCnt++;
 #ifdef SERIAL_DEBUG
     DebugPrintValue("Exception! Eror function!", _au8Buffer[FUNC]);
-    //DebugPrintStr("ModbusGet_FC4 start!\n");
 #endif 
         return EXC_SLAVE_EXC;
     }
@@ -427,7 +468,6 @@ int8_t ModbusPollMaster()
         _masterState = COM_IDLE;
 #ifdef SERIAL_DEBUG
     DebugPrintValue("Master validation error!", u8exception);
-    //DebugPrintStr("ModbusGet_FC4 start!\n");
 #endif 
         return u8exception;
     }
@@ -442,7 +482,6 @@ int8_t ModbusPollMaster()
         ControllersNextRequest[_curControllerIdInEe].banned = CB_NONE;
 #ifdef SERIAL_DEBUG
         DebugPrintValue("Controller unbanned!", _curControllerIdInEe);
-    //DebugPrintStr("ModbusGet_FC4 start!\n");
 #endif         
     }
     

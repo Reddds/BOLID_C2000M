@@ -215,6 +215,13 @@ uint8_t ControllersCount = 0;
 ControllerrInterval ControllersNextRequest[CONTROLLERS_MAX_COUNT];
 #define CTRL_REG_BUF_COUNT 16
 
+struct 
+{
+    uint8_t ControllerNumber;
+    uint8_t RegHourMin;
+    uint8_t RegDaySec;
+    uint8_t RegYearMon;
+}GetTimeInfo;
 
 /*typedef struct 
 {

@@ -31,7 +31,7 @@
 #define INTERVAL_BETWEEN_KEYPRESS_MS 100
 #define INTERVAL_BETWEEN_KEYPRESS_AFTER_SCREENSAVER_MS 1000
 
-#define LED_ALARM_ON    (LATDbits.LATD0 = 0)
+/*#define LED_ALARM_ON    (LATDbits.LATD0 = 0)
 #define LED_ALARM_OFF   (LATDbits.LATD0 = 1)
 #define LED_FIRE_ON     (LATDbits.LATD1 = 0)
 #define LED_FIRE_OFF    (LATDbits.LATD1 = 1)
@@ -40,7 +40,7 @@
 #define LED_CRASH_ON    (LATDbits.LATD3 = 0)
 #define LED_CRASH_OFF   (LATDbits.LATD3 = 1)
 #define LED_WORK_ON     (LATDbits.LATD4 = 0)
-#define LED_WORK_OFF    (LATDbits.LATD4 = 1)
+#define LED_WORK_OFF    (LATDbits.LATD4 = 1)*/
 
 
 
@@ -164,8 +164,6 @@ void SetTime(time_t *newTime);
 void AddSecond();
 time_t *GetTime();
 
-void SetCrashLed(bool on);
-
 void SetBakLightDuty(uint16_t dc);
 void SetKbBakLightDuty(uint16_t dc);
 void SetMODBUSMode(uint16_t isMaster);
@@ -191,4 +189,16 @@ uint8_t DebugPrintNumber(unsigned long n, uint16_t options);
     DebugPrintStr("|\r\n");
 
 #endif
+
+
+
+void SetAlarmState(uint8_t state, uint8_t blink);
+void SetFireState(uint8_t state, uint8_t blink);
+void SetFailureState(uint8_t state, uint8_t blink);
+void SetCrashState(uint8_t state, uint8_t blink);
+void SetWorkState(uint8_t state, uint8_t blink);
+void UpdateBlink(uint8_t globalBlink);
+
+
+
 #endif
