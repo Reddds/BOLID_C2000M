@@ -97,7 +97,7 @@ ${OBJECTDIR}/i2c/i2c_ack.p1: i2c/i2c_ack.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_ack.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_ack.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_ack.p1  i2c/i2c_ack.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_ack.p1  i2c/i2c_ack.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_ack.d ${OBJECTDIR}/i2c/i2c_ack.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_ack.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -105,7 +105,7 @@ ${OBJECTDIR}/i2c/i2c_clos.p1: i2c/i2c_clos.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_clos.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_clos.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_clos.p1  i2c/i2c_clos.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_clos.p1  i2c/i2c_clos.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_clos.d ${OBJECTDIR}/i2c/i2c_clos.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_clos.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -113,7 +113,7 @@ ${OBJECTDIR}/i2c/i2c_dtrd.p1: i2c/i2c_dtrd.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_dtrd.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_dtrd.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_dtrd.p1  i2c/i2c_dtrd.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_dtrd.p1  i2c/i2c_dtrd.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_dtrd.d ${OBJECTDIR}/i2c/i2c_dtrd.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_dtrd.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -121,7 +121,7 @@ ${OBJECTDIR}/i2c/i2c_eeap.p1: i2c/i2c_eeap.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_eeap.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_eeap.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_eeap.p1  i2c/i2c_eeap.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_eeap.p1  i2c/i2c_eeap.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_eeap.d ${OBJECTDIR}/i2c/i2c_eeap.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_eeap.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -129,7 +129,7 @@ ${OBJECTDIR}/i2c/i2c_eebw.p1: i2c/i2c_eebw.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_eebw.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_eebw.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_eebw.p1  i2c/i2c_eebw.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_eebw.p1  i2c/i2c_eebw.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_eebw.d ${OBJECTDIR}/i2c/i2c_eebw.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_eebw.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -137,7 +137,7 @@ ${OBJECTDIR}/i2c/i2c_eecr.p1: i2c/i2c_eecr.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_eecr.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_eecr.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_eecr.p1  i2c/i2c_eecr.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_eecr.p1  i2c/i2c_eecr.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_eecr.d ${OBJECTDIR}/i2c/i2c_eecr.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_eecr.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -145,7 +145,7 @@ ${OBJECTDIR}/i2c/i2c_eepw.p1: i2c/i2c_eepw.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_eepw.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_eepw.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_eepw.p1  i2c/i2c_eepw.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_eepw.p1  i2c/i2c_eepw.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_eepw.d ${OBJECTDIR}/i2c/i2c_eepw.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_eepw.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -153,7 +153,7 @@ ${OBJECTDIR}/i2c/i2c_eerr.p1: i2c/i2c_eerr.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_eerr.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_eerr.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_eerr.p1  i2c/i2c_eerr.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_eerr.p1  i2c/i2c_eerr.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_eerr.d ${OBJECTDIR}/i2c/i2c_eerr.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_eerr.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -161,7 +161,7 @@ ${OBJECTDIR}/i2c/i2c_eesr.p1: i2c/i2c_eesr.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_eesr.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_eesr.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_eesr.p1  i2c/i2c_eesr.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_eesr.p1  i2c/i2c_eesr.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_eesr.d ${OBJECTDIR}/i2c/i2c_eesr.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_eesr.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -169,7 +169,7 @@ ${OBJECTDIR}/i2c/i2c_gets.p1: i2c/i2c_gets.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_gets.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_gets.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_gets.p1  i2c/i2c_gets.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_gets.p1  i2c/i2c_gets.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_gets.d ${OBJECTDIR}/i2c/i2c_gets.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_gets.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -177,7 +177,7 @@ ${OBJECTDIR}/i2c/i2c_idle.p1: i2c/i2c_idle.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_idle.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_idle.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_idle.p1  i2c/i2c_idle.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_idle.p1  i2c/i2c_idle.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_idle.d ${OBJECTDIR}/i2c/i2c_idle.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_idle.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -185,7 +185,7 @@ ${OBJECTDIR}/i2c/i2c_nack.p1: i2c/i2c_nack.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_nack.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_nack.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_nack.p1  i2c/i2c_nack.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_nack.p1  i2c/i2c_nack.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_nack.d ${OBJECTDIR}/i2c/i2c_nack.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_nack.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -193,7 +193,7 @@ ${OBJECTDIR}/i2c/i2c_open.p1: i2c/i2c_open.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_open.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_open.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_open.p1  i2c/i2c_open.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_open.p1  i2c/i2c_open.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_open.d ${OBJECTDIR}/i2c/i2c_open.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_open.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -201,7 +201,7 @@ ${OBJECTDIR}/i2c/i2c_puts.p1: i2c/i2c_puts.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_puts.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_puts.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_puts.p1  i2c/i2c_puts.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_puts.p1  i2c/i2c_puts.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_puts.d ${OBJECTDIR}/i2c/i2c_puts.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_puts.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -209,7 +209,7 @@ ${OBJECTDIR}/i2c/i2c_read.p1: i2c/i2c_read.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_read.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_read.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_read.p1  i2c/i2c_read.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_read.p1  i2c/i2c_read.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_read.d ${OBJECTDIR}/i2c/i2c_read.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_read.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -217,7 +217,7 @@ ${OBJECTDIR}/i2c/i2c_rstr.p1: i2c/i2c_rstr.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_rstr.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_rstr.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_rstr.p1  i2c/i2c_rstr.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_rstr.p1  i2c/i2c_rstr.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_rstr.d ${OBJECTDIR}/i2c/i2c_rstr.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_rstr.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -225,7 +225,7 @@ ${OBJECTDIR}/i2c/i2c_stop.p1: i2c/i2c_stop.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_stop.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_stop.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_stop.p1  i2c/i2c_stop.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_stop.p1  i2c/i2c_stop.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_stop.d ${OBJECTDIR}/i2c/i2c_stop.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_stop.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -233,7 +233,7 @@ ${OBJECTDIR}/i2c/i2c_strt.p1: i2c/i2c_strt.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_strt.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_strt.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_strt.p1  i2c/i2c_strt.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_strt.p1  i2c/i2c_strt.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_strt.d ${OBJECTDIR}/i2c/i2c_strt.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_strt.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -241,7 +241,7 @@ ${OBJECTDIR}/i2c/i2c_writ.p1: i2c/i2c_writ.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_writ.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_writ.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_writ.p1  i2c/i2c_writ.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_writ.p1  i2c/i2c_writ.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_writ.d ${OBJECTDIR}/i2c/i2c_writ.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_writ.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -249,7 +249,7 @@ ${OBJECTDIR}/LCD/busyxlcd.p1: LCD/busyxlcd.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/LCD" 
 	@${RM} ${OBJECTDIR}/LCD/busyxlcd.p1.d 
 	@${RM} ${OBJECTDIR}/LCD/busyxlcd.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/busyxlcd.p1  LCD/busyxlcd.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/busyxlcd.p1  LCD/busyxlcd.c 
 	@-${MV} ${OBJECTDIR}/LCD/busyxlcd.d ${OBJECTDIR}/LCD/busyxlcd.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/LCD/busyxlcd.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -257,7 +257,7 @@ ${OBJECTDIR}/LCD/openxlcd.p1: LCD/openxlcd.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/LCD" 
 	@${RM} ${OBJECTDIR}/LCD/openxlcd.p1.d 
 	@${RM} ${OBJECTDIR}/LCD/openxlcd.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/openxlcd.p1  LCD/openxlcd.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/openxlcd.p1  LCD/openxlcd.c 
 	@-${MV} ${OBJECTDIR}/LCD/openxlcd.d ${OBJECTDIR}/LCD/openxlcd.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/LCD/openxlcd.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -265,7 +265,7 @@ ${OBJECTDIR}/LCD/putrxlcd.p1: LCD/putrxlcd.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/LCD" 
 	@${RM} ${OBJECTDIR}/LCD/putrxlcd.p1.d 
 	@${RM} ${OBJECTDIR}/LCD/putrxlcd.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/putrxlcd.p1  LCD/putrxlcd.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/putrxlcd.p1  LCD/putrxlcd.c 
 	@-${MV} ${OBJECTDIR}/LCD/putrxlcd.d ${OBJECTDIR}/LCD/putrxlcd.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/LCD/putrxlcd.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -273,7 +273,7 @@ ${OBJECTDIR}/LCD/putsxlcd.p1: LCD/putsxlcd.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/LCD" 
 	@${RM} ${OBJECTDIR}/LCD/putsxlcd.p1.d 
 	@${RM} ${OBJECTDIR}/LCD/putsxlcd.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/putsxlcd.p1  LCD/putsxlcd.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/putsxlcd.p1  LCD/putsxlcd.c 
 	@-${MV} ${OBJECTDIR}/LCD/putsxlcd.d ${OBJECTDIR}/LCD/putsxlcd.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/LCD/putsxlcd.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -281,7 +281,7 @@ ${OBJECTDIR}/LCD/readaddr.p1: LCD/readaddr.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/LCD" 
 	@${RM} ${OBJECTDIR}/LCD/readaddr.p1.d 
 	@${RM} ${OBJECTDIR}/LCD/readaddr.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/readaddr.p1  LCD/readaddr.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/readaddr.p1  LCD/readaddr.c 
 	@-${MV} ${OBJECTDIR}/LCD/readaddr.d ${OBJECTDIR}/LCD/readaddr.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/LCD/readaddr.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -289,7 +289,7 @@ ${OBJECTDIR}/LCD/readdata.p1: LCD/readdata.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/LCD" 
 	@${RM} ${OBJECTDIR}/LCD/readdata.p1.d 
 	@${RM} ${OBJECTDIR}/LCD/readdata.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/readdata.p1  LCD/readdata.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/readdata.p1  LCD/readdata.c 
 	@-${MV} ${OBJECTDIR}/LCD/readdata.d ${OBJECTDIR}/LCD/readdata.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/LCD/readdata.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -297,7 +297,7 @@ ${OBJECTDIR}/LCD/setcgram.p1: LCD/setcgram.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/LCD" 
 	@${RM} ${OBJECTDIR}/LCD/setcgram.p1.d 
 	@${RM} ${OBJECTDIR}/LCD/setcgram.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/setcgram.p1  LCD/setcgram.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/setcgram.p1  LCD/setcgram.c 
 	@-${MV} ${OBJECTDIR}/LCD/setcgram.d ${OBJECTDIR}/LCD/setcgram.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/LCD/setcgram.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -305,7 +305,7 @@ ${OBJECTDIR}/LCD/setddram.p1: LCD/setddram.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/LCD" 
 	@${RM} ${OBJECTDIR}/LCD/setddram.p1.d 
 	@${RM} ${OBJECTDIR}/LCD/setddram.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/setddram.p1  LCD/setddram.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/setddram.p1  LCD/setddram.c 
 	@-${MV} ${OBJECTDIR}/LCD/setddram.d ${OBJECTDIR}/LCD/setddram.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/LCD/setddram.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -313,7 +313,7 @@ ${OBJECTDIR}/LCD/wcmdxlcd.p1: LCD/wcmdxlcd.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/LCD" 
 	@${RM} ${OBJECTDIR}/LCD/wcmdxlcd.p1.d 
 	@${RM} ${OBJECTDIR}/LCD/wcmdxlcd.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/wcmdxlcd.p1  LCD/wcmdxlcd.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/wcmdxlcd.p1  LCD/wcmdxlcd.c 
 	@-${MV} ${OBJECTDIR}/LCD/wcmdxlcd.d ${OBJECTDIR}/LCD/wcmdxlcd.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/LCD/wcmdxlcd.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -321,7 +321,7 @@ ${OBJECTDIR}/LCD/writdata.p1: LCD/writdata.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/LCD" 
 	@${RM} ${OBJECTDIR}/LCD/writdata.p1.d 
 	@${RM} ${OBJECTDIR}/LCD/writdata.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/writdata.p1  LCD/writdata.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/writdata.p1  LCD/writdata.c 
 	@-${MV} ${OBJECTDIR}/LCD/writdata.d ${OBJECTDIR}/LCD/writdata.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/LCD/writdata.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -329,7 +329,7 @@ ${OBJECTDIR}/LCD/Print.p1: LCD/Print.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/LCD" 
 	@${RM} ${OBJECTDIR}/LCD/Print.p1.d 
 	@${RM} ${OBJECTDIR}/LCD/Print.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/Print.p1  LCD/Print.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/Print.p1  LCD/Print.c 
 	@-${MV} ${OBJECTDIR}/LCD/Print.d ${OBJECTDIR}/LCD/Print.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/LCD/Print.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -337,7 +337,7 @@ ${OBJECTDIR}/MODBUS/ModbusRtu.p1: MODBUS/ModbusRtu.c  nbproject/Makefile-${CND_C
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/ModbusRtu.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/ModbusRtu.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/ModbusRtu.p1  MODBUS/ModbusRtu.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/ModbusRtu.p1  MODBUS/ModbusRtu.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/ModbusRtu.d ${OBJECTDIR}/MODBUS/ModbusRtu.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/ModbusRtu.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -345,7 +345,7 @@ ${OBJECTDIR}/MODBUS/Ports.p1: MODBUS/Ports.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/Ports.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/Ports.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/Ports.p1  MODBUS/Ports.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/Ports.p1  MODBUS/Ports.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/Ports.d ${OBJECTDIR}/MODBUS/Ports.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/Ports.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -353,7 +353,7 @@ ${OBJECTDIR}/MODBUS/commonutils.p1: MODBUS/commonutils.c  nbproject/Makefile-${C
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/commonutils.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/commonutils.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/commonutils.p1  MODBUS/commonutils.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/commonutils.p1  MODBUS/commonutils.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/commonutils.d ${OBJECTDIR}/MODBUS/commonutils.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/commonutils.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -361,7 +361,7 @@ ${OBJECTDIR}/MODBUS/validation.p1: MODBUS/validation.c  nbproject/Makefile-${CND
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/validation.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/validation.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/validation.p1  MODBUS/validation.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/validation.p1  MODBUS/validation.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/validation.d ${OBJECTDIR}/MODBUS/validation.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/validation.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -369,7 +369,7 @@ ${OBJECTDIR}/MODBUS/func20_file.p1: MODBUS/func20_file.c  nbproject/Makefile-${C
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/func20_file.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/func20_file.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func20_file.p1  MODBUS/func20_file.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func20_file.p1  MODBUS/func20_file.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/func20_file.d ${OBJECTDIR}/MODBUS/func20_file.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/func20_file.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -377,7 +377,7 @@ ${OBJECTDIR}/MODBUS/func43_device_id.p1: MODBUS/func43_device_id.c  nbproject/Ma
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/func43_device_id.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/func43_device_id.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func43_device_id.p1  MODBUS/func43_device_id.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func43_device_id.p1  MODBUS/func43_device_id.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/func43_device_id.d ${OBJECTDIR}/MODBUS/func43_device_id.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/func43_device_id.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -385,7 +385,7 @@ ${OBJECTDIR}/MODBUS/func100_system_command.p1: MODBUS/func100_system_command.c  
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/func100_system_command.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/func100_system_command.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func100_system_command.p1  MODBUS/func100_system_command.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func100_system_command.p1  MODBUS/func100_system_command.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/func100_system_command.d ${OBJECTDIR}/MODBUS/func100_system_command.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/func100_system_command.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -393,7 +393,7 @@ ${OBJECTDIR}/MODBUS/func1_5_15_coils.p1: MODBUS/func1_5_15_coils.c  nbproject/Ma
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/func1_5_15_coils.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/func1_5_15_coils.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func1_5_15_coils.p1  MODBUS/func1_5_15_coils.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func1_5_15_coils.p1  MODBUS/func1_5_15_coils.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/func1_5_15_coils.d ${OBJECTDIR}/MODBUS/func1_5_15_coils.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/func1_5_15_coils.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -401,7 +401,7 @@ ${OBJECTDIR}/MODBUS/func2_discrete_input.p1: MODBUS/func2_discrete_input.c  nbpr
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/func2_discrete_input.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/func2_discrete_input.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func2_discrete_input.p1  MODBUS/func2_discrete_input.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func2_discrete_input.p1  MODBUS/func2_discrete_input.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/func2_discrete_input.d ${OBJECTDIR}/MODBUS/func2_discrete_input.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/func2_discrete_input.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -409,7 +409,7 @@ ${OBJECTDIR}/MODBUS/func3_6_16_holding_registers.p1: MODBUS/func3_6_16_holding_r
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/func3_6_16_holding_registers.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/func3_6_16_holding_registers.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func3_6_16_holding_registers.p1  MODBUS/func3_6_16_holding_registers.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func3_6_16_holding_registers.p1  MODBUS/func3_6_16_holding_registers.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/func3_6_16_holding_registers.d ${OBJECTDIR}/MODBUS/func3_6_16_holding_registers.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/func3_6_16_holding_registers.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -417,7 +417,7 @@ ${OBJECTDIR}/MODBUS/func4_input_registers.p1: MODBUS/func4_input_registers.c  nb
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/func4_input_registers.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/func4_input_registers.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func4_input_registers.p1  MODBUS/func4_input_registers.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func4_input_registers.p1  MODBUS/func4_input_registers.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/func4_input_registers.d ${OBJECTDIR}/MODBUS/func4_input_registers.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/func4_input_registers.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -425,7 +425,7 @@ ${OBJECTDIR}/MODBUS/func101_user_command.p1: MODBUS/func101_user_command.c  nbpr
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/func101_user_command.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/func101_user_command.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func101_user_command.p1  MODBUS/func101_user_command.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func101_user_command.p1  MODBUS/func101_user_command.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/func101_user_command.d ${OBJECTDIR}/MODBUS/func101_user_command.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/func101_user_command.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -433,7 +433,7 @@ ${OBJECTDIR}/MODBUS/func102_device_status.p1: MODBUS/func102_device_status.c  nb
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/func102_device_status.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/func102_device_status.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func102_device_status.p1  MODBUS/func102_device_status.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func102_device_status.p1  MODBUS/func102_device_status.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/func102_device_status.d ${OBJECTDIR}/MODBUS/func102_device_status.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/func102_device_status.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -441,7 +441,7 @@ ${OBJECTDIR}/MODBUS/master.p1: MODBUS/master.c  nbproject/Makefile-${CND_CONF}.m
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/master.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/master.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/master.p1  MODBUS/master.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/master.p1  MODBUS/master.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/master.d ${OBJECTDIR}/MODBUS/master.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/master.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -449,7 +449,7 @@ ${OBJECTDIR}/Sections/SectionIdle.p1: Sections/SectionIdle.c  nbproject/Makefile
 	@${MKDIR} "${OBJECTDIR}/Sections" 
 	@${RM} ${OBJECTDIR}/Sections/SectionIdle.p1.d 
 	@${RM} ${OBJECTDIR}/Sections/SectionIdle.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/Sections/SectionIdle.p1  Sections/SectionIdle.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/Sections/SectionIdle.p1  Sections/SectionIdle.c 
 	@-${MV} ${OBJECTDIR}/Sections/SectionIdle.d ${OBJECTDIR}/Sections/SectionIdle.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/Sections/SectionIdle.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -457,7 +457,7 @@ ${OBJECTDIR}/Sections/SectionRooms.p1: Sections/SectionRooms.c  nbproject/Makefi
 	@${MKDIR} "${OBJECTDIR}/Sections" 
 	@${RM} ${OBJECTDIR}/Sections/SectionRooms.p1.d 
 	@${RM} ${OBJECTDIR}/Sections/SectionRooms.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/Sections/SectionRooms.p1  Sections/SectionRooms.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/Sections/SectionRooms.p1  Sections/SectionRooms.c 
 	@-${MV} ${OBJECTDIR}/Sections/SectionRooms.d ${OBJECTDIR}/Sections/SectionRooms.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/Sections/SectionRooms.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -465,7 +465,7 @@ ${OBJECTDIR}/Sections/SectionSettings.p1: Sections/SectionSettings.c  nbproject/
 	@${MKDIR} "${OBJECTDIR}/Sections" 
 	@${RM} ${OBJECTDIR}/Sections/SectionSettings.p1.d 
 	@${RM} ${OBJECTDIR}/Sections/SectionSettings.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/Sections/SectionSettings.p1  Sections/SectionSettings.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/Sections/SectionSettings.p1  Sections/SectionSettings.c 
 	@-${MV} ${OBJECTDIR}/Sections/SectionSettings.d ${OBJECTDIR}/Sections/SectionSettings.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/Sections/SectionSettings.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -473,7 +473,7 @@ ${OBJECTDIR}/configuration_bits.p1: configuration_bits.c  nbproject/Makefile-${C
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/configuration_bits.p1.d 
 	@${RM} ${OBJECTDIR}/configuration_bits.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/configuration_bits.p1  configuration_bits.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/configuration_bits.p1  configuration_bits.c 
 	@-${MV} ${OBJECTDIR}/configuration_bits.d ${OBJECTDIR}/configuration_bits.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/configuration_bits.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -481,7 +481,7 @@ ${OBJECTDIR}/interrupts.p1: interrupts.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/interrupts.p1.d 
 	@${RM} ${OBJECTDIR}/interrupts.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/interrupts.p1  interrupts.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/interrupts.p1  interrupts.c 
 	@-${MV} ${OBJECTDIR}/interrupts.d ${OBJECTDIR}/interrupts.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/interrupts.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -489,7 +489,7 @@ ${OBJECTDIR}/main.p1: main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/main.p1.d 
 	@${RM} ${OBJECTDIR}/main.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/main.p1  main.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/main.p1  main.c 
 	@-${MV} ${OBJECTDIR}/main.d ${OBJECTDIR}/main.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/main.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -497,7 +497,7 @@ ${OBJECTDIR}/system.p1: system.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/system.p1.d 
 	@${RM} ${OBJECTDIR}/system.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/system.p1  system.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/system.p1  system.c 
 	@-${MV} ${OBJECTDIR}/system.d ${OBJECTDIR}/system.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/system.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -505,7 +505,7 @@ ${OBJECTDIR}/user.p1: user.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/user.p1.d 
 	@${RM} ${OBJECTDIR}/user.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/user.p1  user.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/user.p1  user.c 
 	@-${MV} ${OBJECTDIR}/user.d ${OBJECTDIR}/user.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/user.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -513,7 +513,7 @@ ${OBJECTDIR}/buttons.p1: buttons.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/buttons.p1.d 
 	@${RM} ${OBJECTDIR}/buttons.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/buttons.p1  buttons.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/buttons.p1  buttons.c 
 	@-${MV} ${OBJECTDIR}/buttons.d ${OBJECTDIR}/buttons.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/buttons.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -521,7 +521,7 @@ ${OBJECTDIR}/ParametersController.p1: ParametersController.c  nbproject/Makefile
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/ParametersController.p1.d 
 	@${RM} ${OBJECTDIR}/ParametersController.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/ParametersController.p1  ParametersController.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/ParametersController.p1  ParametersController.c 
 	@-${MV} ${OBJECTDIR}/ParametersController.d ${OBJECTDIR}/ParametersController.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/ParametersController.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -529,7 +529,7 @@ ${OBJECTDIR}/SettingsController.p1: SettingsController.c  nbproject/Makefile-${C
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/SettingsController.p1.d 
 	@${RM} ${OBJECTDIR}/SettingsController.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/SettingsController.p1  SettingsController.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/SettingsController.p1  SettingsController.c 
 	@-${MV} ${OBJECTDIR}/SettingsController.d ${OBJECTDIR}/SettingsController.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/SettingsController.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -538,7 +538,7 @@ ${OBJECTDIR}/i2c/i2c_ack.p1: i2c/i2c_ack.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_ack.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_ack.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_ack.p1  i2c/i2c_ack.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_ack.p1  i2c/i2c_ack.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_ack.d ${OBJECTDIR}/i2c/i2c_ack.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_ack.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -546,7 +546,7 @@ ${OBJECTDIR}/i2c/i2c_clos.p1: i2c/i2c_clos.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_clos.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_clos.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_clos.p1  i2c/i2c_clos.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_clos.p1  i2c/i2c_clos.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_clos.d ${OBJECTDIR}/i2c/i2c_clos.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_clos.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -554,7 +554,7 @@ ${OBJECTDIR}/i2c/i2c_dtrd.p1: i2c/i2c_dtrd.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_dtrd.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_dtrd.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_dtrd.p1  i2c/i2c_dtrd.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_dtrd.p1  i2c/i2c_dtrd.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_dtrd.d ${OBJECTDIR}/i2c/i2c_dtrd.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_dtrd.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -562,7 +562,7 @@ ${OBJECTDIR}/i2c/i2c_eeap.p1: i2c/i2c_eeap.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_eeap.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_eeap.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_eeap.p1  i2c/i2c_eeap.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_eeap.p1  i2c/i2c_eeap.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_eeap.d ${OBJECTDIR}/i2c/i2c_eeap.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_eeap.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -570,7 +570,7 @@ ${OBJECTDIR}/i2c/i2c_eebw.p1: i2c/i2c_eebw.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_eebw.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_eebw.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_eebw.p1  i2c/i2c_eebw.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_eebw.p1  i2c/i2c_eebw.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_eebw.d ${OBJECTDIR}/i2c/i2c_eebw.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_eebw.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -578,7 +578,7 @@ ${OBJECTDIR}/i2c/i2c_eecr.p1: i2c/i2c_eecr.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_eecr.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_eecr.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_eecr.p1  i2c/i2c_eecr.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_eecr.p1  i2c/i2c_eecr.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_eecr.d ${OBJECTDIR}/i2c/i2c_eecr.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_eecr.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -586,7 +586,7 @@ ${OBJECTDIR}/i2c/i2c_eepw.p1: i2c/i2c_eepw.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_eepw.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_eepw.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_eepw.p1  i2c/i2c_eepw.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_eepw.p1  i2c/i2c_eepw.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_eepw.d ${OBJECTDIR}/i2c/i2c_eepw.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_eepw.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -594,7 +594,7 @@ ${OBJECTDIR}/i2c/i2c_eerr.p1: i2c/i2c_eerr.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_eerr.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_eerr.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_eerr.p1  i2c/i2c_eerr.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_eerr.p1  i2c/i2c_eerr.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_eerr.d ${OBJECTDIR}/i2c/i2c_eerr.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_eerr.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -602,7 +602,7 @@ ${OBJECTDIR}/i2c/i2c_eesr.p1: i2c/i2c_eesr.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_eesr.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_eesr.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_eesr.p1  i2c/i2c_eesr.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_eesr.p1  i2c/i2c_eesr.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_eesr.d ${OBJECTDIR}/i2c/i2c_eesr.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_eesr.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -610,7 +610,7 @@ ${OBJECTDIR}/i2c/i2c_gets.p1: i2c/i2c_gets.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_gets.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_gets.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_gets.p1  i2c/i2c_gets.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_gets.p1  i2c/i2c_gets.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_gets.d ${OBJECTDIR}/i2c/i2c_gets.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_gets.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -618,7 +618,7 @@ ${OBJECTDIR}/i2c/i2c_idle.p1: i2c/i2c_idle.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_idle.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_idle.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_idle.p1  i2c/i2c_idle.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_idle.p1  i2c/i2c_idle.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_idle.d ${OBJECTDIR}/i2c/i2c_idle.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_idle.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -626,7 +626,7 @@ ${OBJECTDIR}/i2c/i2c_nack.p1: i2c/i2c_nack.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_nack.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_nack.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_nack.p1  i2c/i2c_nack.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_nack.p1  i2c/i2c_nack.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_nack.d ${OBJECTDIR}/i2c/i2c_nack.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_nack.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -634,7 +634,7 @@ ${OBJECTDIR}/i2c/i2c_open.p1: i2c/i2c_open.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_open.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_open.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_open.p1  i2c/i2c_open.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_open.p1  i2c/i2c_open.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_open.d ${OBJECTDIR}/i2c/i2c_open.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_open.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -642,7 +642,7 @@ ${OBJECTDIR}/i2c/i2c_puts.p1: i2c/i2c_puts.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_puts.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_puts.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_puts.p1  i2c/i2c_puts.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_puts.p1  i2c/i2c_puts.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_puts.d ${OBJECTDIR}/i2c/i2c_puts.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_puts.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -650,7 +650,7 @@ ${OBJECTDIR}/i2c/i2c_read.p1: i2c/i2c_read.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_read.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_read.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_read.p1  i2c/i2c_read.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_read.p1  i2c/i2c_read.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_read.d ${OBJECTDIR}/i2c/i2c_read.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_read.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -658,7 +658,7 @@ ${OBJECTDIR}/i2c/i2c_rstr.p1: i2c/i2c_rstr.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_rstr.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_rstr.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_rstr.p1  i2c/i2c_rstr.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_rstr.p1  i2c/i2c_rstr.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_rstr.d ${OBJECTDIR}/i2c/i2c_rstr.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_rstr.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -666,7 +666,7 @@ ${OBJECTDIR}/i2c/i2c_stop.p1: i2c/i2c_stop.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_stop.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_stop.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_stop.p1  i2c/i2c_stop.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_stop.p1  i2c/i2c_stop.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_stop.d ${OBJECTDIR}/i2c/i2c_stop.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_stop.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -674,7 +674,7 @@ ${OBJECTDIR}/i2c/i2c_strt.p1: i2c/i2c_strt.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_strt.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_strt.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_strt.p1  i2c/i2c_strt.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_strt.p1  i2c/i2c_strt.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_strt.d ${OBJECTDIR}/i2c/i2c_strt.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_strt.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -682,7 +682,7 @@ ${OBJECTDIR}/i2c/i2c_writ.p1: i2c/i2c_writ.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/i2c" 
 	@${RM} ${OBJECTDIR}/i2c/i2c_writ.p1.d 
 	@${RM} ${OBJECTDIR}/i2c/i2c_writ.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_writ.p1  i2c/i2c_writ.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c/i2c_writ.p1  i2c/i2c_writ.c 
 	@-${MV} ${OBJECTDIR}/i2c/i2c_writ.d ${OBJECTDIR}/i2c/i2c_writ.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/i2c/i2c_writ.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -690,7 +690,7 @@ ${OBJECTDIR}/LCD/busyxlcd.p1: LCD/busyxlcd.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/LCD" 
 	@${RM} ${OBJECTDIR}/LCD/busyxlcd.p1.d 
 	@${RM} ${OBJECTDIR}/LCD/busyxlcd.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/busyxlcd.p1  LCD/busyxlcd.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/busyxlcd.p1  LCD/busyxlcd.c 
 	@-${MV} ${OBJECTDIR}/LCD/busyxlcd.d ${OBJECTDIR}/LCD/busyxlcd.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/LCD/busyxlcd.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -698,7 +698,7 @@ ${OBJECTDIR}/LCD/openxlcd.p1: LCD/openxlcd.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/LCD" 
 	@${RM} ${OBJECTDIR}/LCD/openxlcd.p1.d 
 	@${RM} ${OBJECTDIR}/LCD/openxlcd.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/openxlcd.p1  LCD/openxlcd.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/openxlcd.p1  LCD/openxlcd.c 
 	@-${MV} ${OBJECTDIR}/LCD/openxlcd.d ${OBJECTDIR}/LCD/openxlcd.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/LCD/openxlcd.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -706,7 +706,7 @@ ${OBJECTDIR}/LCD/putrxlcd.p1: LCD/putrxlcd.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/LCD" 
 	@${RM} ${OBJECTDIR}/LCD/putrxlcd.p1.d 
 	@${RM} ${OBJECTDIR}/LCD/putrxlcd.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/putrxlcd.p1  LCD/putrxlcd.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/putrxlcd.p1  LCD/putrxlcd.c 
 	@-${MV} ${OBJECTDIR}/LCD/putrxlcd.d ${OBJECTDIR}/LCD/putrxlcd.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/LCD/putrxlcd.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -714,7 +714,7 @@ ${OBJECTDIR}/LCD/putsxlcd.p1: LCD/putsxlcd.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/LCD" 
 	@${RM} ${OBJECTDIR}/LCD/putsxlcd.p1.d 
 	@${RM} ${OBJECTDIR}/LCD/putsxlcd.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/putsxlcd.p1  LCD/putsxlcd.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/putsxlcd.p1  LCD/putsxlcd.c 
 	@-${MV} ${OBJECTDIR}/LCD/putsxlcd.d ${OBJECTDIR}/LCD/putsxlcd.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/LCD/putsxlcd.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -722,7 +722,7 @@ ${OBJECTDIR}/LCD/readaddr.p1: LCD/readaddr.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/LCD" 
 	@${RM} ${OBJECTDIR}/LCD/readaddr.p1.d 
 	@${RM} ${OBJECTDIR}/LCD/readaddr.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/readaddr.p1  LCD/readaddr.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/readaddr.p1  LCD/readaddr.c 
 	@-${MV} ${OBJECTDIR}/LCD/readaddr.d ${OBJECTDIR}/LCD/readaddr.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/LCD/readaddr.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -730,7 +730,7 @@ ${OBJECTDIR}/LCD/readdata.p1: LCD/readdata.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/LCD" 
 	@${RM} ${OBJECTDIR}/LCD/readdata.p1.d 
 	@${RM} ${OBJECTDIR}/LCD/readdata.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/readdata.p1  LCD/readdata.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/readdata.p1  LCD/readdata.c 
 	@-${MV} ${OBJECTDIR}/LCD/readdata.d ${OBJECTDIR}/LCD/readdata.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/LCD/readdata.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -738,7 +738,7 @@ ${OBJECTDIR}/LCD/setcgram.p1: LCD/setcgram.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/LCD" 
 	@${RM} ${OBJECTDIR}/LCD/setcgram.p1.d 
 	@${RM} ${OBJECTDIR}/LCD/setcgram.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/setcgram.p1  LCD/setcgram.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/setcgram.p1  LCD/setcgram.c 
 	@-${MV} ${OBJECTDIR}/LCD/setcgram.d ${OBJECTDIR}/LCD/setcgram.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/LCD/setcgram.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -746,7 +746,7 @@ ${OBJECTDIR}/LCD/setddram.p1: LCD/setddram.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/LCD" 
 	@${RM} ${OBJECTDIR}/LCD/setddram.p1.d 
 	@${RM} ${OBJECTDIR}/LCD/setddram.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/setddram.p1  LCD/setddram.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/setddram.p1  LCD/setddram.c 
 	@-${MV} ${OBJECTDIR}/LCD/setddram.d ${OBJECTDIR}/LCD/setddram.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/LCD/setddram.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -754,7 +754,7 @@ ${OBJECTDIR}/LCD/wcmdxlcd.p1: LCD/wcmdxlcd.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/LCD" 
 	@${RM} ${OBJECTDIR}/LCD/wcmdxlcd.p1.d 
 	@${RM} ${OBJECTDIR}/LCD/wcmdxlcd.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/wcmdxlcd.p1  LCD/wcmdxlcd.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/wcmdxlcd.p1  LCD/wcmdxlcd.c 
 	@-${MV} ${OBJECTDIR}/LCD/wcmdxlcd.d ${OBJECTDIR}/LCD/wcmdxlcd.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/LCD/wcmdxlcd.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -762,7 +762,7 @@ ${OBJECTDIR}/LCD/writdata.p1: LCD/writdata.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/LCD" 
 	@${RM} ${OBJECTDIR}/LCD/writdata.p1.d 
 	@${RM} ${OBJECTDIR}/LCD/writdata.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/writdata.p1  LCD/writdata.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/writdata.p1  LCD/writdata.c 
 	@-${MV} ${OBJECTDIR}/LCD/writdata.d ${OBJECTDIR}/LCD/writdata.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/LCD/writdata.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -770,7 +770,7 @@ ${OBJECTDIR}/LCD/Print.p1: LCD/Print.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/LCD" 
 	@${RM} ${OBJECTDIR}/LCD/Print.p1.d 
 	@${RM} ${OBJECTDIR}/LCD/Print.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/Print.p1  LCD/Print.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/LCD/Print.p1  LCD/Print.c 
 	@-${MV} ${OBJECTDIR}/LCD/Print.d ${OBJECTDIR}/LCD/Print.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/LCD/Print.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -778,7 +778,7 @@ ${OBJECTDIR}/MODBUS/ModbusRtu.p1: MODBUS/ModbusRtu.c  nbproject/Makefile-${CND_C
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/ModbusRtu.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/ModbusRtu.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/ModbusRtu.p1  MODBUS/ModbusRtu.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/ModbusRtu.p1  MODBUS/ModbusRtu.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/ModbusRtu.d ${OBJECTDIR}/MODBUS/ModbusRtu.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/ModbusRtu.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -786,7 +786,7 @@ ${OBJECTDIR}/MODBUS/Ports.p1: MODBUS/Ports.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/Ports.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/Ports.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/Ports.p1  MODBUS/Ports.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/Ports.p1  MODBUS/Ports.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/Ports.d ${OBJECTDIR}/MODBUS/Ports.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/Ports.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -794,7 +794,7 @@ ${OBJECTDIR}/MODBUS/commonutils.p1: MODBUS/commonutils.c  nbproject/Makefile-${C
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/commonutils.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/commonutils.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/commonutils.p1  MODBUS/commonutils.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/commonutils.p1  MODBUS/commonutils.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/commonutils.d ${OBJECTDIR}/MODBUS/commonutils.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/commonutils.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -802,7 +802,7 @@ ${OBJECTDIR}/MODBUS/validation.p1: MODBUS/validation.c  nbproject/Makefile-${CND
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/validation.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/validation.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/validation.p1  MODBUS/validation.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/validation.p1  MODBUS/validation.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/validation.d ${OBJECTDIR}/MODBUS/validation.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/validation.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -810,7 +810,7 @@ ${OBJECTDIR}/MODBUS/func20_file.p1: MODBUS/func20_file.c  nbproject/Makefile-${C
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/func20_file.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/func20_file.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func20_file.p1  MODBUS/func20_file.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func20_file.p1  MODBUS/func20_file.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/func20_file.d ${OBJECTDIR}/MODBUS/func20_file.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/func20_file.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -818,7 +818,7 @@ ${OBJECTDIR}/MODBUS/func43_device_id.p1: MODBUS/func43_device_id.c  nbproject/Ma
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/func43_device_id.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/func43_device_id.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func43_device_id.p1  MODBUS/func43_device_id.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func43_device_id.p1  MODBUS/func43_device_id.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/func43_device_id.d ${OBJECTDIR}/MODBUS/func43_device_id.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/func43_device_id.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -826,7 +826,7 @@ ${OBJECTDIR}/MODBUS/func100_system_command.p1: MODBUS/func100_system_command.c  
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/func100_system_command.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/func100_system_command.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func100_system_command.p1  MODBUS/func100_system_command.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func100_system_command.p1  MODBUS/func100_system_command.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/func100_system_command.d ${OBJECTDIR}/MODBUS/func100_system_command.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/func100_system_command.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -834,7 +834,7 @@ ${OBJECTDIR}/MODBUS/func1_5_15_coils.p1: MODBUS/func1_5_15_coils.c  nbproject/Ma
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/func1_5_15_coils.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/func1_5_15_coils.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func1_5_15_coils.p1  MODBUS/func1_5_15_coils.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func1_5_15_coils.p1  MODBUS/func1_5_15_coils.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/func1_5_15_coils.d ${OBJECTDIR}/MODBUS/func1_5_15_coils.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/func1_5_15_coils.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -842,7 +842,7 @@ ${OBJECTDIR}/MODBUS/func2_discrete_input.p1: MODBUS/func2_discrete_input.c  nbpr
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/func2_discrete_input.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/func2_discrete_input.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func2_discrete_input.p1  MODBUS/func2_discrete_input.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func2_discrete_input.p1  MODBUS/func2_discrete_input.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/func2_discrete_input.d ${OBJECTDIR}/MODBUS/func2_discrete_input.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/func2_discrete_input.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -850,7 +850,7 @@ ${OBJECTDIR}/MODBUS/func3_6_16_holding_registers.p1: MODBUS/func3_6_16_holding_r
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/func3_6_16_holding_registers.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/func3_6_16_holding_registers.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func3_6_16_holding_registers.p1  MODBUS/func3_6_16_holding_registers.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func3_6_16_holding_registers.p1  MODBUS/func3_6_16_holding_registers.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/func3_6_16_holding_registers.d ${OBJECTDIR}/MODBUS/func3_6_16_holding_registers.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/func3_6_16_holding_registers.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -858,7 +858,7 @@ ${OBJECTDIR}/MODBUS/func4_input_registers.p1: MODBUS/func4_input_registers.c  nb
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/func4_input_registers.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/func4_input_registers.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func4_input_registers.p1  MODBUS/func4_input_registers.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func4_input_registers.p1  MODBUS/func4_input_registers.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/func4_input_registers.d ${OBJECTDIR}/MODBUS/func4_input_registers.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/func4_input_registers.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -866,7 +866,7 @@ ${OBJECTDIR}/MODBUS/func101_user_command.p1: MODBUS/func101_user_command.c  nbpr
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/func101_user_command.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/func101_user_command.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func101_user_command.p1  MODBUS/func101_user_command.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func101_user_command.p1  MODBUS/func101_user_command.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/func101_user_command.d ${OBJECTDIR}/MODBUS/func101_user_command.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/func101_user_command.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -874,7 +874,7 @@ ${OBJECTDIR}/MODBUS/func102_device_status.p1: MODBUS/func102_device_status.c  nb
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/func102_device_status.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/func102_device_status.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func102_device_status.p1  MODBUS/func102_device_status.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/func102_device_status.p1  MODBUS/func102_device_status.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/func102_device_status.d ${OBJECTDIR}/MODBUS/func102_device_status.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/func102_device_status.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -882,7 +882,7 @@ ${OBJECTDIR}/MODBUS/master.p1: MODBUS/master.c  nbproject/Makefile-${CND_CONF}.m
 	@${MKDIR} "${OBJECTDIR}/MODBUS" 
 	@${RM} ${OBJECTDIR}/MODBUS/master.p1.d 
 	@${RM} ${OBJECTDIR}/MODBUS/master.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/master.p1  MODBUS/master.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/MODBUS/master.p1  MODBUS/master.c 
 	@-${MV} ${OBJECTDIR}/MODBUS/master.d ${OBJECTDIR}/MODBUS/master.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/MODBUS/master.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -890,7 +890,7 @@ ${OBJECTDIR}/Sections/SectionIdle.p1: Sections/SectionIdle.c  nbproject/Makefile
 	@${MKDIR} "${OBJECTDIR}/Sections" 
 	@${RM} ${OBJECTDIR}/Sections/SectionIdle.p1.d 
 	@${RM} ${OBJECTDIR}/Sections/SectionIdle.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/Sections/SectionIdle.p1  Sections/SectionIdle.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/Sections/SectionIdle.p1  Sections/SectionIdle.c 
 	@-${MV} ${OBJECTDIR}/Sections/SectionIdle.d ${OBJECTDIR}/Sections/SectionIdle.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/Sections/SectionIdle.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -898,7 +898,7 @@ ${OBJECTDIR}/Sections/SectionRooms.p1: Sections/SectionRooms.c  nbproject/Makefi
 	@${MKDIR} "${OBJECTDIR}/Sections" 
 	@${RM} ${OBJECTDIR}/Sections/SectionRooms.p1.d 
 	@${RM} ${OBJECTDIR}/Sections/SectionRooms.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/Sections/SectionRooms.p1  Sections/SectionRooms.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/Sections/SectionRooms.p1  Sections/SectionRooms.c 
 	@-${MV} ${OBJECTDIR}/Sections/SectionRooms.d ${OBJECTDIR}/Sections/SectionRooms.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/Sections/SectionRooms.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -906,7 +906,7 @@ ${OBJECTDIR}/Sections/SectionSettings.p1: Sections/SectionSettings.c  nbproject/
 	@${MKDIR} "${OBJECTDIR}/Sections" 
 	@${RM} ${OBJECTDIR}/Sections/SectionSettings.p1.d 
 	@${RM} ${OBJECTDIR}/Sections/SectionSettings.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/Sections/SectionSettings.p1  Sections/SectionSettings.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/Sections/SectionSettings.p1  Sections/SectionSettings.c 
 	@-${MV} ${OBJECTDIR}/Sections/SectionSettings.d ${OBJECTDIR}/Sections/SectionSettings.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/Sections/SectionSettings.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -914,7 +914,7 @@ ${OBJECTDIR}/configuration_bits.p1: configuration_bits.c  nbproject/Makefile-${C
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/configuration_bits.p1.d 
 	@${RM} ${OBJECTDIR}/configuration_bits.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/configuration_bits.p1  configuration_bits.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/configuration_bits.p1  configuration_bits.c 
 	@-${MV} ${OBJECTDIR}/configuration_bits.d ${OBJECTDIR}/configuration_bits.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/configuration_bits.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -922,7 +922,7 @@ ${OBJECTDIR}/interrupts.p1: interrupts.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/interrupts.p1.d 
 	@${RM} ${OBJECTDIR}/interrupts.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/interrupts.p1  interrupts.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/interrupts.p1  interrupts.c 
 	@-${MV} ${OBJECTDIR}/interrupts.d ${OBJECTDIR}/interrupts.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/interrupts.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -930,7 +930,7 @@ ${OBJECTDIR}/main.p1: main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/main.p1.d 
 	@${RM} ${OBJECTDIR}/main.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/main.p1  main.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/main.p1  main.c 
 	@-${MV} ${OBJECTDIR}/main.d ${OBJECTDIR}/main.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/main.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -938,7 +938,7 @@ ${OBJECTDIR}/system.p1: system.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/system.p1.d 
 	@${RM} ${OBJECTDIR}/system.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/system.p1  system.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/system.p1  system.c 
 	@-${MV} ${OBJECTDIR}/system.d ${OBJECTDIR}/system.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/system.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -946,7 +946,7 @@ ${OBJECTDIR}/user.p1: user.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/user.p1.d 
 	@${RM} ${OBJECTDIR}/user.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/user.p1  user.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/user.p1  user.c 
 	@-${MV} ${OBJECTDIR}/user.d ${OBJECTDIR}/user.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/user.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -954,7 +954,7 @@ ${OBJECTDIR}/buttons.p1: buttons.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/buttons.p1.d 
 	@${RM} ${OBJECTDIR}/buttons.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/buttons.p1  buttons.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/buttons.p1  buttons.c 
 	@-${MV} ${OBJECTDIR}/buttons.d ${OBJECTDIR}/buttons.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/buttons.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -962,7 +962,7 @@ ${OBJECTDIR}/ParametersController.p1: ParametersController.c  nbproject/Makefile
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/ParametersController.p1.d 
 	@${RM} ${OBJECTDIR}/ParametersController.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/ParametersController.p1  ParametersController.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/ParametersController.p1  ParametersController.c 
 	@-${MV} ${OBJECTDIR}/ParametersController.d ${OBJECTDIR}/ParametersController.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/ParametersController.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -970,7 +970,7 @@ ${OBJECTDIR}/SettingsController.p1: SettingsController.c  nbproject/Makefile-${C
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/SettingsController.p1.d 
 	@${RM} ${OBJECTDIR}/SettingsController.p1 
-	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/SettingsController.p1  SettingsController.c 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/SettingsController.p1  SettingsController.c 
 	@-${MV} ${OBJECTDIR}/SettingsController.d ${OBJECTDIR}/SettingsController.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/SettingsController.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
@@ -987,13 +987,13 @@ endif
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 dist/${CND_CONF}/${IMAGE_TYPE}/BOLID_C2000M.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_CC} $(MP_EXTRA_LD_PRE) --chip=$(MP_PROCESSOR_OPTION) -G -mdist/${CND_CONF}/${IMAGE_TYPE}/BOLID_C2000M.${IMAGE_TYPE}.map  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"        $(COMPARISON_BUILD) --memorysummary dist/${CND_CONF}/${IMAGE_TYPE}/memoryfile.xml -odist/${CND_CONF}/${IMAGE_TYPE}/BOLID_C2000M.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}     
+	${MP_CC} $(MP_EXTRA_LD_PRE) --chip=$(MP_PROCESSOR_OPTION) -G -mdist/${CND_CONF}/${IMAGE_TYPE}/BOLID_C2000M.${IMAGE_TYPE}.map  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"        $(COMPARISON_BUILD) --memorysummary dist/${CND_CONF}/${IMAGE_TYPE}/memoryfile.xml -odist/${CND_CONF}/${IMAGE_TYPE}/BOLID_C2000M.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}     
 	@${RM} dist/${CND_CONF}/${IMAGE_TYPE}/BOLID_C2000M.${IMAGE_TYPE}.hex 
 	
 else
 dist/${CND_CONF}/${IMAGE_TYPE}/BOLID_C2000M.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_CC} $(MP_EXTRA_LD_PRE) --chip=$(MP_PROCESSOR_OPTION) -G -mdist/${CND_CONF}/${IMAGE_TYPE}/BOLID_C2000M.${IMAGE_TYPE}.map  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"     $(COMPARISON_BUILD) --memorysummary dist/${CND_CONF}/${IMAGE_TYPE}/memoryfile.xml -odist/${CND_CONF}/${IMAGE_TYPE}/BOLID_C2000M.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}     
+	${MP_CC} $(MP_EXTRA_LD_PRE) --chip=$(MP_PROCESSOR_OPTION) -G -mdist/${CND_CONF}/${IMAGE_TYPE}/BOLID_C2000M.${IMAGE_TYPE}.map  --double=24 --float=24 --emi=wordwrite --opt=+asm,+asmfile,-speed,+space,-debug,-local --addrqual=ignore --mode=free -DC2000M -DSERIAL_DEBUG_ -P -N255 --warn=-3 --asmlist -DXPRJ_XC8_18F6720=$(CND_CONF)  --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"     $(COMPARISON_BUILD) --memorysummary dist/${CND_CONF}/${IMAGE_TYPE}/memoryfile.xml -odist/${CND_CONF}/${IMAGE_TYPE}/BOLID_C2000M.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}     
 	
 endif
 

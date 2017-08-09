@@ -72,6 +72,7 @@ void PortWriteByte(uint8_t b);
 void PortWrite(uint8_t *buf, uint8_t buflen);
 void PortClearReadBuffer();
 unsigned long millis();
+bool IsTimeSet();
 // return true if time set
 bool getHourMin(uint8_t *hour, uint8_t *min);
 bool getTotalMinutes(uint16_t *totalMinutes);

@@ -183,28 +183,6 @@ void SetHeartBeat(uint8_t value)
 uint32_t nextTimeSync = 0;
 
 
-/**
- * Синхронизация времени
- */
-void TimeSync()
-{
-    modbus_t tt;
-    tt.u8id = GetControllerAddress(GetTimeInfo.ControllerNumber);
-#ifdef SERIAL_DEBUG
-    DebugPrintValue("Send query for tyme sync", tt.u8id);
-#endif
-    tt.u8fct = MB_FC_READ_INPUT_REGISTER;
-    tt.u16CoilsNo = 2 + HOLDING_REGS_SIMPLE_COUNT + INPUT_REGS_SIMPLE_COUNT;
-    tt.u16RegAdd = 0;
-    tt.au16reg = NULL;
-    tt.curControllerIdInEe = GetTimeInfo.ControllerNumber;
-    tt.isTimeSync = true;
-    ModbusQuery(&tt);
-
-    // Надо устанавливать только при удачно синхронизации
-    // А если контроллер забанен, не входить в бесконечную синхронизацию
-    nextTimeSync = millis() + 100000;
-}
 
 
 uint16_t modbusState;
@@ -324,8 +302,6 @@ void main(void)
     
     
 #endif    
-    // Первая синхронизация при запуске
-    TimeSync();
     //bool isTimerOverflow = false; // Когда curMs переваливает за максимальное значение
     
     while(1)

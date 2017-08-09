@@ -257,7 +257,7 @@ unsigned long millis()
 
 bool getHourMin(uint8_t *hour, uint8_t *min)
 {
-    if(globalHours == TIME_NOT_SET)
+    if(!IsTimeSet())
         return false;
     di();
     *hour = globalHours;
@@ -266,9 +266,14 @@ bool getHourMin(uint8_t *hour, uint8_t *min)
     return true;
 }
 
+bool IsTimeSet()
+{
+    return globalHours != TIME_NOT_SET;
+}
+
 bool getTotalMinutes(uint16_t *totalMinutes)
 {
-    if(globalHours == TIME_NOT_SET)
+    if(!IsTimeSet())
         return false;
     di();
     *totalMinutes = _totalMinutesFromDayStart;
