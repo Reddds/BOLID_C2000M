@@ -118,11 +118,7 @@ void LoadParamsFromEeprom()
     }
 }
 
-uint16_t _heartBeat = 500;
-void SetHeartBeat(uint8_t value)
-{
-    _heartBeat = value * 10;
-}
+
 
 /*
  * Основные настройки - действия по быстрым кнопкам 
@@ -221,11 +217,6 @@ void main(void)
     SetFailureState(false, false);
     SetCrashState(false, false);
     
-    TRISDbits.RD0 = 0;
-    TRISDbits.RD1 = 0;
-    TRISDbits.RD2 = 0;
-    TRISDbits.RD3 = 0;
-    TRISDbits.RD4 = 0;
 
     SetWorkState(true, false);
     
@@ -276,7 +267,7 @@ void main(void)
     uint32_t curMs = millis();
     uint32_t nextSec = curMs + 1000;
     uint32_t nextBlink = curMs + BLINK_INTERVAL;
-    uint32_t nextModbusQuery = curMs;
+    //uint32_t nextModbusQuery = curMs;
     uint32_t screenSaveStart = curMs + GetSettingValue(SETTING_SAVESCREEN_TIMEOUT) * 1000;
     
     ResetIdleScreenTimeout(&curMs);
@@ -286,6 +277,12 @@ void main(void)
     // Если долго (5с) держать CLR, то перезагружаемся
     unsigned long timeToReset;
   
+    
+    if(GetSettingValue(SETTING_MODBUS_MASTER) != 0)
+    {
+        ModbusChangeMode(true);
+    }
+    
 #ifdef SERIAL_DEBUG
     //DebugPrintValue("Second controller rate", GetControllerRate(1));
     
@@ -320,14 +317,7 @@ void main(void)
                 if(nextSec > 1000)
                     nextSec = 1000;
             }
-            if(nextModbusQuery > tmpMs)
-                nextModbusQuery = _heartBeat;
-            
-            for(uint8_t i = 0; i < ControllersCount; i++)
-            {
-                if(ControllersNextRequest[i].nextRequest > tmpMs)
-                    ControllersNextRequest[i].nextRequest = GetControllerRate(i) * 1000UL;
-            }
+            ModbusMasterOnTimerOverflow(tmpMs);
         }
                 
         curMs = tmpMs;
@@ -598,90 +588,8 @@ void main(void)
         
         if(ModbusIsMasterMode())
         {          
+            MasterProcess();
             
-            if(ModbusGetState() == COM_WAITING)
-            {
-                modbusState = ModbusPollMaster(); 
-                bool anyBanned = false;
-                for(uint8_t i = 0; i < ControllersCount; i++)
-                {
-                    if(ControllersNextRequest[i].banned != CB_NONE)
-                    {
-                        anyBanned = true;
-                        break;
-                    }
-                }
-                SetCrashState(anyBanned, false);
-                
-            }
-            if(ModbusGetState() == COM_IDLE && nextModbusQuery < curMs)
-            {
-                // Сперва ищем контроллер с самым большим интервалом опросов
-                // Чтобы до него тоеж очередь дошла, а то все быстроопрашиваемые займут всё время
-                uint8_t maxInterval = 0;
-                uint8_t longControllerId = 255;
-                for(uint8_t i = 0; i < ControllersCount; i++)
-                {
-                    if(ControllersNextRequest[i].banned == CB_COMPLETE_BAN)
-                        continue;
-                    if(ControllersNextRequest[i].nextRequest >= curMs)
-                        continue;
-                    uint8_t rate = GetControllerRate(i);
-                    if(rate > maxInterval)
-                    {
-                        maxInterval = rate;
-                        longControllerId = i;
-                    }
-                }
-                
-                if(longControllerId < 255)
-                {
-                //for(uint8_t i = 0; i < ControllersCount; i++)
-                //{
-                //    if(ControllersNextRequest[i].banned == CB_COMPLETE_BAN)
-                //        continue;
-                //    if(ControllersNextRequest[i].nextRequest < curMs)
-                //    {
-                        modbus_t tt;
-                        tt.u8id = GetControllerAddress(longControllerId);
-#ifdef SERIAL_DEBUG
-                        DebugPrintValue("Send query, controllerId", tt.u8id);
-#endif
-                        tt.u8fct = MB_FC_READ_INPUT_REGISTER;
-                        tt.u16CoilsNo = 2 + HOLDING_REGS_SIMPLE_COUNT + INPUT_REGS_SIMPLE_COUNT;
-                        tt.u16RegAdd = 0;
-                        tt.au16reg = NULL;
-                        tt.curControllerIdInEe = longControllerId;
-                        tt.isTimeSync = false;
-                        ModbusQuery(&tt);
-                        
-                        switch(ControllersNextRequest[longControllerId].banned)
-                        {
-                            case CB_NONE:
-                            {
-                                //uint8_t rate = GetControllerRate(longControllerId);
-                                if(maxInterval> 0)
-                                    ControllersNextRequest[longControllerId].nextRequest = curMs + maxInterval * 1000UL;
-                                else
-                                    ControllersNextRequest[longControllerId].nextRequest = curMs + _heartBeat;
-                            }
-                            break;
-                            case CB_FIRST_BAN:
-                                ControllersNextRequest[longControllerId].nextRequest = curMs + 5 * 60 * 1000UL; // 5 минут 5 * 60
-                                break;
-                            case CB_SECOND_BAN:
-                                ControllersNextRequest[longControllerId].nextRequest = curMs + 30 * 60 * 1000UL; // 30 минут 30 * 60
-                                break;
-                        }
-                        // Выходим после первого запроса, ибо надо дождаться ответа
-                        //break;
-                //    }
-                //}
-//                    nextModbusQuery = curMs;    
-                }
-                else // Если все контроллеры уже опрошены
-                    nextModbusQuery = curMs + _heartBeat;
-            }
         }
         else
         {

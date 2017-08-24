@@ -1,6 +1,9 @@
 #include "internal.h"
 
 #define ERROR_COUNT_FOR_BAN 5 //  оличество ошибко чтени€, чтобы бан перешЄл на новый уровень
+#define FIRST_BAN_SEC 5 * 60
+#define SECOND_BAN_SEC 30 * 60
+
 
 uint16_t *au16regs;
 uint8_t _masterState;
@@ -9,6 +12,18 @@ uint8_t _isTimeSyncRequest;
 bool _isMaster;
 
 uint8_t _curControllerIdInEe;
+uint32_t nextModbusQuery;
+
+// »нтервал между последующими запросами мастера
+uint16_t _masterRequestInterval = 20; 
+uint16_t _heartBeat = 500;
+
+
+
+void SetHeartBeat(uint8_t value)
+{
+    _heartBeat = value * 10;
+}
 
 void SetTimeFromResponse(uint8_t *hour, uint8_t *min, uint8_t *day, uint8_t *sec, uint8_t *year, uint8_t *mon);
 /**
@@ -50,6 +65,123 @@ void TimeSync()
 //    nextTimeSync = millis() + 100000;
 }
 
+// ƒействи€ при переполнении счЄтчика millis()
+void ModbusMasterOnTimerOverflow(uint32_t tmpMs)
+{
+    if(nextModbusQuery > tmpMs)
+        nextModbusQuery = _heartBeat;
+
+    for(uint8_t i = 0; i < ControllersCount; i++)
+    {
+        if(ControllersNextRequest[i].nextRequest > tmpMs)
+            ControllersNextRequest[i].nextRequest = GetControllerRate(i) * 1000UL;
+    }
+ 
+}
+
+/**
+ * обработка команд дл€ мастера при каждой итерации осного цикла в main
+ */
+void MasterProcess()
+{
+    if(ModbusGetState() == COM_WAITING)
+    {//modbusState = 
+        ModbusPollMaster(); 
+        bool anyBanned = false;
+        for(uint8_t i = 0; i < ControllersCount; i++)
+        {
+            if(ControllersNextRequest[i].banned != CB_NONE)
+            {
+                anyBanned = true;
+                break;
+            }
+        }
+        SetCrashState(anyBanned, false);
+
+    }
+    
+    uint32_t curMs = millis();
+    
+    if(ModbusGetState() == COM_IDLE && nextModbusQuery < curMs)
+    {
+        
+        // —перва ищем контроллер с самым большим интервалом опросов
+        // „тобы до него тоеж очередь дошла, а то все быстроопрашиваемые займут всЄ врем€
+        uint8_t maxInterval = 0;
+        uint8_t longControllerId = 255;
+        for(uint8_t i = 0; i < ControllersCount; i++)
+        {
+            if(ControllersNextRequest[i].banned == CB_COMPLETE_BAN)
+                continue;
+            if(ControllersNextRequest[i].nextRequest >= curMs)
+                continue;
+            uint8_t rate = GetControllerRate(i);
+            if(rate > maxInterval)
+            {
+                maxInterval = rate;
+                longControllerId = i;
+            }
+        }
+
+        if(longControllerId < 255)
+        {
+        //for(uint8_t i = 0; i < ControllersCount; i++)
+        //{
+        //    if(ControllersNextRequest[i].banned == CB_COMPLETE_BAN)
+        //        continue;
+        //    if(ControllersNextRequest[i].nextRequest < curMs)
+        //    {
+                modbus_t tt;
+                tt.u8id = GetControllerAddress(longControllerId);
+#ifdef SERIAL_DEBUG
+                DebugPrintValue("Send query, controllerId", tt.u8id);
+#endif
+                tt.u8fct = MB_FC_READ_INPUT_REGISTER;
+                tt.u16CoilsNo = 2 + HOLDING_REGS_SIMPLE_COUNT + INPUT_REGS_SIMPLE_COUNT;
+                tt.u16RegAdd = 0;
+                tt.au16reg = NULL;
+                tt.curControllerIdInEe = longControllerId;
+                tt.isTimeSync = false;
+                ModbusQuery(&tt);
+
+                switch(ControllersNextRequest[longControllerId].banned)
+                {
+                    case CB_NONE:
+                    {
+                        //uint8_t rate = GetControllerRate(longControllerId);
+                        if(maxInterval > 0)
+                            ControllersNextRequest[longControllerId].nextRequest = curMs + maxInterval * 1000UL;
+                        else
+                            ControllersNextRequest[longControllerId].nextRequest = curMs + _heartBeat;
+                    }
+                    break;
+                    case CB_FIRST_BAN:
+                        // ≈сли интервал опроса больше интервала бана, то ставим интервал опроса
+                        if(FIRST_BAN_SEC > maxInterval)
+                            ControllersNextRequest[longControllerId].nextRequest = curMs + FIRST_BAN_SEC * 1000UL; // 5 минут 5 * 60
+                        else
+                            ControllersNextRequest[longControllerId].nextRequest = curMs + maxInterval * 1000UL;
+                        break;
+                    case CB_SECOND_BAN:
+                        // ≈сли интервал опроса больше интервала бана, то ставим интервал опроса
+                        if(SECOND_BAN_SEC > maxInterval)
+                            ControllersNextRequest[longControllerId].nextRequest = curMs + SECOND_BAN_SEC * 1000UL; // 30 минут 30 * 60
+                        else
+                            ControllersNextRequest[longControllerId].nextRequest = curMs + maxInterval * 1000UL;
+                        break;
+                }
+                // ¬ыходим после первого запроса, ибо надо дождатьс€ ответа
+                //break;
+        //    }
+        //}
+            nextModbusQuery = curMs + _masterRequestInterval;    
+        }
+        else // ≈сли все контроллеры уже опрошены
+            nextModbusQuery = curMs + _heartBeat;
+    }    
+}
+
+
 /**
  * »змен€ет режим работы
  * @param isMaster
@@ -59,6 +191,7 @@ void ModbusChangeMode(bool isMaster)
     PortClearReadBuffer();
     if(isMaster)
     {
+        nextModbusQuery = millis();
         //_u8id = 0;
         _masterState = COM_IDLE;  
         SetWorkState(true, true);

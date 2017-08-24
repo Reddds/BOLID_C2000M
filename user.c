@@ -305,7 +305,14 @@ void InitApp(void)
     ADCON0bits.ADON = 1;
     
     
+    
     // Светодиоды
+    LATDbits.LATD0 = 1;
+    LATDbits.LATD1 = 1;
+    LATDbits.LATD2 = 1;
+    LATDbits.LATD3 = 1;
+    LATDbits.LATD4 = 1;
+    
     TRISDbits.RD0 = 0;
     TRISDbits.RD1 = 0;
     TRISDbits.RD2 = 0;
@@ -394,6 +401,7 @@ void SetAlarmState(uint8_t state, uint8_t blink)
         return;
     ledAlarmState = state;
     ledAlarmBlink = blink;
+    
     LATDbits.LATD0 = !ledAlarmState;
 }
 void SetFireState(uint8_t state, uint8_t blink)
@@ -402,7 +410,7 @@ void SetFireState(uint8_t state, uint8_t blink)
         return;
     ledFireState = state;
     ledFireBlink = blink;
-    LATDbits.LATD1 = !ledFireState;
+    LATDbits.LATD1 = ledFireState ? 0 : 1;
 }
 void SetFailureState(uint8_t state, uint8_t blink)
 {
